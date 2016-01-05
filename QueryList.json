@@ -1,1 +1,9 @@
-
+{
+	"trouver":"match",
+	"renvoyer":"return",
+	"telQue":"where",
+	"retirer":"remove",
+	"supprimer","delete",
+	"creer":"create",
+	"modifier":"set",
+}
