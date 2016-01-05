@@ -3,7 +3,7 @@
 	"renvoyer":"return",
 	"telQue":"where",
 	"retirer":"remove",
-	"supprimer","delete",
+	"supprimer": "delete",
 	"creer":"create",
 	"modifier":"set",
 }
