@@ -4,9 +4,13 @@
     <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
-    <h1>Premiere page du projet</h1>
-    <h3 class="trolol"> Le message suivant est généré en nodejs : <%= param1 %> </h3>
+    <% include partials/menu.ejs %>
+
+    <h3 class="trolol">Texte généré avec node js <%= param1 %></h3>
 
     <% include partials/footer %>
 </body>
+
+<!-- Menu Toggle Script -->
+<script src="/js/menu.js"></script>
 </html>
