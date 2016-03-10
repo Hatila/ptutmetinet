@@ -10,4 +10,8 @@ app.get('/', function(req, res) {
     res.render('index.ejs', {param1: message});
 });
 
+app.get('/standard', function(req, res) {
+    res.render('interface-standard.ejs');
+});
+
 app.listen(8000);

@@ -1,0 +1,34 @@
+<html>
+<head>
+    <% include partials/head %>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/standard.css">
+    <link rel="stylesheet" href="/css/ripple.css">
+</head>
+<body>
+<% include partials/menu.ejs %>
+
+<div class="block-requete">
+    <div class="row">
+        <div class="col-lg-10 col-lg-offset-1 form-group">
+            <textarea class="form-control requete-input" rows="5" id="requete-input"></textarea>
+        </div>
+        <div class="col-lg-2 col-lg-offset-1">
+            <button type="button" class="button-ripple ripple">Valider</button>
+        </div>
+    </div>
+</div>
+<div class="block-intermediaire"></div>
+<div class="block-graph">
+    <div class="row">
+
+    </div>
+</div>
+
+<% include partials/footer %>
+</body>
+
+<!-- Menu Toggle Script -->
+<script src="/js/menu.js"></script>
+<script src="/js/ripple.js"></script>
+</html>
