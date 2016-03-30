@@ -1,10 +1,26 @@
 {
-  "name": "ptut-Metinet",
+  "name": "ptut",
   "version": "0.0.1",
   "dependencies": {
     "ejs": "2.4.1",
     "express": "4.13.4",
-    "body-parser":"1.9.2",
-    "node-neo4j":"2.0.3"
-  }
+    "body-parser": "1.9.2",
+    "node-neo4j": "2.0.3"
+  },
+  "description": "http://maurizzzio.github.io/greuler/#/",
+  "main": "serveur.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hatila/ptutmetinet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hatila/ptutmetinet/issues"
+  },
+  "homepage": "https://github.com/Hatila/ptutmetinet#readme"
 }
+
