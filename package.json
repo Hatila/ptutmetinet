@@ -8,7 +8,7 @@
     "node-neo4j": "2.0.3"
   },
   "description": "http://maurizzzio.github.io/greuler/#/",
-  "main": "serveur.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
