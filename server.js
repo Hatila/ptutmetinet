@@ -15,6 +15,14 @@ app.get('/', function(req, res) {
     res.render('index.ejs', {param1: message});
 });
 
+app.get('/test', function(req, res) {
+   res.render('test.ejs');
+});
+
+app.get('/graph', function(req, res) {
+   res.render('graph.ejs');
+});
+
 app.get('/standard', function(req, res) {
     res.render('interface-standard.ejs', {requete: "null"});
 });
