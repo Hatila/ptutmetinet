@@ -23,6 +23,10 @@ app.get('/graph', function(req, res) {
    res.render('graph.ejs');
 });
 
+app.get('/userFriendly', function(req, res) {
+    res.render('interface-userFriendly.ejs');
+});
+
 app.get('/standard', function(req, res) {
     res.render('interface-standard.ejs', {requete: "null"});
 });
