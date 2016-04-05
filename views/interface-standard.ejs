@@ -21,19 +21,11 @@
     </div>
 </div>
 <div class="block-intermediaire"></div>
-<div class="block-graph">
-    <div class="row">
-        <%= requete[0].name %>
-        <% for(var i=0; i<requete.length; i++) { %>
-            <li>
-                <%= requete[i]._id %>
-                <%= requete[i].name %>
-                <%= requete[i].sex %>
-            </li>
-        <% } %>
+<div class="row">
+    <div class="block-graph col-lg-10 col-lg-offset-1">
+            <%= requete %>
     </div>
 </div>
-
 <% include partials/footer %>
 </body>
 
