@@ -31,6 +31,27 @@ $(document).ready(function () {
               .attr("class", function (d) { return "node "+d.label })
               .attr("r", 10)
               .call(force.drag);
+			  
+		/*	  Code pour affichage infos noeud survol
+	  nodeEnter = node.enter().append("g")
+  .attr("class", "node")
+  .attr("transform", function(d) { 
+      return "translate(" + source.y0 + "," + source.x0 + ")"; 
+  })
+  .on("click", click)
+  .on("mouseover", function(d) {
+      var g = d3.select(this); // The node
+      // The class is used to remove the additional text later
+      var info = g.append('text')
+         .classed('info', true)
+         .attr('x', 20)
+         .attr('y', 10)
+         .text('More info');
+  })
+  .on("mouseout", function() {
+      // Remove the info text on mouse out.
+      d3.select(this).select('text.info').remove();
+  });*/
 
       // html title attribute for title node-attribute
       node.append("title")
