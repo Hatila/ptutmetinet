@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var r=require("request");
 var app = express();
 app.use(bodyParser.urlencoded());
 
@@ -27,16 +28,42 @@ app.get('/standard', function(req, res) {
     res.render('interface-standard.ejs', {requete: "null"});
 });
 
-app.post('/standard', function(req, res){
-    var message = req.body.ntm;
+app.post('/standard', function(req, res) {
+    // var message =req.body.ntm;
+    // message =  '{"statement":"'+req.body.ntm+'", "resultDataContents":["graph"]} ';
     var json;
-    db.cypherQuery(message, function(err, result){
-        if(err){ throw err};
-       json = result.data; // delivers an array of query results
-//       json = JSON.parse(json);
-       res.render('interface-standard.ejs', {requete: json});
-    });
-    
-});
+    /*
+     db.beginTransaction(
+     {statements:[{
+     statement:req.body.ntm,
+     resultDataContents:["graph"]}]},
+     function(err, result){
+     if(err){ throw err};
+     console.log(result);
+     json = result.data; // delivers an array of query results
+     console.log(json);
+     res.render('interface-standard.ejs', {requete: json});}
+     );
+     */
 
+    var txUrl = "http://neo4j:naruto@localhost:7474/db/data/transaction/commit";
+    r.post({
+            uri: txUrl,
+            json: {
+                statements: [{
+                    statement: req.body.ntm,
+                    resultDataContents: ["graph"]
+                }]
+            }
+        },
+        function (err, result) {
+            if (err) {
+                throw err
+            }
+            ;
+            json = result.body; // delivers an array of query results
+            console.log(JSON.stringify(json));
+            res.render('interface-standard.ejs', {requete: json});
+        });
+});
 app.listen(80);
