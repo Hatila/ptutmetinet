@@ -12,7 +12,7 @@
     <div class="row">
         <form action="/standard" method="post">
             <div class="col-lg-10 col-lg-offset-1 form-group">
-                <textarea class="form-control requete-input" name="ntm" rows="5" id="requete-input">match(n) return n</textarea>
+                <textarea class="form-control requete-input" name="ntm" rows="5" id="requete-input">MATCH path = (n)-[r]->(m) RETURN path</textarea>
             </div>
             <div class="col-lg-2 col-lg-offset-1">
                 <button type="submit" class="caca">Valider</button>
@@ -21,14 +21,12 @@
     </div>
 </div>
 <div class="block-intermediaire"></div>
-
-
-
-
 <div class="row">
     <div class="block-graph col-lg-10 col-lg-offset-1">
-            <%= requete %>
         <div id="graph"></div>
+    </div>
+    <div class="col-lg-1 col-lg-offset-11">
+        <div id="detailedInfos"></div>
     </div>
 </div>
 <% include partials/footer %>
@@ -41,6 +39,27 @@
 <script src="./js/test.js"></script>
 <script>
     genererGraph(<%- JSON.stringify(requete) %>);
+    $(document).ready(function () {
+        //can also be wrapped with:
+        //1. $(function () {...});
+        //2. $(window).load(function () {...});
+        //3. Or your own custom named function block.
+        //It's better to wrap it.
+
+        //Tooltip, activated by hover event
+        $("body").tooltip({
+                    selector: "[data-toggle='tooltip']",
+                    container: "body"
+                })
+                //Popover, activated by clicking
+                .popover({
+                    selector: "[data-toggle='popover']",
+                    container: "body",
+                    html: true
+                });
+        //They can be chained like the example above (when using the same selector).
+
+    });
 </script>
 </html>
 

@@ -22,16 +22,15 @@ function genererGraph(requete) {
 
     graph.results[0].data.forEach(function (row) {
         row.graph.nodes.forEach(function (n) {
-            if (idIndex(nodes,n.id) == null)
-                nodes.push({id:n.id,label:n.labels[0],title:n.properties.name});
+            if (idIndex(nodes,n.id) == null){
+                nodes.push({id:n.id,type:n.labels[0],properties:n.properties});
+            }
         });
         links = links.concat( row.graph.relationships.map(function(r) {
-            return {start:idIndex(nodes,r.startNode),end:idIndex(nodes,r.endNode),type:r.type};
+            return {source:idIndex(nodes,r.startNode),target:idIndex(nodes,r.endNode),type:r.type};
         }));
     });
-    //viz = {nodes:nodes, links:links};
-
-      force.nodes(nodes).links(links).start();
+     force.nodes(nodes).links(links).start();
 
       // render relationships as lines
       var link = svg.selectAll(".link")
@@ -44,34 +43,28 @@ function genererGraph(requete) {
       var node = svg.selectAll(".node")
               .data(nodes).enter()
               .append("circle")
-              .attr("class", function (d) { return "node "+d.label })
+              .attr("class", function (d) { return "node "+d.type })
               .attr("r", 10)
-              .call(force.drag);
-			  
-			  /*Code pour affichage infos noeud survol
-	  nodeEnter = node.enter().append("g")
-  .attr("class", "node")
-  .attr("transform", function(d) { 
-      return "translate(" + source.y0 + "," + source.x0 + ")"; 
-  })
-  .on("click", click)
-  .on("mouseover", function(d) {
-      var g = d3.select(this); // The node
-      // The class is used to remove the additional text later
-      var info = g.append('text')
-         .classed('info', true)
-         .attr('x', 20)
-         .attr('y', 10)
-         .text('More info');
-  })
-  .on("mouseout", function() {
-      // Remove the info text on mouse out.
-      d3.select(this).select('text.info').remove();
-  });
-
-      // html title attribute for title node-attribute
-      node.append("title")
-              .text(function (d) { return d.title; })
+              .call(force.drag)
+          .attr("data-toggle","tooltip")
+          .attr("data-placement","right")
+          .attr("data-original-title",function(d){
+              return "Type : "+d.type+"\n"+"Id : "+d.id+"\n";
+          })
+          .attr("data-content",function (d) {
+              var result = "";
+              for(prop in d.properties){
+                  result+=prop+" : "+d.properties[prop]+"\n";
+              }
+              return result;
+          })
+          .on("mouseover",function(d){
+              var result = "";
+              for(prop in d.properties){
+                  result+=prop+" : "+d.properties[prop]+"\n";
+              }
+              $("#detailedInfos").innerHTML = result;
+          })
 
       // force feed algo ticks for coordinate computation
       force.on("tick", function() {
@@ -83,39 +76,7 @@ function genererGraph(requete) {
           node.attr("cx", function(d) { return d.x; })
                   .attr("cy", function(d) { return d.y; });
       });
- /*
-  var res  =
-{ "results": [
-    {
-      "columns": ["path"],
-      "data"   : [{
-          "graph": {
-            "nodes": [
-              {"id": "1", "labels": ["Person"], "properties": {"name": "Peter"}},
-              {"id": "2", "labels": ["Person"], "properties": {"name": "Michael"}}
-             ],
-            "relationships": [
-              {"id": "0", "type": "KNOWS", "startNode": "1", "endNode": "2", "properties": {}}
-             ]
-          } // , {"graph": ...}, ...
-      }]}
-  ], "errors": []
-}
-  
-  function idIndex(a,id) {
-  for (var i=0;i<a.length;i++) {
-    if (a[i].id == id) return i;}
-  return null;
-}
-var nodes=[], links=[];
-res.results[0].data.forEach(function (row) {
-   row.graph.nodes.forEach(function (n) {
-     if (idIndex(nodes,n.id) == null)
-       nodes.push({id:n.id,label:n.labels[0],title:n.properties.name});
-   });
-   links = links.concat( row.graph.relationships.map(function(r) {
-     return {start:idIndex(nodes,r.startNode),end:idIndex(nodes,r.endNode),type:r.type};
-   }));
-});
-viz = {nodes:nodes, links:links};*/
+
+
+
 }
