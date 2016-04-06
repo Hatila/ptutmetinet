@@ -1,4 +1,10 @@
-$(document).ready(function () {
+function idIndex(a,id) {
+    for (var i=0;i<a.length;i++) {
+        if (a[i].id == id) return i;}
+    return null;
+}
+
+function genererGraph(requete) {
 	var width = 800, height = 800;
   // force layout setup
   var force = d3.layout.force()
@@ -10,29 +16,39 @@ $(document).ready(function () {
           .attr("pointer-events", "all");
 
   // load graph (nodes,links) json from /graph endpoint
-	var graph = {"nodes":[{name:"Peter",label:"Person",id:1},{name:"Michael",label:"Person",id:2},
-          {name:"Neo4j",label:"Database",id:3}],
- "links":[{source:0, target:1, type:"KNOWS", since:2010},{source:0, target:2, type:"FOUNDED"},
-          {source:1, target:2, type:"WORKS_ON"}]};
+    var nodes=[], links=[];
 
-      force.nodes(graph.nodes).links(graph.links).start();
+    var graph = requete;
+
+    graph.results[0].data.forEach(function (row) {
+        row.graph.nodes.forEach(function (n) {
+            if (idIndex(nodes,n.id) == null)
+                nodes.push({id:n.id,label:n.labels[0],title:n.properties.name});
+        });
+        links = links.concat( row.graph.relationships.map(function(r) {
+            return {start:idIndex(nodes,r.startNode),end:idIndex(nodes,r.endNode),type:r.type};
+        }));
+    });
+    //viz = {nodes:nodes, links:links};
+
+      force.nodes(nodes).links(links).start();
 
       // render relationships as lines
       var link = svg.selectAll(".link")
-              .data(graph.links).enter()
+              .data(links).enter()
               .append("line").attr("class", "link")
 			  .attr("fill", "none")
 			  .attr("stroke", "black");
 
       // render nodes as circles, css-class from label
       var node = svg.selectAll(".node")
-              .data(graph.nodes).enter()
+              .data(nodes).enter()
               .append("circle")
               .attr("class", function (d) { return "node "+d.label })
               .attr("r", 10)
               .call(force.drag);
 			  
-		/*	  Code pour affichage infos noeud survol
+			  /*Code pour affichage infos noeud survol
 	  nodeEnter = node.enter().append("g")
   .attr("class", "node")
   .attr("transform", function(d) { 
@@ -51,7 +67,7 @@ $(document).ready(function () {
   .on("mouseout", function() {
       // Remove the info text on mouse out.
       d3.select(this).select('text.info').remove();
-  });*/
+  });
 
       // html title attribute for title node-attribute
       node.append("title")
@@ -102,4 +118,4 @@ res.results[0].data.forEach(function (row) {
    }));
 });
 viz = {nodes:nodes, links:links};*/
-});
+}

@@ -12,7 +12,7 @@
     <div class="row">
         <form action="/standard" method="post">
             <div class="col-lg-10 col-lg-offset-1 form-group">
-                <textarea class="form-control requete-input" name="ntm" rows="5" id="requete-input"></textarea>
+                <textarea class="form-control requete-input" name="ntm" rows="5" id="requete-input">match(n) return n</textarea>
             </div>
             <div class="col-lg-2 col-lg-offset-1">
                 <button type="submit" class="caca">Valider</button>
@@ -21,9 +21,14 @@
     </div>
 </div>
 <div class="block-intermediaire"></div>
+
+
+
+
 <div class="row">
     <div class="block-graph col-lg-10 col-lg-offset-1">
             <%= requete %>
+        <div id="graph"></div>
     </div>
 </div>
 <% include partials/footer %>
@@ -33,6 +38,10 @@
 <script src="/js/menu.js"></script>
 <script src="/js/ripple.js"></script>
 <script src="/js/d3.js"></script>
+<script src="./js/test.js"></script>
+<script>
+    genererGraph(<%- JSON.stringify(requete) %>);
+</script>
 </html>
 
 

@@ -5,7 +5,8 @@
     "ejs": "2.4.1",
     "express": "4.13.4",
     "body-parser": "1.9.2",
-    "node-neo4j": "2.0.3"
+    "node-neo4j": "2.0.3",
+    "request": "2.70.0"
   },
   "description": "http://maurizzzio.github.io/greuler/#/",
   "main": "server.js",
