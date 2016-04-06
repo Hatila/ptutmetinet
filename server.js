@@ -24,6 +24,10 @@ app.get('/graph', function(req, res) {
    res.render('graph.ejs');
 });
 
+app.get('/userFriendly', function(req, res) {
+    res.render('interface-userFriendly.ejs');
+});
+
 app.get('/standard', function(req, res) {
     res.render('interface-standard.ejs', {requete: "null"});
 });
@@ -45,7 +49,6 @@ app.post('/standard', function(req, res) {
      res.render('interface-standard.ejs', {requete: json});}
      );
      */
-
     var txUrl = "http://neo4j:naruto@localhost:7474/db/data/transaction/commit";
     r.post({
             uri: txUrl,
