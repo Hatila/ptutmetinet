@@ -1,3 +1,9 @@
+.detailNode{
+    height:50px;
+    background-color: #cccccc;
+    border: 2px solid black;
+}
+
 .block-requete{
     background-color: #4b4b4b;
     width: 100%;
@@ -6,6 +12,8 @@
 
 .block-graph{
     background-color: #cccccc;
+    height:500px;
+    overflow: auto;
     padding: 25px;
     margin-top : 25px;
     border-radius: 4px;

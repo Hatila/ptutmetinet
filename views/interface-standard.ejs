@@ -25,8 +25,10 @@
     <div class="block-graph col-lg-10 col-lg-offset-1">
         <div id="graph"></div>
     </div>
-    <div class="col-lg-1 col-lg-offset-11">
-        <div id="detailedInfos"></div>
+</div>
+<div class="row">
+    <div class="detailNode col-lg-10 col-lg-offset-1">
+        <div id="detailedInfos"><p>caca</p></div>
     </div>
 </div>
 <% include partials/footer %>
@@ -58,6 +60,11 @@
                     html: true
                 });
         //They can be chained like the example above (when using the same selector).
+
+        $(".node").mouseover(function(){
+            var pouet = $(this).attr("data-content");
+        $("#detailedInfos").html(pouet);
+    });
 
     });
 </script>

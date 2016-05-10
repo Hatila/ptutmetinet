@@ -63,7 +63,7 @@ function genererGraph(requete) {
               for(prop in d.properties){
                   result+=prop+" : "+d.properties[prop]+"\n";
               }
-              $("#detailedInfos").innerHTML = result;
+              $("#detailedInfos").innerHTML = "<p>"+result+"</p>";
           })
 
       // force feed algo ticks for coordinate computation
@@ -76,6 +76,8 @@ function genererGraph(requete) {
           node.attr("cx", function(d) { return d.x; })
                   .attr("cy", function(d) { return d.y; });
       });
+
+
 
 
 
