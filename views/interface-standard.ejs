@@ -12,7 +12,7 @@
     <div class="row">
         <form action="/standard" method="post">
             <div class="col-lg-10 col-lg-offset-1 form-group">
-                <textarea class="form-control requete-input" name="ntm" rows="5" id="requete-input">MATCH path = (n)-[r]->(m) RETURN path</textarea>
+                <textarea onkeyup="auto_grow(this)" id="areaRequete" class="form-control requete-input" name="ntm" rows="1" id="requete-input">MATCH path = (n)-[r]->(m) RETURN path</textarea>
             </div>
             <div class="col-lg-2 col-lg-offset-1">
                 <button type="submit" class="caca">Valider</button>
@@ -39,7 +39,14 @@
 <script src="/js/ripple.js"></script>
 <script src="/js/d3.js"></script>
 <script src="./js/test.js"></script>
+<script src="/js/jquery.elastic.js" type="text/javascript"></script>
 <script>
+
+    function auto_grow(element) {
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight)+"px";
+    }
+
     genererGraph(<%- JSON.stringify(requete) %>);
     $(document).ready(function () {
         //can also be wrapped with:
