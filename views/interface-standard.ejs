@@ -8,11 +8,26 @@
 <body>
 <% include partials/menu.ejs %>
 
+<div class="row">
+    <div class="col-lg-2 col-lg-offset-1">
+        <button class="btn btn-primary" id="addNode">Ajouter un noeud</button>
+    </div>
+    <div class="col-lg-2">
+        <button class="btn btn-primary" id="findNode">Rechercher un noed</button>
+    </div>
+    <div class="col-lg-2">
+        <button class="btn btn-primary" id="returnNode">Retourne les noeuds</button>
+    </div>
+    <div class="col-lg-2">
+        <button class="btn btn-primary" id="returnGraph">Retourne le graph</button>
+    </div>
+</div>
+
 <div class="block-requete">
     <div class="row">
         <form action="/standard" method="post">
             <div class="col-lg-10 col-lg-offset-1 form-group">
-                <textarea onkeyup="auto_grow(this)" id="areaRequete" class="form-control requete-input" name="ntm" rows="1" id="requete-input">MATCH path = (n)-[r]->(m) RETURN path</textarea>
+                <textarea onkeyup="auto_grow(this)" id="areaRequete" class="form-control requete-input" name="ntm" rows="1" id="requete-input" placeholder="Tapez ici votre requête Cypher"></textarea>
             </div>
             <div class="col-lg-2 col-lg-offset-1">
                 <button type="submit" class="caca">Valider</button>
@@ -47,7 +62,25 @@
         element.style.height = (element.scrollHeight)+"px";
     }
 
-    genererGraph(<%- JSON.stringify(requete) %>);
+    $("#addNode").on("click", function(){
+        $("#areaRequete").html('CREATE (n {name:"World"}) RETURN "hello", n.name')
+    })
+
+    $("#returnNode").on("click", function(){
+        $("#areaRequete").html('MATCH (n) RETURN n LIMIT 100')
+    })
+
+    $("#returnGraph").on("click", function(){
+        $("#areaRequete").html('MATCH path = (n)-[r]->(m) RETURN path')
+    })
+
+    $("#findNode").on("click", function(){
+        $("#areaRequete").html('START n=node:nodes(field = "label") RETURN n')
+    })
+
+    console.log(<%- requete.results %>);
+    genererGraph(<%- requete %>);
+
     $(document).ready(function () {
         //can also be wrapped with:
         //1. $(function () {...});

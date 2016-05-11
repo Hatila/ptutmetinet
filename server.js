@@ -62,10 +62,9 @@ app.post('/standard', function(req, res) {
         function (err, result) {
             if (err) {
                 throw err
-            }
-            ;
-            json = result.body; // delivers an array of query results
-            console.log(JSON.stringify(json));
+            };
+            json = JSON.stringify(result.body); // delivers an array of query results
+            console.log(json);
             res.render('interface-standard.ejs', {requete: json});
         });
 });
