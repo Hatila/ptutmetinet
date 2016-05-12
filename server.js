@@ -28,6 +28,42 @@ app.get('/userFriendly', function(req, res) {
     res.render('interface-userFriendly.ejs');
 });
 
+app.post('/userFriendly', function(req, res){
+    var nodeType = req.body.nodeType;
+    var newNodes;
+    var boolean = true;
+    var i = 0;
+    while(boolean){
+        var name = "nodeName"+i;
+        i++;
+        if(eval('req.body.nodeName'+i) === undefined){
+            boolean = false;
+            console.log("stop");
+        }
+    }
+//    var json;
+//    
+//    var txUrl = "http://neo4j:naruto@localhost:7474/db/data/transaction/commit";
+//    r.post({
+//            uri: txUrl,
+//            json: {
+//                statements: [{
+//                    statement: req.body,
+//                    resultDataContents: ["graph"]
+//                }]
+//            }
+//        },
+//        function (err, result) {
+//            if (err) {
+//                throw err
+//            }
+//            ;
+//            json = result.body; // delivers an array of query results
+//            console.log(JSON.stringify(json));
+//            res.render('interface-userFriendly.ejs', {requete: json});
+//        });
+})
+
 app.get('/standard', function(req, res) {
     res.render('interface-standard.ejs', {requete: "null"});
 });
