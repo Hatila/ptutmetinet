@@ -26,6 +26,11 @@
     font-size: 2em;
     font-family: "COURIER", monospace;
     border: 2px solid #303030;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 10px;
+    resize: none;
+    overflow: hidden;
 }
 
 body{
