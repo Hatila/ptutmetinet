@@ -8,11 +8,26 @@
 <body>
 <% include partials/menu.ejs %>
 
+<div class="row">
+    <div class="col-lg-2 col-lg-offset-1">
+        <button class="btn btn-primary" id="addNode">Ajouter un noeud</button>
+    </div>
+    <div class="col-lg-2">
+        <button class="btn btn-primary" id="findNode">Rechercher un noed</button>
+    </div>
+    <div class="col-lg-2">
+        <button class="btn btn-primary" id="returnNode">Retourne les noeuds</button>
+    </div>
+    <div class="col-lg-2">
+        <button class="btn btn-primary" id="returnGraph">Retourne le graph</button>
+    </div>
+</div>
+
 <div class="block-requete">
     <div class="row">
         <form action="/standard" method="post">
             <div class="col-lg-10 col-lg-offset-1 form-group">
-                <textarea class="form-control requete-input" name="ntm" rows="5" id="requete-input">MATCH path = (n)-[r]->(m) RETURN path</textarea>
+                <textarea onkeyup="auto_grow(this)" id="areaRequete" class="form-control requete-input" name="ntm" rows="1" id="requete-input" placeholder="Tapez ici votre requête Cypher"></textarea>
             </div>
             <div class="col-lg-2 col-lg-offset-1">
                 <button type="submit" class="caca">Valider</button>
@@ -25,8 +40,10 @@
     <div class="block-graph col-lg-10 col-lg-offset-1">
         <div id="graph"></div>
     </div>
-    <div class="col-lg-1 col-lg-offset-11">
-        <div id="detailedInfos"></div>
+</div>
+<div class="row">
+    <div class="detailNode col-lg-10 col-lg-offset-1">
+        <div id="detailedInfos"><p></p></div>
     </div>
 </div>
 <% include partials/footer %>
@@ -37,8 +54,37 @@
 <script src="/js/ripple.js"></script>
 <script src="/js/d3.js"></script>
 <script src="./js/test.js"></script>
+<script src="/js/jquery.elastic.js" type="text/javascript"></script>
 <script>
-    genererGraph(<%- JSON.stringify(requete) %>);
+
+    function auto_grow(element) {
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight)+"px";
+    }
+
+    $("#addNode").on("click", function(){
+        $("#areaRequete").html('CREATE (n {name:"World"}) RETURN "hello", n.name')
+    })
+
+    $("#returnNode").on("click", function(){
+        $("#areaRequete").html('MATCH (n) RETURN n LIMIT 100')
+    })
+
+    $("#returnGraph").on("click", function(){
+        $("#areaRequete").html('MATCH path = (n)-[r]->(m) RETURN path')
+    })
+
+    $("#findNode").on("click", function(){
+        $("#areaRequete").html('START n=node:nodes(field = "label") RETURN n')
+    })
+
+    var jsonResponse = <%- requete %>;
+    if (jsonResponse['errors'].length > 0) {
+        swal("Erreur","Code : "+jsonResponse.errors[0].code+"\n \n Message : "+jsonResponse.errors[0].message,"error");
+    }
+    if (jsonResponse['results'].length > 0) {
+        genererGraph(<%- requete %>);
+    }
     $(document).ready(function () {
         //can also be wrapped with:
         //1. $(function () {...});
@@ -57,6 +103,10 @@
                     html: true
                 });
         //They can be chained like the example above (when using the same selector).
+        $(".node").mouseover(function(){
+            var pouet = $(this).attr("data-content");
+            $("#detailedInfos").html(pouet);
+        });
     });
 </script>
 </html>

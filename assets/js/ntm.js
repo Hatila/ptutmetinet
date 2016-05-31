@@ -1,3 +1,8 @@
-/**
- * Created by loick on 06/04/16.
- */
+$(".node").mouseover(function(){
+   alert();
+});
+/*
+$(".node").mouseover({
+    console.log(this);
+});
+*/
