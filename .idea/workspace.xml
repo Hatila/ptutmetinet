@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="90f215cc-b208-48c9-9a8c-4a2bbe00cbc5" name="Default" comment="intégration css static">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/js/graph.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/js/test.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/css/standard.css" afterPath="$PROJECT_DIR$/assets/css/standard.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/interface-standard.ejs" afterPath="$PROJECT_DIR$/views/interface-standard.ejs" />
     </list>
     <list id="31d9cf06-66c5-473f-8677-e35f01b6e779" name="New changelist" comment="" />
     <ignored path="ptutmetinet.iws" />
@@ -176,8 +180,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -255,20 +257,6 @@
               <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ptutmetinet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ptutmetinet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
@@ -294,6 +282,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -393,7 +383,6 @@
       <workItem from="1463037151376" duration="10475000" />
       <workItem from="1464613308422" duration="883000" />
       <workItem from="1464683413122" duration="335000" />
-      <workItem from="1464684605390" duration="223000" />
     </task>
     <task id="LOCAL-00001" summary="ajout d'un modele head et footer">
       <created>1457615780866</created>
@@ -413,7 +402,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36161000" />
+    <option name="totallyTimeSpent" value="35938000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
