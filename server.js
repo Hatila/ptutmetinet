@@ -29,39 +29,60 @@ app.get('/userFriendly', function(req, res) {
 });
 
 app.post('/userFriendly', function(req, res){
-    var nodeType = req.body.nodeType;
+    var requestType = req.body.KEYWORD;
+    var nodeType = req.body.typeNode;
+    var nodeValue = req.body.valueNode;
+    var cypherRequest = {query : requestType+" ("+nodeValue+":"+nodeType+" "};
     var newNodes;
     var boolean = true;
     var i = 0;
+    var jsonData = [];
     while(boolean){
-        var name = "nodeName"+i;
-        i++;
-        if(eval('req.body.nodeName'+i) === undefined){
-            boolean = false;
-            console.log("stop");
+        //Ajoute la 1ère accolade nécessaire pour séparer les propriétés
+        if(i === 0){
+            cypherRequest.query += '{';
         }
+        var obj = {};
+        var attributeName = eval('req.body.attributesName'+i);
+        var attributeValue = eval('req.body.attributesValue'+i);
+        if(typeof attributeName === 'undefined' || typeof attributeValue === 'undefined'){
+            boolean = false;
+            //Permet d'enlever la dernière virgule inutile
+            cypherRequest.query = cypherRequest.query.substr(0, (cypherRequest.query.length-1));
+            console.log("stop");
+        } else {
+            cypherRequest.query += attributeName+' : "'+attributeValue+'",';
+        }
+        i++;
     }
-//    var json;
-//    
-//    var txUrl = "http://neo4j:naruto@localhost:7474/db/data/transaction/commit";
-//    r.post({
-//            uri: txUrl,
-//            json: {
-//                statements: [{
-//                    statement: req.body,
-//                    resultDataContents: ["graph"]
-//                }]
-//            }
-//        },
-//        function (err, result) {
-//            if (err) {
-//                throw err
-//            }
-//            ;
-//            json = result.body; // delivers an array of query results
-//            console.log(JSON.stringify(json));
-//            res.render('interface-userFriendly.ejs', {requete: json});
-//        });
+    cypherRequest.query+= '}) RETURN '+nodeValue+';';
+    
+    var json;
+//    console.log(jsonData);
+//    var jsonData = {query : "CREATE (n:Person { name : 'name' }) RETURN n"};
+//    var jsonData = { query: 'CREATE (n:NewType {name:"World"}) RETURN "hello", n.name' }
+    req.body.jsonData = jsonData.query;
+//    var txUrl = "http://neo4j:naruto@localhost:7474/db/data/cypher";
+    var txUrl = "http://neo4j:naruto@localhost:7474/db/data/transaction/commit";
+    
+    r.post({
+            uri: txUrl,
+            json: {
+                statements: [{
+                    statement: cypherRequest.query,
+                    resultDataContents: ["graph"]
+                }]
+            }
+        },
+        function (err, result) {
+            if (err) {
+                throw err
+            }
+            ;
+            json = result.body; // delivers an array of query results
+            console.log(JSON.stringify(json));
+            res.render('interface-userFriendly.ejs', {requete: json});
+        });
 })
 
 app.get('/standard', function(req, res) {
@@ -72,6 +93,7 @@ app.post('/standard', function(req, res) {
     // var message =req.body.ntm;
     // message =  '{"statement":"'+req.body.ntm+'", "resultDataContents":["graph"]} ';
     var json;
+    
     /*
      db.beginTransaction(
      {statements:[{

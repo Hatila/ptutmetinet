@@ -1,13 +1,18 @@
 function openDialog(){
     $("#modalCreateNode").modal();
 }
-var indexRow = 0;
+var indexAttributes = 0;
 function addAttributes(){
-    indexRow++;
-    $('#row0').append('<div id="row'+indexRow+'"><div class="col-md-6 champClone"><input class="form-control" type="text" name="nodeName'+indexRow+'" id="nameInput'+indexRow+'" /></div><div class="col-md-6 champClone"><input class="form-control" type="text" name="nodeValue'+indexRow+'" id="valueInput'+indexRow+'"/></div></div>');
+    indexAttributes++;
+    $('#row0').append('<div id="row'+indexAttributes+'"><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" /></div><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'"/></div></div>');
+}
+
+var indexNodes = 0;
+function addNodes(){
+    indexNodes++;
+    $('#rowNode0').append('<div id="rowNode'+indexNodes+'"><div class="col-md-6 champClone"><input class="form-control" type="text" id="nodeType'+indexNodes+'" /></div><div class="col-md-6 champClone"><input class="form-control" type="text" name="nodeValue'+indexNodes+'" id="valueNode'+indexNodes+'"/></div></div>');
 }
 
 function submit(){
-    console.log('here');
     $('#formCreateNode').submit();
 }
