@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/standard.css">
     <link rel="stylesheet" href="/css/ripple.css">
+    <link rel="stylesheet" href="/css/userFriendly.css">
 </head>
 <body>
 <% include partials/menu.ejs %>
@@ -40,10 +41,12 @@
             </div>
             <div class="modal-body">
                 <form id="formCreateNode" name="createNode" action="/userFriendly" method="post">
-                    <label for="labelNodeType">Type de noeud</label>
-                    <input type="text" id="labelNodeType" name="nodeType"/>
+                    <div class="form-group">
+                        <label for="nodeType">Type de noeud</label>
+                        <input type="text" id="labelNodeType" name="nodeType" class="form-control"/>
+                    </div>
                     <h5>Attributs</h5>
-                    <div class="col-md-12">
+                    <div class="row">
                         <div class="col-md-6">
                             <h6>Nom</h6>
                         </div>
@@ -51,21 +54,21 @@
                             <h6>Valeur</h6>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div id="row0">
-                            <div class="col-md-6">
-                                <input type="text" name="nodeName0" id="nameInput0" />
-                            </div>
-                            <div class="col-md-6">
-                                <input type="text" name="nodeValue0" id="valueInput0" />
-                            </div>
+                    <div id="row0" class="row">
+                        <div class="col-md-6">
+                            <input type="text" name="nodeName0" id="nameInput0" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="nodeValue0" id="valueInput0" class="form-control"/>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <i class="glyphicon glyphicon-plus" onClick="addAttributes()"></i>
-                <button onClick="submit()">Valider</button>
+                <button type="button" class="btn btn-primary" onClick="addAttributes()">
+                    <span class="glyphicon glyphicon-plus"></span> Ajouter
+                </button>
+                <button type="button" class="btn btn-primary" onClick="submit()">Valider</button>
             </div>
         </div>
     </div>
