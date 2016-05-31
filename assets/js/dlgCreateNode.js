@@ -1,5 +1,9 @@
-function openDialog(){
+function createNodeDialog(){
     $("#modalCreateNode").modal();
+}
+
+function updateNodeDialog(){
+    $("#modalUpdateNode").modal();
 }
 var indexAttributes = 0;
 function addAttributes(){

@@ -12,10 +12,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-2">
-            <div class="btn btn-primary" onclick="openDialog()">Créer un noeud</div>
+            <div class="btn btn-primary" onclick="createNodeDialog()">Créer un noeud</div>
         </div>
         <div class="col-md-2">
-            <div class="btn btn-primary" onClick="openDialog()">keyword 2</div>
+            <div class="btn btn-primary" onClick="updateNodeDialog()">Mettre à jour un noeud</div>
         </div>
         <div class="col-md-2">
             <div class="btn btn-primary" onClick="openDialog()">keyword 3</div>
@@ -81,7 +81,7 @@
     </div>
 </div>
 
-<div id="modalUnknownNode" class="modal fade" role="dialog">
+<div id="modalUpdateNode" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -89,7 +89,7 @@
                 <h4 class="modal-title">Création d'un noeud</h4>
             </div>
             <div class="modal-body">
-                <form id="formUnknownNode" name="createNode" action="/userFriendly" method="post">
+                <form id="formUpdateNode" name="updateNode" action="/userFriendly" method="post">
                     <div class="row">
                         <div id="rowNode0">
                             <div class="col-md-6">
@@ -101,6 +101,7 @@
                                 <input type="text" id="valueNode0" name="valueNode" class="form-control" />
                             </div>
                         </div>
+                        <input type="hidden" name="KEYWORD" value="MATCH_SET" />
                     </div>
                     <div class="row pull-right btn-addNode">
                         <button type="button" class="btn btn-primary" onClick="addNodes()">
@@ -123,6 +124,10 @@
                         <div class="col-md-6">
                             <input type="text" name="attributesValue0" id="valueInput0" class="form-control" />
                         </div>
+                        <div class="help-block">
+                            <p>Le premier attribut permet de trouver quel noeud vous souhaitez mettre à jour</p>
+                            <p>Il ne servira en aucun cas à modifier un attribut existant</p>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -136,12 +141,83 @@
     </div>
 </div>
 
+<div class="block-intermediaire"></div>
+    <div class="row">
+        <div class="block-graph col-lg-10 col-lg-offset-1">
+            <div id="graph"></div>
+        </div>
+    </div>
+<div class="row">
+    <div class="detailNode col-lg-10 col-lg-offset-1">
+        <div id="detailedInfos"><p></p></div>
+    </div>
+</div>
+
 <% include partials/footer %>
 </body>
 
 <!-- Menu Toggle Script -->
-<script src="/js/menu.js"></script>
-<script src="/js/ripple.js"></script>
-<script src="/js/d3.js"></script>
-<script src="/js/dlgCreateNode.js"></script>
+<script src="./js/menu.js"></script>
+<script src="./js/ripple.js"></script>
+<script src="./js/d3.js"></script>
+<script src="./js/dlgCreateNode.js"></script>
+<script src="./js/graph.js"></script>
+<script src="./js/svg-pan-zoom.min.js"></script>
+<script>
+
+    function auto_grow(element) {
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight)+"px";
+    }
+
+    $("#addNode").on("click", function(){
+        $("#areaRequete").html('CREATE (n {name:"World"}) RETURN "hello", n.name')
+    })
+
+    $("#returnNode").on("click", function(){
+        $("#areaRequete").html('MATCH (n) RETURN n LIMIT 100')
+    })
+
+    $("#returnGraph").on("click", function(){
+        $("#areaRequete").html('MATCH path = (n)-[r]->(m) RETURN path')
+    })
+
+    $("#findNode").on("click", function(){
+        $("#areaRequete").html('START n=node:nodes(field = "label") RETURN n')
+    })
+
+    var jsonResponse = <%- requete %>;
+    
+    
+    if (jsonResponse['errors'].length > 0) {
+        swal("Erreur","Code : "+jsonResponse.errors[0].code+"\n \n Message : "+jsonResponse.errors[0].message,"error");
+    }
+    if (jsonResponse['results'].length > 0) {
+        genererGraph(jsonResponse);
+    }
+    
+    $(document).ready(function () {
+        //can also be wrapped with:
+        //1. $(function () {...});
+        //2. $(window).load(function () {...});
+        //3. Or your own custom named function block.
+        //It's better to wrap it.
+        //Tooltip, activated by hover event
+        $("body").tooltip({
+                    selector: "[data-toggle='tooltip']",
+                    container: "body"
+                })
+                //Popover, activated by clicking
+                .popover({
+                    selector: "[data-toggle='popover']",
+                    container: "body",
+                    html: true
+                });
+        //They can be chained like the example above (when using the same selector).
+        $(".node").mouseover(function(){
+            var pouet = $(this).attr("data-content");
+            $("#detailedInfos").html(pouet);
+        });
+    });
+</script>
 </html>
