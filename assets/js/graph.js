@@ -22,14 +22,14 @@ function genererGraph(requete) {
         }));
     });
 
-    var width = 1000;
-    var height = 1000;
+    var width = 600;
+    var height = 400;
     // force layout setup
-    var force = d3.layout.force().charge(-100).linkDistance(90).size([width, height]);
+    var force = d3.layout.force().charge(-200).linkDistance(30).size([width, height]);
 
     // setup svg div
     var svg = d3.select("#graph").append("svg")
-         .attr("width", "100%").attr("height",  height)
+         .attr("width", "100%").attr("height",  "100%")
         .attr("pointer-events", "all");
 
 
@@ -93,4 +93,21 @@ function genererGraph(requete) {
             }
             $("#detailedInfos").innerHTML = result;
         })
+
+    var graphPanZoom = svgPanZoom("#graph svg", {
+        panEnabled: true
+        , controlIconsEnabled: false
+        , zoomEnabled: true
+        , mouseWheelZoomEnabled: true
+        , preventMouseEventsDefault: true
+        , zoomScaleSensitivity: 0.5
+        , minZoom: 0.001
+        , maxZoom:10
+        , fit: false
+        , contain: true
+        , center: true
+        , refreshRate: 'auto'
+    });
+
+    graphPanZoom.zoom(0.01);
 }
