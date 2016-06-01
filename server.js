@@ -116,6 +116,43 @@ app.post('/userFriendly', function(req, res){
             }
             //}) CREATE ('+nodeValue+')-[:'+req.body.relationshipName+']->('+nodeValue+')'};
             break;
+        case 'DELETE_RELATIONSHIP':
+            var otherNodeType = null;
+            var otherNodeValue = null;
+            
+            cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+')-'};
+            if(typeof req.body.otherNodeType !== 'undefined' && typeof req.body.otherNodeAttributeAim !== 'undefined' && typeof req.body.otherNodeAttributeAimValue !== 'undefined'){
+                var random = randomize();
+                
+                otherNodeType = req.body.otherNodeType;
+                otherNodeValue = otherNodeType.toString().toLowerCase()+""+random;
+                cypherRequest.query += '[rel:'+req.body.relationshipName+']->('+otherNodeValue+':'+otherNodeType+')';
+                cypherRequest.query += ' WHERE '+nodeValue+'.'+req.body.attributeAim+'="'+req.body.attributeAimValue+'"';
+                cypherRequest.query += ' AND '+otherNodeValue+'.'+req.body.otherNodeAttributeAim+'="'+req.body.otherNodeAttributeAimValue+'"';
+            } else {
+                cypherRequest.query += '[rel:'+req.body.relationshipName+']->('+nodeValue+':'+nodeType+')';
+                cypherRequest.query += ' WHERE '+nodeValue+'.'+req.body.attributeAim+'="'+req.body.attributeAimValue+'"';
+            }
+            
+            cypherRequest.query += ' DELETE rel;';
+            
+            break;
+        case 'UPDATE_RELATIONSHIP':
+            cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+' {'+req.body.attributeAim+':"'+req.body.attributeAimValue+'"})-'};
+            if(typeof req.body.otherNodeType !== 'undefined' && typeof req.body.otherNodeAttributeAim !== 'undefined' && typeof req.body.otherNodeAttributeAimValue !== 'undefined'){
+                var random = randomize();
+                otherNodeType = req.body.otherNodeType;
+                otherNodeValue = otherNodeType.toString().toLowerCase()+random;
+                
+                cypherRequest.query += '[rel:'+req.body.relationshipName+']->('+otherNodeValue+':'+otherNodeType+' {'+req.body.otherNodeAttributeAim+':"'+req.body.otherNodeAttributeAimValue+'"})';
+                cypherRequest.query += ' CREATE ('+nodeValue+')-[rel2:'+req.body.newRelationshipName+']->('+otherNodeValue+')';
+            } else {
+                cypherRequest.query += '[rel:'+req.body.relationshipName+']->('+nodeValue+':'+nodeType+' {'+req.body.attributeAim+':'+req.body.attributeAimValue+'})';
+                cypherRequest.query += ' CREATE ('+nodeValue+')-[rel2:'+req.body.newRelationshipName+']->('+nodeValue+')';
+            }
+            
+            cypherRequest.query += ' SET rel2 = rel WITH rel DELETE rel'
+            break;
         case 'DELETE_DATABASE':
             cypherRequest = {query : 'MATCH (n) DETACH DELETE n;'};
             break;
@@ -191,3 +228,12 @@ app.post('/standard', function(req, res) {
         });
 });
 app.listen(8080);
+
+
+function randomize(){
+    var n=Math.floor(Math.random()*11);
+    var k = Math.floor(Math.random()* 1000000);
+    var m = String.fromCharCode(n)+k;
+    
+    return m;
+}

@@ -1,5 +1,5 @@
 function createNodeDialog(){
-    $("#modalCreateNode").modal();
+    $("#modalCreateNode").modal();        
 }
 
 function updateNodeDialog(){
@@ -19,6 +19,14 @@ function deleteAttributeDialog(){
 
 function createNodeRelationshipDialog(){
     $("#modalCreateNodeRelationship").modal();
+}
+
+function updateNodeRelationshipDialog(){
+    $('#modalUpdateNodeRelationship').modal();
+}
+
+function deleteRelationshipDialog(){
+    $('#modalDeleteNodeRelationship').modal();
 }
 
 function deleteDatabase(){
