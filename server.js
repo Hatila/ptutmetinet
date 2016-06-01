@@ -30,15 +30,13 @@ app.get('/userFriendly', function(req, res) {
 
 app.post('/userFriendly', function(req, res){
     var requestType = req.body.KEYWORD;
-    
     var nodeType = req.body.typeNode;
     var nodeValue = req.body.valueNode;
     var cypherRequest = null;
-    var newNodes;
     var boolean = true;
     var i = 0;
     var jsonData = [];
-    
+    console.log(req.body);
     switch(requestType){
         //Create state
         case 'CREATE':
@@ -64,8 +62,9 @@ app.post('/userFriendly', function(req, res){
             cypherRequest.query+= '}) RETURN '+nodeValue+';';
             break;
         //Update state
-        case 'MATCH_SET':
-            cypherRequest = {query : "MATCH ("+nodeValue+":"+nodeType+") SET "};
+        case 'SET':
+            i=1;
+            cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+' {'+req.body.attributesName0+':"'+req.body.attributesValue0+'"}) SET '};
             while(boolean){
                 var attributeName = eval('req.body.attributesName'+i);
                 var attributeValue = eval('req.body.attributesValue'+i);
@@ -75,10 +74,46 @@ app.post('/userFriendly', function(req, res){
                     cypherRequest.query = cypherRequest.query.substr(0, (cypherRequest.query.length-1));
                     console.log("stop");
                 } else {
-                    cypherRequest.query += attributeName+' : "'+attributeValue+'",';
+                    cypherRequest.query += nodeValue+"."+attributeName+' = "'+attributeValue+'",';
                 }
                 i++;
             }
+            cypherRequest.query += ' RETURN '+nodeValue+';';
+            break;
+        case 'DELETE':
+            cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+' {'+req.body.attributesName0+':"'+req.body.attributesValue0+'"}) DETACH DELETE '+nodeValue};
+            break;
+        case 'DELETE_PROPERTY':
+            cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+' {'+req.body.attributeAim+':"'+req.body.attributeAimValue+'"}) REMOVE '};
+            while(boolean){
+                console.log("here");
+                console.log(i);
+                var attributeName = eval('req.body.attributesName'+i);
+                if(typeof attributeName === 'undefined'){
+                    boolean = false;
+                    //Permet d'enlever la dernière virgule inutile
+                    cypherRequest.query = cypherRequest.query.substr(0, (cypherRequest.query.length-1));
+                    console.log("stop");
+                } else {
+                    console.log("right there");
+                    cypherRequest.query += nodeValue+"."+attributeName+',';
+                }
+                i++;
+            }
+            cypherRequest.query += ' RETURN '+nodeValue+';';
+            break;
+        case 'RELATIONSHIP':
+            cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+')'};
+            if(typeof req.body.otherNodeType !== 'undefined' && typeof req.body.otherNodeAttributeAim !== 'undefined' && typeof req.body.otherNodeAttributeAimValue !== 'undefined'){
+                cypherRequest.query += ', (r:'+req.body.otherNodeType+')';
+                cypherRequest.query += ' WHERE '+nodeValue+'.'+req.body.attributeAim+'="'+req.body.attributeAimValue+'"';
+                cypherRequest.query += ' AND r.'+req.body.otherNodeAttributeAim+'="'+req.body.otherNodeAttributeAimValue+'"';
+                cypherRequest.query += ' CREATE ('+nodeValue+')-[:'+req.body.relationshipName+']->(r)';
+            } else {
+                cypherRequest.query += ' WHERE '+nodeValue+'.'+req.body.attributeAim+'="'+req.body.attributeAimValue+'"';
+                cypherRequest.query += ' CREATE ('+nodeValue+')-[:'+req.body.relationshipName+']->('+nodeValue+')';
+            }
+            //}) CREATE ('+nodeValue+')-[:'+req.body.relationshipName+']->('+nodeValue+')'};
             break;
         default:
             //@TODO
@@ -86,11 +121,9 @@ app.post('/userFriendly', function(req, res){
     
     
     console.log(cypherRequest.query);
-    var json;
 //    console.log(jsonData);
 //    var jsonData = {query : "CREATE (n:Person { name : 'name' }) RETURN n"};
 //    var jsonData = { query: 'CREATE (n:NewType {name:"World"}) RETURN "hello", n.name' }
-    req.body.jsonData = jsonData.query;
 //    var txUrl = "http://neo4j:naruto@localhost:7474/db/data/cypher";
     var txUrl = "http://neo4j:naruto@localhost:7474/db/data/transaction/commit";
     
