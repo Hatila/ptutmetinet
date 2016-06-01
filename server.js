@@ -12,8 +12,7 @@ app.use(express.static(__dirname + '/assets'));
 app.set("view engine", "ejs");
 
 app.get('/', function(req, res) {
-    var message = "Loïck ne sait pas coder";
-    res.render('index.ejs', {param1: message});
+    res.render('index.ejs');
 });
 
 app.get('/test', function(req, res) {
@@ -191,4 +190,4 @@ app.post('/standard', function(req, res) {
             res.render('interface-standard.ejs', {requete: json});
         });
 });
-app.listen(80);
+app.listen(8080);
