@@ -17,6 +17,9 @@
         <div class="col-md-4">
             <div class="btn btn-primary" onClick="updateNodeDialog()">Ajouter/Editer d'un ou plusieurs attribut à un noeud</div>
         </div>
+        <div class="col-md-2">
+            <div class="btn btn-primary" onClick="deleteDatabase()">Supprimer la base de données</div>
+        </div>
     </div>
     <div class="row" style="margin-top:10px;">
         <div class="col-md-2">
@@ -45,10 +48,10 @@
                                 <label for="nodeType">Type de noeud</label>
                                 <input type="text" id="typeNode0" name="typeNode" class="form-control" />                            
                         </div>
-                        <div class="col-md-6">
+<!--                        <div class="col-md-6">
                             <label for="nodeType">Nom du noeud</label>
                             <input type="text" id="valueNode0" name="valueNode" class="form-control" />
-                        </div>
+                        </div>-->
                         <input type="hidden" name="KEYWORD" value="CREATE" />
                     </div>
                     <h4>Attributs</h4>
@@ -60,7 +63,7 @@
                             <h6>Valeur</h6>
                         </div>
                     </div>
-                    <div id="rowCreate0" class="row">
+                    <div id="rowCreate" class="row">
                         <div class="col-md-6">
                             <input type="text" name="attributesName0" id="nameInput0" class="form-control" />
                         </div>
@@ -91,15 +94,15 @@
             <div class="modal-body">
                 <form id="formUpdateNode" name="updateNode" action="/userFriendly" method="post">
                     <div class="row">
-                        <div id="rowNode0">
+                        <div id="rowNode">
                             <div class="col-md-6">
                                 <label for="nodeType">Type de noeud</label>
                                 <input type="text" id="typeNode0" name="typeNode" class="form-control" />                            
                             </div>
-                            <div class="col-md-6">
+<!--                            <div class="col-md-6">
                                 <label for="nodeType">Nom du noeud</label>
                                 <input type="text" id="valueNode0" name="valueNode" class="form-control" />
-                            </div>
+                            </div>-->
                         </div>
                         <input type="hidden" name="KEYWORD" value="SET" />
                     </div>
@@ -117,7 +120,7 @@
                             <h6>Valeur</h6>
                         </div>
                     </div>
-                    <div id="rowUpdate0" class="row">
+                    <div id="rowUpdate" class="row">
                         <div class="col-md-6">
                             <input type="text" name="attributesName0" id="nameInput0" class="form-control" />
                         </div>
@@ -155,13 +158,13 @@
                                 <label for="nodeType">Type de noeud</label>
                                 <input type="text" id="typeNode0" name="typeNode" class="form-control" />                            
                         </div>
-                        <div class="col-md-6">
+<!--                        <div class="col-md-6">
                             <label for="nodeType">Nom du noeud</label>
                             <input type="text" id="valueNode0" name="valueNode" class="form-control" />
-                        </div>
+                        </div>-->
                         <input type="hidden" name="KEYWORD" value="DELETE" />
                     </div>
-                    <h4>Attributs</h4>
+                    <h4>Attribut nécessaire à la recherche du noeud</h4>
                     <div class="row">
                         <div class="col-md-6">
                             <h6>Nom</h6>
@@ -170,7 +173,7 @@
                             <h6>Valeur</h6>
                         </div>
                     </div>
-                    <div id="rowDelete0" class="row">
+                    <div id="rowDelete" class="row">
                         <div class="col-md-6">
                             <input type="text" name="attributesName0" id="nameInput0" class="form-control" />
                         </div>
@@ -201,10 +204,10 @@
                                 <label for="nodeType">Type de noeud</label>
                                 <input type="text" id="typeNode0" name="typeNode" class="form-control" />                            
                         </div>
-                        <div class="col-md-6">
+<!--                        <div class="col-md-6">
                             <label for="nodeType">Nom du noeud</label>
                             <input type="text" id="valueNode0" name="valueNode" class="form-control" />
-                        </div>
+                        </div>-->
                         <input type="hidden" name="KEYWORD" value="DELETE_PROPERTY" />
                     </div>
                     <h4>Attribut nécessaire à la recherche du noeud</h4>
@@ -225,7 +228,7 @@
                         </div>
                     </div>
                     <h4>Attributs à supprimer</h4>
-                    <div id="rowPropertiesToDelete0" class="row">
+                    <div id="rowPropertiesToDelete" class="row">
                         <div class="col-md-6">
                             <input type="text" name="attributesName0" id="nameInput0" class="form-control" />
                         </div>
@@ -256,10 +259,10 @@
                                 <label for="nodeType">Type de noeud</label>
                                 <input type="text" id="typeNode0" name="typeNode" class="form-control" />                            
                         </div>
-                        <div class="col-md-6">
+<!--                        <div class="col-md-6">
                             <label for="nodeType">Nom du noeud</label>
                             <input type="text" id="valueNode0" name="valueNode" class="form-control" />
-                        </div>
+                        </div>-->
                         <input type="hidden" name="KEYWORD" value="RELATIONSHIP" />
                     </div>
                     <h4>Attribut nécessaire à la recherche du noeud</h4>
@@ -320,12 +323,42 @@
     </div>
 </div>
 
-<div class="block-intermediaire"></div>
-    <div class="row">
-        <div class="block-graph col-lg-10 col-lg-offset-1">
-            <div id="graph"></div>
+<div id="modalDeleteDatabase" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Supprimer toute la base de données</h4>
+            </div>
+            <div class="modal-body">
+                <p class="alert alert-danger">
+                    Attention ! Vous êtes sur le point de supprimer l'intégralité de votre base de données. Êtes-vous sûr que vous souhaitez faire ça ?
+                </p>
+                <form id="formDeleteDatabase" name="deleteDatabse" action="/userFriendly" method="post">
+                    <input type='hidden' name="KEYWORD"  value="DELETE_DATABASE" />
+                </form>
+            </div>
+            <div class="modal-footer">
+<!--                <button type="button" class="btn btn-primary" onClick="addAttributes('rowRelationship')">
+                    <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
+                </button>-->
+                <button type="button" class="btn btn-primary" onClick="submit('formDeleteDatabase')">Oui</button>
+                <button type="button" class="btn btn-primary" onClick="cancel('modalDeleteDatabase')">Non</button>
+            </div>
         </div>
     </div>
+</div>
+
+
+
+
+
+<div class="block-intermediaire"></div>
+<div class="row">
+    <div class="block-graph col-lg-10 col-lg-offset-1">
+        <div id="graph"></div>
+    </div>
+</div>
 <div class="row">
     <div class="detailNode col-lg-10 col-lg-offset-1">
         <div id="detailedInfos"><p></p></div>

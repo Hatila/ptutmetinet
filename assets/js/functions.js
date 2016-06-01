@@ -21,16 +21,24 @@ function createNodeRelationshipDialog(){
     $("#modalCreateNodeRelationship").modal();
 }
 
-var indexAttributes = 0;
-function addAttributes(id){
-    indexAttributes++;
-    if(id === 'rowPropertiesToDelete'){
-        $('#'+id+"0").append('<div id="'+id+''+indexAttributes+'"><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" /></div></div>');
-    } else {
-        $('#'+id+"0").append('<div id="'+id+''+indexAttributes+'"><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" /></div><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'"/></div></div>');
-    }
+function deleteDatabase(){
+    $("#modalDeleteDatabase").modal();
 }
 
+var indexAttributes = 0;
+function addAttributes(id){
+    var inputNameField = $('#'+id+' [name=attributesName'+indexAttributes+']');
+    var inputValueField = $('#'+id+' [name=attributesValue'+indexAttributes+']');
+    //Si au moins un input de la ligne en cours est vide, on ajoute pas de nouvelles lignes
+    if(inputNameField.val() !== '' && typeof inputValueField.val() !== ''){
+        indexAttributes++;
+        if(id === 'rowPropertiesToDelete'){
+            $('#'+id).append('<div id="'+id+''+indexAttributes+'"><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" /></div></div>');
+        } else {
+            $('#'+id).append('<div id="'+id+''+indexAttributes+'"><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" /></div><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'"/></div></div>');
+        }
+    }
+}
 
 var indexNodes = 0;
 function addNodes(){
@@ -40,4 +48,8 @@ function addNodes(){
 
 function submit(id){
     $('#'+id).submit();
+}
+
+function cancel(id){
+    $('#'+id).modal('hide');
 }

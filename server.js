@@ -30,12 +30,18 @@ app.get('/userFriendly', function(req, res) {
 
 app.post('/userFriendly', function(req, res){
     var requestType = req.body.KEYWORD;
-    var nodeType = req.body.typeNode;
-    var nodeValue = req.body.valueNode;
+    var nodeType = null;
+    var nodeValue = null;
     var cypherRequest = null;
     var boolean = true;
     var i = 0;
     var jsonData = [];
+    
+    if(typeof req.body.typeNode !== 'undefined'){
+        nodeType = req.body.typeNode;
+        nodeValue = nodeType.toString().toLowerCase();
+    }
+    
     console.log(req.body);
     switch(requestType){
         //Create state
@@ -86,16 +92,12 @@ app.post('/userFriendly', function(req, res){
         case 'DELETE_PROPERTY':
             cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+' {'+req.body.attributeAim+':"'+req.body.attributeAimValue+'"}) REMOVE '};
             while(boolean){
-                console.log("here");
-                console.log(i);
                 var attributeName = eval('req.body.attributesName'+i);
                 if(typeof attributeName === 'undefined'){
                     boolean = false;
                     //Permet d'enlever la dernière virgule inutile
                     cypherRequest.query = cypherRequest.query.substr(0, (cypherRequest.query.length-1));
-                    console.log("stop");
                 } else {
-                    console.log("right there");
                     cypherRequest.query += nodeValue+"."+attributeName+',';
                 }
                 i++;
@@ -115,10 +117,12 @@ app.post('/userFriendly', function(req, res){
             }
             //}) CREATE ('+nodeValue+')-[:'+req.body.relationshipName+']->('+nodeValue+')'};
             break;
+        case 'DELETE_DATABASE':
+            cypherRequest = {query : 'MATCH (n) DETACH DELETE n;'};
+            break;
         default:
             //@TODO
     }
-    
     
     console.log(cypherRequest.query);
 //    console.log(jsonData);
