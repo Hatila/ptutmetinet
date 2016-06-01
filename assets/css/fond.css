@@ -1,0 +1,24 @@
+body {
+    background: url('../img/fond.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.opaque{
+    background-color: white;
+    opacity: 0.4;
+    height: 500px;
+    margin-top: auto ;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.textIndex{
+    text-align: center;
+    margin-top: 160px;
+    font-size: 7em;
+    font-weight: bolder;
+    color:black;
+}
