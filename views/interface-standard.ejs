@@ -78,7 +78,7 @@
         $("#areaRequete").html('START n=node:nodes(field = "label") RETURN n')
     })
 
-    var jsonResponse = <%- JSON.stringify(requete) %>;
+    var jsonResponse = <%- requete %>;
     if (jsonResponse['errors'].length > 0) {
         swal("Erreur","Code : "+jsonResponse.errors[0].code+"\n \n Message : "+jsonResponse.errors[0].message,"error");
     }
