@@ -8,18 +8,18 @@
 <body>
 <% include partials/menu.ejs %>
 
-<div class="row">
+<div class="row ligneBtn">
     <div class="col-lg-2 col-lg-offset-1">
-        <button class="btn btn-primary" id="addNode">Ajouter un noeud</button>
+        <button class="btn btn-primary btnStandard" id="addNode">Ajouter un noeud</button>
     </div>
     <div class="col-lg-2">
-        <button class="btn btn-primary" id="findNode">Rechercher un noed</button>
+        <button class="btn btn-primary btnStandard" id="findNode">Rechercher un noeud</button>
     </div>
     <div class="col-lg-2">
-        <button class="btn btn-primary" id="returnNode">Retourne les noeuds</button>
+        <button class="btn btn-primary btnStandard" id="returnNode">Retourne les noeuds</button>
     </div>
     <div class="col-lg-2">
-        <button class="btn btn-primary" id="returnGraph">Retourne le graph</button>
+        <button class="btn btn-primary btnStandard" id="returnGraph">Retourne le graph</button>
     </div>
 </div>
 
@@ -30,7 +30,7 @@
                 <textarea onkeyup="auto_grow(this)" id="areaRequete" class="form-control requete-input" name="ntm" rows="1" id="requete-input" placeholder="Tapez ici votre requête Cypher"></textarea>
             </div>
             <div class="col-lg-2 col-lg-offset-1">
-                <button type="submit" class="caca">Valider</button>
+                <button type="submit" class="btnValid">Valider</button>
             </div>
         </form>
     </div>

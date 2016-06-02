@@ -9,35 +9,41 @@
 <body>
 <% include partials/menu.ejs %>
 
-<div class="container">
+<div class="container grpBtn">
+    <p class="separationText"> Traitement des noeuds </p>
+    <hr>
     <div class="row">
         <div class="col-md-2">
-            <div class="btn btn-primary" onclick="createNodeDialog()">Créer un noeud</div>
+            <button class="btn btn-primary btnStandard" onclick="createNodeDialog()">Créer un noeud</button>
         </div>
         <div class="col-md-4">
-            <div class="btn btn-primary" onClick="updateNodeDialog()">Ajouter/Editer un ou plusieurs attribut à un noeud</div>
+            <button class="btn btn-primary btnStandard" onClick="updateNodeDialog()">Ajouter/Editer un ou plusieurs attribut à un noeud</button>
         </div>
         <div class="col-md-2">
-            <div class="btn btn-primary" onClick="deleteNodeDialog()">Supprimer un noeud</div>
+            <button class="btn btn-primary btnStandard" onClick="deleteNodeDialog()">Supprimer un noeud</button>
         </div>
         <div class="col-md-2">
-            <div class="btn btn-primary" onClick="deleteAttributeDialog()">Supprimer un attribut</div>
-        </div>
-    </div>
-    <div class="row" style="margin-top:10px;">
-        <div class="col-md-2">
-            <div class="btn btn-primary" onClick="createNodeRelationshipDialog()">Créer une relation</div>
-        </div>
-        <div class="col-md-2">
-            <div class="btn btn-primary" onClick="updateNodeRelationshipDialog()">Editer une relation</div>
-        </div>
-        <div class="col-md-2">
-            <div class="btn btn-primary" onClick="deleteRelationshipDialog()">Supprimer une relation</div>
+            <button class="btn btn-primary btnStandard" onClick="deleteAttributeDialog()">Supprimer un attribut</button>
         </div>
     </div>
+    <p class="separationText"> Traitement des relations </p>
+    <hr>
     <div class="row" style="margin-top:10px;">
         <div class="col-md-2">
-            <div class="btn btn-primary" onClick="deleteDatabase()">Supprimer la base de données</div>
+            <button class="btn btn-primary btnStandard" onClick="createNodeRelationshipDialog()">Créer une relation</button>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary btnStandard" onClick="updateNodeRelationshipDialog()">Editer une relation</button>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary btnStandard" onClick="deleteRelationshipDialog()">Supprimer une relation</button>
+        </div>
+    </div>
+    <p class="separationText"> Traitement de la base </p>
+    <hr>
+    <div class="row" style="margin-top:10px;">
+        <div class="col-md-3">
+            <button class="btn btn-primary btnStandard" onClick="deleteDatabase()">Supprimer la base de données</button>
         </div>
     </div>
 </div>
@@ -85,7 +91,7 @@
                 <button type="button" class="btn btn-primary" onClick="addAttributes('rowCreate')">
                     <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
                 </button>
-                <button type="button" class="btn btn-primary" onClick="submit('formCreateNode')">Valider</button>
+                <button type="button" class="btn btn-success" onClick="submit('formCreateNode')">Valider</button>
             </div>
         </div>
     </div>
@@ -146,7 +152,7 @@
                 <button type="button" class="btn btn-primary" onClick="addAttributes('rowUpdate')">
                     <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
                 </button>
-                <button type="button" class="btn btn-primary" onClick="submit('formUpdateNode')">Valider</button>
+                <button type="button" class="btn btn-success" onClick="submit('formUpdateNode')">Valider</button>
             </div>
         </div>
     </div>
@@ -192,7 +198,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onClick="submit('formDeleteNode')">Valider</button>
+                <button type="button" class="btn btn-success" onClick="submit('formDeleteNode')">Valider</button>
             </div>
         </div>
     </div>
@@ -247,7 +253,7 @@
                 <button type="button" class="btn btn-primary" onClick="addAttributes('rowPropertiesToDelete')">
                     <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
                 </button>
-                <button type="button" class="btn btn-primary" onClick="submit('formDeleteNodeProperty')">Valider</button>
+                <button type="button" class="btn btn-success" onClick="submit('formDeleteNodeProperty')">Valider</button>
             </div>
         </div>
     </div>
@@ -325,7 +331,7 @@
 <!--                <button type="button" class="btn btn-primary" onClick="addAttributes('rowRelationship')">
                     <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
                 </button>-->
-                <button type="button" class="btn btn-primary" onClick="submit('formCreateNodeRelationship')">Valider</button>
+                <button type="button" class="btn btn-success" onClick="submit('formCreateNodeRelationship')">Valider</button>
             </div>
         </div>
     </div>
@@ -408,7 +414,7 @@
 <!--                <button type="button" class="btn btn-primary" onClick="addAttributes('rowRelationship')">
                     <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
                 </button>-->
-                <button type="button" class="btn btn-primary" onClick="submit('formUpdateNodeRelationship')">Valider</button>
+                <button type="button" class="btn btn-success" onClick="submit('formUpdateNodeRelationship')">Valider</button>
             </div>
         </div>
     </div>
@@ -486,7 +492,7 @@
 <!--                <button type="button" class="btn btn-primary" onClick="addAttributes('rowRelationship')">
                     <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
                 </button>-->
-                <button type="button" class="btn btn-primary" onClick="submit('formDeleteNodeRelationship')">Valider</button>
+                <button type="button" class="btn btn-success" onClick="submit('formDeleteNodeRelationship')">Valider</button>
             </div>
         </div>
     </div>
@@ -517,14 +523,13 @@
 <!--                <button type="button" class="btn btn-primary" onClick="addAttributes('rowRelationship')">
                     <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
                 </button>-->
-                <button type="button" class="btn btn-primary" onClick="submit('formDeleteDatabase')">Oui</button>
-                <button type="button" class="btn btn-primary" onClick="cancel('modalDeleteDatabase')">Non</button>
+                <button type="button" class="btn btn-success" onClick="submit('formDeleteDatabase')">Oui</button>
+                <button type="button" class="btn btn-danger" onClick="cancel('modalDeleteDatabase')">Non</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="block-intermediaire"></div>
 <div class="row">
     <div class="block-graph col-lg-10 col-lg-offset-1">
         <div id="graph"></div>
