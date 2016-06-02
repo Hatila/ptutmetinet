@@ -38,12 +38,12 @@ function addAttributes(id){
     var inputNameField = $('#'+id+' [name=attributesName'+indexAttributes+']');
     var inputValueField = $('#'+id+' [name=attributesValue'+indexAttributes+']');
     //Si au moins un input de la ligne en cours est vide, on ajoute pas de nouvelles lignes
-    if(inputNameField.val() !== '' && typeof inputValueField.val() !== ''){
+    if(inputNameField.val() !== '' && inputValueField.val() !== ''){
         indexAttributes++;
         if(id === 'rowPropertiesToDelete'){
-            $('#'+id).append('<div id="'+id+''+indexAttributes+'"><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" /></div></div>');
+            $('#'+id).append('<div id="'+id+''+indexAttributes+'"><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div></div>');
         } else {
-            $('#'+id).append('<div id="'+id+''+indexAttributes+'"><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" /></div><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'"/></div></div>');
+            $('#'+id).append('<div id="'+id+''+indexAttributes+'"><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div></div>');
         }
     }
 }
@@ -51,11 +51,15 @@ function addAttributes(id){
 var indexNodes = 0;
 function addNodes(){
     indexNodes++;
-    $('#rowNode0').append('<div id="rowNode'+indexNodes+'"><div class="col-md-6 champClone"><input class="form-control" type="text" id="nodeType'+indexNodes+'" /></div><div class="col-md-6 champClone"><input class="form-control" type="text" name="nodeValue'+indexNodes+'" id="valueNode'+indexNodes+'"/></div></div>');
+    $('#rowNode0').append('<div id="rowNode'+indexNodes+'"><div class="col-md-6 champClone"><input class="form-control" type="text" id="nodeType'+indexNodes+'" required /></div><div class="col-md-6 champClone"><input class="form-control" type="text" name="nodeValue'+indexNodes+'" id="valueNode'+indexNodes+'" required/></div></div>');
 }
 
 function submit(id){
-    $('#'+id).submit();
+    console.log('indexNodes');
+    console.log(indexNodes);
+    console.log('indexAttributes');
+    console.log(indexAttributes);
+//    $('#'+id).submit();
 }
 
 function cancel(id){
