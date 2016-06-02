@@ -79,15 +79,12 @@
     })
 
     var jsonResponse = <%- requete %>;
-    
-    
     if (jsonResponse['errors'].length > 0) {
         swal("Erreur","Code : "+jsonResponse.errors[0].code+"\n \n Message : "+jsonResponse.errors[0].message,"error");
     }
     if (jsonResponse['results'].length > 0) {
         genererGraph(jsonResponse);
     }
-    
     $(document).ready(function () {
         //can also be wrapped with:
         //1. $(function () {...});
