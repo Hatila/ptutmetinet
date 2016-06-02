@@ -69,19 +69,13 @@
                         <input type="hidden" name="KEYWORD" value="CREATE" />
                     </div>
                     <h4>Attributs</h4>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h6>Nom</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Valeur</h6>
-                        </div>
-                    </div>
                     <div id="rowCreate" class="row">
                         <div class="col-md-6">
+                            <label for="attributesName0">Nom</label>
                             <input type="text" name="attributesName0" id="nameInput0" class="form-control" />
                         </div>
                         <div class="col-md-6">
+                            <label for="attributesValue0">Valeur</label>
                             <input type="text" name="attributesValue0" id="valueInput0" class="form-control" />
                         </div>
                     </div>
@@ -125,23 +119,18 @@
                             <span class="glyphicon glyphicon-plus"></span> Ajouter un noeud
                         </button>
                     </div>-->
+                    <hr>
                     <h5>Attributs</h5>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h6>Nom</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Valeur</h6>
-                        </div>
-                    </div>
                     <div id="rowUpdate" class="row">
                         <div class="col-md-6">
+                            <label for="attributesName0">Nom</label>
                             <input type="text" name="attributesName0" id="nameInput0" class="form-control" />
                         </div>
                         <div class="col-md-6">
+                            <label for="attributesValue0">Valeur</label>
                             <input type="text" name="attributesValue0" id="valueInput0" class="form-control" />
                         </div>
-                        <div class="help-block">
+                        <div class="container help-block">
                             <p>Le premier attribut permet de trouver quel noeud vous souhaitez mettre à jour</p>
                             <p>Il ne servira en aucun cas à modifier un attribut existant</p>
                         </div>
@@ -178,20 +167,15 @@
                         </div>-->
                         <input type="hidden" name="KEYWORD" value="DELETE" />
                     </div>
+                    <hr>
                     <h4>Attribut nécessaire à la recherche du noeud</h4>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h6>Nom</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Valeur</h6>
-                        </div>
-                    </div>
                     <div id="rowDelete" class="row">
                         <div class="col-md-6">
+                            <label for="attributesName0">Nom</label>
                             <input type="text" name="attributesName0" id="nameInput0" class="form-control" />
                         </div>
                         <div class="col-md-6">
+                            <label for="attributesValue0">Valeur</label>
                             <input type="text" name="attributesValue0" id="valueInput0" class="form-control" />
                         </div>
                     </div>
@@ -224,23 +208,19 @@
                         </div>-->
                         <input type="hidden" name="KEYWORD" value="DELETE_PROPERTY" />
                     </div>
+                    <hr>
                     <h4>Attribut nécessaire à la recherche du noeud</h4>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h6>Nom</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Valeur</h6>
-                        </div>
-                    </div>
                     <div id="rowDeleteProperty" class="row">
                         <div class="col-md-6">
+                            <label for="attributeAim">Nom</label>
                             <input type="text" name="attributeAim" class="form-control" />
                         </div>
                         <div class="col-md-6">
+                            <label for="attributeAimValue">Valeur</label>
                             <input type="text" name="attributeAimValue" class="form-control" />
                         </div>
                     </div>
+                    <hr>
                     <h4>Attributs à supprimer</h4>
                     <div id="rowPropertiesToDelete" class="row">
                         <div class="col-md-6">
@@ -279,29 +259,26 @@
                         </div>-->
                         <input type="hidden" name="KEYWORD" value="RELATIONSHIP" />
                     </div>
+                    <hr>
                     <h4>Attribut nécessaire à la recherche du noeud</h4>
                     <div class="row">
                         <div class="col-md-6">
-                            <h6>Nom</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Valeur</h6>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
+                            <label for="attributeAim">Nom</label>
                             <input type="text" name="attributeAim" class="form-control" />
                         </div>
                         <div class="col-md-6">
+                            <label for="attributeAimValue">Valeur</label>
                             <input type="text" name="attributeAimValue" class="form-control" />
                         </div>
                     </div>
+                    <hr>
                     <h4>Nom de la relation</h4>
                     <div id="rowRelationship" class="row">
                         <div class="col-md-6">
-                            <input type="text" name="relationshipName" classs="form-control" />
+                            <input type="text" name="relationshipName" class="form-control" />
                         </div>
                     </div>
+                    <hr>
                     <h4>Relation avec un autre noeud</h4>                    
                     <div class="row">
                         <div class="col-md-6">
@@ -309,19 +286,15 @@
                             <input type="text" name="otherNodeType" id="otherNodeType" class="form-control" />
                         </div>
                     </div>
+                    <hr>
+                    <h4>Attribut nécessaire à la recherche du noeud</h4>
                     <div class="row">
-                        <h4>Attribut nécessaire à la recherche du noeud</h4>
                         <div class="col-md-6">
-                            <h6>Nom</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Valeur</h6>
-                        </div>
-                        </div>
-                        <div class="col-md-6">
+                            <label for="otherNodeAttributeAim">Type de noeud</label>
                             <input type="text" name="otherNodeAttributeAim" class="form-control" />
                         </div>
                         <div class="col-md-6">
+                            <label for="otherNodeAttributeAimValue">Type de noeud</label>
                             <input type="text" name="otherNodeAttributeAimValue" class="form-control" />
                         </div>
                     </div>
@@ -357,34 +330,31 @@
                         </div>-->
                         <input type="hidden" name="KEYWORD" value="UPDATE_RELATIONSHIP" />
                     </div>
+                    <hr>
                     <h4>Attribut nécessaire à la recherche du noeud</h4>
                     <div class="row">
                         <div class="col-md-6">
-                            <h6>Nom</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Valeur</h6>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
+                            <label for="attributeAim">La relation actuelle</label>
                             <input type="text" name="attributeAim" class="form-control" />
                         </div>
                         <div class="col-md-6">
+                            <label for="attributeAimValue">La relation actuelle</label>
                             <input type="text" name="attributeAimValue" class="form-control" />
                         </div>
                     </div>
+                    <hr>
                     <h4>Relations</h4>
                     <div id="rowRelationship" class="row">
                         <div class="col-md-6">
                             <label for="origialRelationship">La relation actuelle</label>
-                            <input id="originalRelationship" type="text" name="relationshipName" classs="form-control" />
+                            <input id="originalRelationship" type="text" name="relationshipName" class="form-control" />
                         </div>
                         <div class="col-md-6">
                             <label for="newRelationship">La nouvelle relation</label>
-                            <input id="newRelationship" type="text" name="newRelationshipName" classs="form-control" />
+                            <input id="newRelationship" type="text" name="newRelationshipName" class="form-control" />
                         </div>
                     </div>
+                    <hr>
                     <h4>Relation avec un autre noeud</h4>                    
                     <div class="row">
                         <div class="col-md-6">
@@ -392,19 +362,15 @@
                             <input type="text" name="otherNodeType" id="otherNodeType" class="form-control" />
                         </div>
                     </div>
+                    <hr>
+                    <h4>Attribut nécessaire à la recherche du noeud</h4>
                     <div class="row">
-                        <h4>Attribut nécessaire à la recherche du noeud</h4>
                         <div class="col-md-6">
-                            <h6>Nom</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Valeur</h6>
-                        </div>
-                        </div>
-                        <div class="col-md-6">
+                            <label for="otherNodeAttributeAim">Nom</label>
                             <input type="text" name="otherNodeAttributeAim" class="form-control" />
                         </div>
                         <div class="col-md-6">
+                            <label for="otherNodeAttributeAimValue">Valeur</label>
                             <input type="text" name="otherNodeAttributeAimValue" class="form-control" />
                         </div>
                     </div>
@@ -429,40 +395,36 @@
             </div>
             <div class="modal-body">
                 <form id="formDeleteNodeRelationship" name="deleteNodeRelationship" action="/userFriendly" method="post">
-                    <h4>Nom de la relation</h4>
                     <div id="rowRelationship" class="row">
                         <div class="col-md-6">
-                            <input type="text" name="relationshipName" classs="form-control" />
+                            <label for="relationshipName">Nom de la relation</label>
+                            <input type="text" name="relationshipName" class="form-control" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                                <label for="nodeType">Type de noeud</label>
-                                <input type="text" id="typeNode0" name="typeNode" class="form-control" />                            
+                            <label for="nodeType">Type de noeud</label>
+                            <input type="text" id="typeNode0" name="typeNode" class="form-control" />
                         </div>
-<!--                        <div class="col-md-6">
+<!--                    <div class="col-md-6">
                             <label for="nodeType">Nom du noeud</label>
                             <input type="text" id="valueNode0" name="valueNode" class="form-control" />
                         </div>-->
                         <input type="hidden" name="KEYWORD" value="DELETE_RELATIONSHIP" />
                     </div>
+                    <hr>
                     <h4>Attribut nécessaire à la recherche du noeud</h4>
                     <div class="row">
                         <div class="col-md-6">
-                            <h6>Nom</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Valeur</h6>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
+                            <label for="attributeAim">Nom</label>
                             <input type="text" name="attributeAim" class="form-control" />
                         </div>
                         <div class="col-md-6">
+                            <label for="attributeAimValue">Valeur</label>
                             <input type="text" name="attributeAimValue" class="form-control" />
                         </div>
                     </div>
+                    <hr>
                     <h4>Relation avec un autre noeud</h4>                    
                     <div class="row">
                         <div class="col-md-6">
@@ -470,19 +432,15 @@
                             <input type="text" name="otherNodeType" id="otherNodeType" class="form-control" />
                         </div>
                     </div>
+                    <hr>
+                    <h4>Attribut nécessaire à la recherche du noeud</h4>
                     <div class="row">
-                        <h4>Attribut nécessaire à la recherche du noeud</h4>
                         <div class="col-md-6">
-                            <h6>Nom</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Valeur</h6>
-                        </div>
-                        </div>
-                        <div class="col-md-6">
+                            <label for="otherNodeAttributeAim">Nom</label>
                             <input type="text" name="otherNodeAttributeAim" class="form-control" />
                         </div>
                         <div class="col-md-6">
+                            <label for="otherNodeAttributeAim">Valeur</label>
                             <input type="text" name="otherNodeAttributeAimValue" class="form-control" />
                         </div>
                     </div>
