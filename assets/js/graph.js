@@ -18,14 +18,14 @@ function genererGraph(requete) {
             }
         });
         links = links.concat(row.graph.relationships.map(function (r) {
-            return {source: idIndex(nodes, r.startNode), target: idIndex(nodes, r.endNode), type: r.type};
+            return {id: r.id, source: idIndex(nodes, r.startNode), target: idIndex(nodes, r.endNode), type: r.type};
         }));
     });
 
     var width = 600;
     var height = 400;
     // force layout setup
-    var force = d3.layout.force().charge(-200).linkDistance(30).size([width, height]);
+    var force = d3.layout.force().charge(-400).linkDistance(90).size([width, height]);
 
     // setup svg div
     var svg = d3.select("#graph").append("svg")
@@ -37,43 +37,49 @@ function genererGraph(requete) {
 
     // force feed algo ticks for coordinate computation
     force.on("tick", function () {
-        link.attr("x1", function (d) {
-                return d.source.x;
-            })
-            .attr("y1", function (d) {
-                return d.source.y;
-            })
-            .attr("x2", function (d) {
-                return d.target.x;
-            })
-            .attr("y2", function (d) {
-                return d.target.y;
+        link.attr("d", function (d) {
+                return "M "+ d.source.x + " " + d.source.y +" L "+d.target.x + " " + d.target.y;
             });
 
-        node.attr("cx", function (d) {
-                return d.x;
-            })
-            .attr("cy", function (d) {
-                return d.y;
-            });
+        node.attr("transform", function(d) {
+            return "translate(" + d.x + "," + d.y + ")";
+        })
     });
 
     // render relationships as lines
     var link = svg.selectAll(".link")
         .data(links).enter()
-        .append("line").attr("class", "link")
+        .append("path").attr("class", "link")
+        .attr("id", function (d){ return "link"+d.id; })
         .attr("fill", "none")
-        .attr("stroke", "black");
+        .attr("stroke", "black")
+        .attr("data-content", function (d) { console.log(d);
+            return d.source.id + " " + d.type + " " + d.target.id;
+        });
+
+    var linkText = svg.selectAll(".linkText")
+        .data(links).enter()
+        .append("text")
+        .append("textPath").attr("class", "linkText")
+        .attr("xlink:href", function (d){ return "#link"+d.id; })
+        .attr("startOffset", "35%")
+        .text( function (d) { return d.type;})
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "7px")
+        .attr("fill", "darkblue");
 
     // render nodes as circles, css-class from label
     var node = svg.selectAll(".node")
-        .data(nodes).enter()
-        .append("circle")
+        .data(nodes)
+        .enter()
+        .append("g")
+        .call(force.drag);
+
+    var nodeCircle = node.append("circle")
         .attr("class", function (d) {
             return "node " + d.type
         })
-        .attr("r", 10)
-        .call(force.drag)
+        .attr("r", 20)
         .attr("data-toggle", "tooltip")
         .attr("data-placement", "right")
         .attr("data-original-title", function (d) {
@@ -85,16 +91,31 @@ function genererGraph(requete) {
                 result += prop + " : " + d.properties[prop] + "\n";
             }
             return result;
-        })
-        .on("mouseover", function (d) {
-            var result = "";
-            for (prop in d.properties) {
-                result += prop + " : " + d.properties[prop] + "\n";
-            }
-            $("#detailedInfos").innerHTML = result;
-        })
+        });
 
-    var graphPanZoom = svgPanZoom("#graph svg", {
+    var text = node.append("text")
+        .attr("text-anchor", "middle")
+        .text( function (d) {
+            var result = d.id;
+            for (prop in d.properties) {
+               if(prop === "name" || prop==="title"){
+                   result="";
+                   var res = d.properties[prop];
+                       if(res.length < 10){
+                           result +=res ;
+                       }
+                       else{
+                           result = res.substring(0, 8) +"...";
+                       }
+               }
+            }
+            return result;
+        })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "7px")
+        .attr("fill", "white");
+
+       var graphPanZoom = svgPanZoom("#graph svg", {
         panEnabled: true
         , controlIconsEnabled: false
         , zoomEnabled: true
