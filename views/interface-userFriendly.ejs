@@ -9,24 +9,41 @@
 <body>
 <% include partials/menu.ejs %>
 
-<div class="container">
+<div class="container grpBtn">
+    <p class="separationText"> Traitement des noeuds </p>
+    <hr>
     <div class="row">
         <div class="col-md-2">
-            <div class="btn btn-primary" onclick="createNodeDialog()">Créer un noeud</div>
+            <button class="btn btn-primary btnStandard" onclick="createNodeDialog()">Créer un noeud</button>
         </div>
         <div class="col-md-4">
-            <div class="btn btn-primary" onClick="updateNodeDialog()">Ajouter/Editer d'un ou plusieurs attribut à un noeud</div>
+            <button class="btn btn-primary btnStandard" onClick="updateNodeDialog()">Ajouter/Editer un ou plusieurs attribut à un noeud</button>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary btnStandard" onClick="deleteNodeDialog()">Supprimer un noeud</button>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary btnStandard" onClick="deleteAttributeDialog()">Supprimer un attribut</button>
         </div>
     </div>
+    <p class="separationText"> Traitement des relations </p>
+    <hr>
     <div class="row" style="margin-top:10px;">
         <div class="col-md-2">
-            <div class="btn btn-primary" onClick="deleteNodeDialog()">Supprimer un noeud</div>
+            <button class="btn btn-primary btnStandard" onClick="createNodeRelationshipDialog()">Créer une relation</button>
         </div>
         <div class="col-md-2">
-            <div class="btn btn-primary" onClick="deleteAttributeDialog()">Supprimer un attribut</div>
+            <button class="btn btn-primary btnStandard" onClick="updateNodeRelationshipDialog()">Editer une relation</button>
         </div>
         <div class="col-md-2">
-            <div class="btn btn-primary" onClick="createNodeRelationshipDialog()">Créer une relation</div>
+            <button class="btn btn-primary btnStandard" onClick="deleteRelationshipDialog()">Supprimer une relation</button>
+        </div>
+    </div>
+    <p class="separationText"> Traitement de la base </p>
+    <hr>
+    <div class="row" style="margin-top:10px;">
+        <div class="col-md-3">
+            <button class="btn btn-primary btnStandard" onClick="deleteDatabase()">Vider la base de données</button>
         </div>
     </div>
 </div>
@@ -42,29 +59,23 @@
                 <form id="formCreateNode" name="createNode" action="/userFriendly" method="post">
                     <div class="row">
                         <div class="col-md-6">
-                                <label for="nodeType">Type de noeud</label>
-                                <input type="text" id="typeNode0" name="typeNode" class="form-control" />                            
+                            <label for="nodeType">Type de noeud</label>
+                            <input type="text" id="typeNode0" name="typeNode" class="form-control" />                            
                         </div>
-                        <div class="col-md-6">
-                            <label for="nodeType">Nom du noeud</label>
-                            <input type="text" id="valueNode0" name="valueNode" class="form-control" />
-                        </div>
+                        <!--                        <div class="col-md-6">
+                                                    <label for="nodeType">Nom du noeud</label>
+                                                    <input type="text" id="valueNode0" name="valueNode" class="form-control" />
+                                                </div>-->
                         <input type="hidden" name="KEYWORD" value="CREATE" />
                     </div>
                     <h4>Attributs</h4>
-                    <div class="row">
+                    <div id="rowCreate" class="row">
                         <div class="col-md-6">
-                            <h6>Nom</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Valeur</h6>
-                        </div>
-                    </div>
-                    <div id="rowCreate0" class="row">
-                        <div class="col-md-6">
+                            <label for="attributesName0">Nom</label>
                             <input type="text" name="attributesName0" id="nameInput0" class="form-control" />
                         </div>
                         <div class="col-md-6">
+                            <label for="attributesValue0">Valeur</label>
                             <input type="text" name="attributesValue0" id="valueInput0" class="form-control" />
                         </div>
                     </div>
@@ -74,7 +85,7 @@
                 <button type="button" class="btn btn-primary" onClick="addAttributes('rowCreate')">
                     <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
                 </button>
-                <button type="button" class="btn btn-primary" onClick="submit('formCreateNode')">Valider</button>
+                <button type="button" class="btn btn-success" onClick="submit('formCreateNode')">Valider</button>
             </div>
         </div>
     </div>
@@ -91,15 +102,15 @@
             <div class="modal-body">
                 <form id="formUpdateNode" name="updateNode" action="/userFriendly" method="post">
                     <div class="row">
-                        <div id="rowNode0">
+                        <div id="rowNode">
                             <div class="col-md-6">
                                 <label for="nodeType">Type de noeud</label>
                                 <input type="text" id="typeNode0" name="typeNode" class="form-control" />                            
                             </div>
-                            <div class="col-md-6">
+<!--                            <div class="col-md-6">
                                 <label for="nodeType">Nom du noeud</label>
                                 <input type="text" id="valueNode0" name="valueNode" class="form-control" />
-                            </div>
+                            </div>-->
                         </div>
                         <input type="hidden" name="KEYWORD" value="SET" />
                     </div>
@@ -108,23 +119,18 @@
                             <span class="glyphicon glyphicon-plus"></span> Ajouter un noeud
                         </button>
                     </div>-->
+                    <hr>
                     <h5>Attributs</h5>
-                    <div class="row">
+                    <div id="rowUpdate" class="row">
                         <div class="col-md-6">
-                            <h6>Nom</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Valeur</h6>
-                        </div>
-                    </div>
-                    <div id="rowUpdate0" class="row">
-                        <div class="col-md-6">
+                            <label for="attributesName0">Nom</label>
                             <input type="text" name="attributesName0" id="nameInput0" class="form-control" />
                         </div>
                         <div class="col-md-6">
+                            <label for="attributesValue0">Valeur</label>
                             <input type="text" name="attributesValue0" id="valueInput0" class="form-control" />
                         </div>
-                        <div class="help-block">
+                        <div class="container help-block">
                             <p>Le premier attribut permet de trouver quel noeud vous souhaitez mettre à jour</p>
                             <p>Il ne servira en aucun cas à modifier un attribut existant</p>
                         </div>
@@ -135,7 +141,7 @@
                 <button type="button" class="btn btn-primary" onClick="addAttributes('rowUpdate')">
                     <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
                 </button>
-                <button type="button" class="btn btn-primary" onClick="submit('formUpdateNode')">Valider</button>
+                <button type="button" class="btn btn-success" onClick="submit('formUpdateNode')">Valider</button>
             </div>
         </div>
     </div>
@@ -155,33 +161,28 @@
                                 <label for="nodeType">Type de noeud</label>
                                 <input type="text" id="typeNode0" name="typeNode" class="form-control" />                            
                         </div>
-                        <div class="col-md-6">
+<!--                        <div class="col-md-6">
                             <label for="nodeType">Nom du noeud</label>
                             <input type="text" id="valueNode0" name="valueNode" class="form-control" />
-                        </div>
+                        </div>-->
                         <input type="hidden" name="KEYWORD" value="DELETE" />
                     </div>
-                    <h4>Attributs</h4>
-                    <div class="row">
+                    <hr>
+                    <h4>Attribut nécessaire à la recherche du noeud</h4>
+                    <div id="rowDelete" class="row">
                         <div class="col-md-6">
-                            <h6>Nom</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Valeur</h6>
-                        </div>
-                    </div>
-                    <div id="rowDelete0" class="row">
-                        <div class="col-md-6">
+                            <label for="attributesName0">Nom</label>
                             <input type="text" name="attributesName0" id="nameInput0" class="form-control" />
                         </div>
                         <div class="col-md-6">
+                            <label for="attributesValue0">Valeur</label>
                             <input type="text" name="attributesValue0" id="valueInput0" class="form-control" />
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onClick="submit('formDeleteNode')">Valider</button>
+                <button type="button" class="btn btn-success" onClick="submit('formDeleteNode')">Valider</button>
             </div>
         </div>
     </div>
@@ -201,31 +202,27 @@
                                 <label for="nodeType">Type de noeud</label>
                                 <input type="text" id="typeNode0" name="typeNode" class="form-control" />                            
                         </div>
-                        <div class="col-md-6">
+<!--                        <div class="col-md-6">
                             <label for="nodeType">Nom du noeud</label>
                             <input type="text" id="valueNode0" name="valueNode" class="form-control" />
-                        </div>
+                        </div>-->
                         <input type="hidden" name="KEYWORD" value="DELETE_PROPERTY" />
                     </div>
+                    <hr>
                     <h4>Attribut nécessaire à la recherche du noeud</h4>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h6>Nom</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Valeur</h6>
-                        </div>
-                    </div>
                     <div id="rowDeleteProperty" class="row">
                         <div class="col-md-6">
+                            <label for="attributeAim">Nom</label>
                             <input type="text" name="attributeAim" class="form-control" />
                         </div>
                         <div class="col-md-6">
+                            <label for="attributeAimValue">Valeur</label>
                             <input type="text" name="attributeAimValue" class="form-control" />
                         </div>
                     </div>
+                    <hr>
                     <h4>Attributs à supprimer</h4>
-                    <div id="rowPropertiesToDelete0" class="row">
+                    <div id="rowPropertiesToDelete" class="row">
                         <div class="col-md-6">
                             <input type="text" name="attributesName0" id="nameInput0" class="form-control" />
                         </div>
@@ -236,7 +233,7 @@
                 <button type="button" class="btn btn-primary" onClick="addAttributes('rowPropertiesToDelete')">
                     <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
                 </button>
-                <button type="button" class="btn btn-primary" onClick="submit('formDeleteNodeProperty')">Valider</button>
+                <button type="button" class="btn btn-success" onClick="submit('formDeleteNodeProperty')">Valider</button>
             </div>
         </div>
     </div>
@@ -256,35 +253,32 @@
                                 <label for="nodeType">Type de noeud</label>
                                 <input type="text" id="typeNode0" name="typeNode" class="form-control" />                            
                         </div>
-                        <div class="col-md-6">
+<!--                        <div class="col-md-6">
                             <label for="nodeType">Nom du noeud</label>
                             <input type="text" id="valueNode0" name="valueNode" class="form-control" />
-                        </div>
+                        </div>-->
                         <input type="hidden" name="KEYWORD" value="RELATIONSHIP" />
                     </div>
+                    <hr>
                     <h4>Attribut nécessaire à la recherche du noeud</h4>
                     <div class="row">
                         <div class="col-md-6">
-                            <h6>Nom</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Valeur</h6>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
+                            <label for="attributeAim">Nom</label>
                             <input type="text" name="attributeAim" class="form-control" />
                         </div>
                         <div class="col-md-6">
+                            <label for="attributeAimValue">Valeur</label>
                             <input type="text" name="attributeAimValue" class="form-control" />
                         </div>
                     </div>
+                    <hr>
                     <h4>Nom de la relation</h4>
                     <div id="rowRelationship" class="row">
                         <div class="col-md-6">
-                            <input type="text" name="relationshipName" classs="form-control" />
+                            <input type="text" name="relationshipName" class="form-control" />
                         </div>
                     </div>
+                    <hr>
                     <h4>Relation avec un autre noeud</h4>                    
                     <div class="row">
                         <div class="col-md-6">
@@ -292,19 +286,15 @@
                             <input type="text" name="otherNodeType" id="otherNodeType" class="form-control" />
                         </div>
                     </div>
+                    <hr>
+                    <h4>Attribut nécessaire à la recherche du noeud</h4>
                     <div class="row">
-                        <h4>Attribut nécessaire à la recherche du noeud</h4>
                         <div class="col-md-6">
-                            <h6>Nom</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Valeur</h6>
-                        </div>
-                        </div>
-                        <div class="col-md-6">
+                            <label for="otherNodeAttributeAim">Type de noeud</label>
                             <input type="text" name="otherNodeAttributeAim" class="form-control" />
                         </div>
                         <div class="col-md-6">
+                            <label for="otherNodeAttributeAimValue">Type de noeud</label>
                             <input type="text" name="otherNodeAttributeAimValue" class="form-control" />
                         </div>
                     </div>
@@ -314,18 +304,211 @@
 <!--                <button type="button" class="btn btn-primary" onClick="addAttributes('rowRelationship')">
                     <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
                 </button>-->
-                <button type="button" class="btn btn-primary" onClick="submit('formCreateNodeRelationship')">Valider</button>
+                <button type="button" class="btn btn-success" onClick="submit('formCreateNodeRelationship')">Valider</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="block-intermediaire"></div>
-    <div class="row">
-        <div class="block-graph col-lg-10 col-lg-offset-1">
-            <div id="graph"></div>
+<div id="modalUpdateNodeRelationship" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Edition d'une relation</h4>
+            </div>
+            <div class="modal-body">
+                <form id="formUpdateNodeRelationship" name="updateNodeRelationship" action="/userFriendly" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                                <label for="nodeType">Type de noeud</label>
+                                <input type="text" id="typeNode0" name="typeNode" class="form-control" />                            
+                        </div>
+<!--                        <div class="col-md-6">
+                            <label for="nodeType">Nom du noeud</label>
+                            <input type="text" id="valueNode0" name="valueNode" class="form-control" />
+                        </div>-->
+                        <input type="hidden" name="KEYWORD" value="UPDATE_RELATIONSHIP" />
+                    </div>
+                    <hr>
+                    <h4>Attribut nécessaire à la recherche du noeud</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="attributeAim">La relation actuelle</label>
+                            <input type="text" name="attributeAim" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="attributeAimValue">La relation actuelle</label>
+                            <input type="text" name="attributeAimValue" class="form-control" />
+                        </div>
+                    </div>
+                    <hr>
+                    <h4>Relations</h4>
+                    <div id="rowRelationship" class="row">
+                        <div class="col-md-6">
+                            <label for="origialRelationship">La relation actuelle</label>
+                            <input id="originalRelationship" type="text" name="relationshipName" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="newRelationship">La nouvelle relation</label>
+                            <input id="newRelationship" type="text" name="newRelationshipName" class="form-control" />
+                        </div>
+                    </div>
+                    <hr>
+                    <h4>Relation avec un autre noeud</h4>                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="otherNodeType">Type de noeud</label>
+                            <input type="text" name="otherNodeType" id="otherNodeType" class="form-control" />
+                        </div>
+                    </div>
+                    <hr>
+                    <h4>Attribut nécessaire à la recherche du noeud</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="otherNodeAttributeAim">Nom</label>
+                            <input type="text" name="otherNodeAttributeAim" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="otherNodeAttributeAimValue">Valeur</label>
+                            <input type="text" name="otherNodeAttributeAimValue" class="form-control" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+<!--                <button type="button" class="btn btn-primary" onClick="addAttributes('rowRelationship')">
+                    <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
+                </button>-->
+                <button type="button" class="btn btn-success" onClick="submit('formUpdateNodeRelationship')">Valider</button>
+            </div>
         </div>
     </div>
+</div>
+
+<div id="modalDeleteNodeRelationship" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Suppression d'une relation</h4>
+            </div>
+            <div class="modal-body">
+
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#pane1">Menu 1</a></li>
+                    <li><a data-toggle="tab" href="#pane2">Menu 2</a></li>
+                </ul>
+
+                <form id="formDeleteNodeRelationship" name="deleteNodeRelationship" action="/userFriendly" method="post">
+                    <div class="tab-content">
+                    <div class="tab-pane fade in active" id="pane1">
+                        <h4>Relation</h4>
+                        <div id="rowRelationship" class="row">
+                            <div class="col-md-6">
+                                <label for="relationshipName">Nom de la relation</label>
+                                <input type="text" name="relationshipName" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="nodeType">Type de noeud</label>
+                                <input type="text" id="typeNode0" name="typeNode" class="form-control" />
+                            </div>
+    <!--                    <div class="col-md-6">
+                                <label for="nodeType">Nom du noeud</label>
+                                <input type="text" id="valueNode0" name="valueNode" class="form-control" />
+                            </div>-->
+                            <input type="hidden" name="KEYWORD" value="DELETE_RELATIONSHIP" />
+                        </div>
+                        <hr>
+                        <h4>Attribut nécessaire à la recherche du noeud</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="attributeAim">Nom</label>
+                                <input type="text" name="attributeAim" class="form-control" />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="attributeAimValue">Valeur</label>
+                                <input type="text" name="attributeAimValue" class="form-control" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="pane2">
+
+                        <h4>Relation avec un autre noeud</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="otherNodeType">Type de noeud</label>
+                                <input type="text" name="otherNodeType" id="otherNodeType" class="form-control" />
+                            </div>
+                        </div>
+                        <hr>
+                        <h4>Attribut nécessaire à la recherche du noeud</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="otherNodeAttributeAim">Nom</label>
+                                <input type="text" name="otherNodeAttributeAim" class="form-control" />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="otherNodeAttributeAim">Valeur</label>
+                                <input type="text" name="otherNodeAttributeAimValue" class="form-control" />
+                            </div>
+                        </div>
+                    </form>
+
+                <div class="modal-footer">
+    <!--                <button type="button" class="btn btn-primary" onClick="addAttributes('rowRelationship')">
+                        <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
+                    </button>-->
+                    <button type="button" class="btn btn-success" onClick="submit('formDeleteNodeRelationship')">Valider</button>
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div id="modalDeleteDatabase" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Supprimer toute la base de données</h4>
+            </div>
+            <div class="modal-body">
+                <p class="alert alert-danger">
+                    Attention ! Vous êtes sur le point de supprimer l'intégralité de votre base de données. Êtes-vous sûr que vous souhaitez faire ça ?
+                </p>
+                <form id="formDeleteDatabase" name="deleteDatabse" action="/userFriendly" method="post">
+                    <input type='hidden' name="KEYWORD"  value="DELETE_DATABASE" />
+                </form>
+            </div>
+            <div class="modal-footer">
+<!--                <button type="button" class="btn btn-primary" onClick="addAttributes('rowRelationship')">
+                    <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
+                </button>-->
+                <button type="button" class="btn btn-success" onClick="submit('formDeleteDatabase')">Oui</button>
+                <button type="button" class="btn btn-danger" onClick="cancel('modalDeleteDatabase')">Non</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="block-graph col-lg-10 col-lg-offset-1">
+        <div id="graph"></div>
+    </div>
+</div>
 <div class="row">
     <div class="detailNode col-lg-10 col-lg-offset-1">
         <div id="detailedInfos"><p></p></div>

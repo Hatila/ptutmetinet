@@ -42,7 +42,16 @@ body{
     height: 50px;
 }
 
-.caca{
+.btnStandard{
+    width: 100%;
+    height: 50px;
+}
+
+.ligneBtn{
+    margin-bottom: 30px;
+}
+
+.btnValid{
     position: relative;
     border: none;
     outline:none;
