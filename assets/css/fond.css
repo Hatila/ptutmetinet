@@ -22,3 +22,17 @@ body {
     font-weight: bolder;
     color:black;
 }
+
+.hamburger.is-closed .hamb-top,
+.hamburger.is-closed .hamb-middle,
+.hamburger.is-closed .hamb-bottom {
+    background-color: magenta;
+}
+
+.footer{
+    color : white;
+}
+
+.item-menu-base{
+    margin-bottom: 20px;
+}
