@@ -43,7 +43,7 @@ function addAttributes(id){
         if(id === 'rowPropertiesToDelete'){
             $('#'+id).append('<div id="'+id+''+indexAttributes+'"><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div></div>');
         } else {
-            $('#'+id).append('<div id="'+id+''+indexAttributes+'"><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div></div>');
+            $('#'+id).append('<div id="'+id+''+indexAttributes+'"><div class="col-md-5 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div><div class="col-md-5 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div><div class="col-md-2"><input type="checkbox" name="uniqueConstraint'+indexAttributes+'" id="uniqueInput'+indexAttributes+'" /></div></div>');
         }
     }
 }
@@ -64,4 +64,4 @@ function submit(id){
 
 function cancel(id){
     $('#'+id).modal('hide');
-}
+}                                                                                                    

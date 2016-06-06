@@ -36,6 +36,7 @@ app.post('/userFriendly', function(req, res){
     var nodeType = null;
     var nodeValue = null;
     var cypherRequest = null;
+    var cypherRequestUnique = [];
     var boolean = true;
     var i = 0;
     var jsonData = [];
@@ -45,7 +46,6 @@ app.post('/userFriendly', function(req, res){
         nodeValue = nodeType.toString().toLowerCase();
     }
     
-    console.log(req.body);
     switch(requestType){
         //Create state
         case 'CREATE':
@@ -53,8 +53,8 @@ app.post('/userFriendly', function(req, res){
             while(boolean){
                 var obj = {};
                 var attributeName = eval('req.body.attributesName'+i);
-                console.log(attributeName);
                 var attributeValue = eval('req.body.attributesValue'+i);
+                var uniqueConstraint = eval('req.body.uniqueConstraint'+i);
                 
                 if(typeof attributeName === 'undefined' || typeof attributeValue === 'undefined'){
                     boolean = false;
@@ -64,6 +64,9 @@ app.post('/userFriendly', function(req, res){
                 } else {
                     attributeName = attributeName.replace(' ','_');
                     cypherRequest.query += attributeName+' : "'+attributeValue+'",';
+                }
+                if(typeof uniqueConstraint !== 'undefined'){
+                    cypherRequestUnique.push('CREATE CONSTRAINT ON ('+nodeValue+':'+nodeType+') ASSERT '+nodeValue+'.'+attributeName+' IS UNIQUE; ');
                 }
                 i++;
             }
@@ -116,6 +119,7 @@ app.post('/userFriendly', function(req, res){
         case 'RELATIONSHIP':
             var attributeAim = req.body.attributeAim.replace(' ','_');
             var relationshipName = req.body.relationshipName.replace(' ','_');
+            var uniqueConstraint = eval('req.body.uniqueConstraint'+i);
             
             cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+')'};
             if(req.body.otherNodeType !== '' && otherNodeAttributeAim !== '' && req.body.otherNodeAttributeAimValue !== ''){
@@ -125,10 +129,18 @@ app.post('/userFriendly', function(req, res){
                 cypherRequest.query += ', (r:'+req.body.otherNodeType+')';
                 cypherRequest.query += ' WHERE '+nodeValue+'.'+attributeAim+'="'+req.body.attributeAimValue+'"';
                 cypherRequest.query += ' AND r.'+otherNodeAttributeAim+'="'+req.body.otherNodeAttributeAimValue+'"';
-                cypherRequest.query += ' CREATE ('+nodeValue+')-[:'+relationshipName+']->(r)';
+                if(typeof uniqueConstraint !== 'undefined'){
+                    cypherRequest.query += 'CREATE UNIQUE ('+nodeValue+')-[:'+relationshipName+']->(r)';
+                } else {
+                    cypherRequest.query += ' CREATE ('+nodeValue+')-[:'+relationshipName+']->(r)';
+                }
             } else {
                 cypherRequest.query += ' WHERE '+nodeValue+'.'+attributeAim+'="'+req.body.attributeAimValue+'"';
-                cypherRequest.query += ' CREATE ('+nodeValue+')-[:'+relationshipName+']->('+nodeValue+')';
+                if(typeof uniqueConstraint !== 'undefined'){
+                    cypherRequest.query += 'CREATE UNIQUE ('+nodeValue+')-[:'+relationshipName+']->('+nodeValue+')';
+                } else {
+                    cypherRequest.query += ' CREATE ('+nodeValue+')-[:'+relationshipName+']->('+nodeValue+')';
+                }
             }
             //}) CREATE ('+nodeValue+')-[:'+req.body.relationshipName+']->('+nodeValue+')'};
             break;
@@ -185,8 +197,7 @@ app.post('/userFriendly', function(req, res){
             //@TODO
     }
     
-    console.log(cypherRequest.query);
-//    console.log(jsonData);
+    
 //    var jsonData = {query : "CREATE (n:Person { name : 'name' }) RETURN n"};
 //    var jsonData = { query: 'CREATE (n:NewType {name:"World"}) RETURN "hello", n.name' }
 //    var txUrl = "http://neo4j:naruto@localhost:7474/db/data/cypher";
@@ -209,6 +220,25 @@ app.post('/userFriendly', function(req, res){
             console.log(json);
             res.render('interface-userFriendly.ejs', {requete: json});
         });
+    
+    if(cypherRequestUnique.length > 0){
+        for(var i = 0; i< cypherRequestUnique.length; i++){
+            r.post({
+                uri: txUrl,
+                json: {
+                    statements: [{
+                        statement: cypherRequestUnique[i],
+                        resultDataContents: ["graph"]
+                    }]
+                }
+            },
+            function (err, result) {
+                if (err) {
+                    throw err
+                };
+            });
+        }
+    }
 })
 
 app.get('/standard', function(req, res) {

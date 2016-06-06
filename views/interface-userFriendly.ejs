@@ -70,13 +70,17 @@
                     </div>
                     <h4>Attributs</h4>
                     <div id="rowCreate" class="row">
-                        <div class="col-md-6">
-                            <label for="attributesName0">Nom</label>
+                        <div class="col-md-5">
+                            <label for="nameInput0">Nom</label>
                             <input type="text" name="attributesName0" id="nameInput0" class="form-control" required/>
                         </div>
-                        <div class="col-md-6">
-                            <label for="attributesValue0">Valeur</label>
+                        <div class="col-md-5">
+                            <label for="valueInput0">Valeur</label>
                             <input type="text" name="attributesValue0" id="valueInput0" class="form-control" required/>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="uniqueInput0">Attribut unique</label>
+                            <input type="checkbox" name="uniqueConstraint0" id="uniqueInput0" />
                         </div>
                     </div>
                 </div>
@@ -122,13 +126,17 @@
                     <hr>
                     <h5>Attributs</h5>
                     <div id="rowUpdate" class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <label for="attributesName0">Nom</label>
                             <input type="text" name="attributesName0" id="nameInput0" class="form-control" required/>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <label for="attributesValue0">Valeur</label>
                             <input type="text" name="attributesValue0" id="valueInput0" class="form-control" required/>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="uniqueInput0">Attribut unique</label>
+                            <input type="checkbox" name="uniqueConstraint0" id="uniqueInput0" />
                         </div>
                         <div class="container help-block">
                             <p>Le premier attribut permet de trouver quel noeud vous souhaitez mettre à jour</p>
@@ -277,6 +285,9 @@
                         <div class="col-md-6">
                             <input type="text" name="relationshipName" class="form-control" />
                         </div>
+                        <div class="col-md-2">
+                            <input type="checkbox" name="uniqueConstraint0" id="uniqueInput0" />
+                        </div>
                     </div>
                     <hr>
                     <h4>Relation avec un autre noeud</h4>                    
@@ -410,6 +421,7 @@
                                     <input type="text" name="relationshipName" class="form-control" />
                                 </div>
                             </div>
+                            <h4>Noeud</h4>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="nodeType">Type de noeud</label>
