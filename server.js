@@ -24,7 +24,7 @@ app.get('/graph', function(req, res) {
 });
 
 app.get('/userFriendly', function(req, res) {
-    res.render('interface-userFriendly.ejs', {requete : null});
+    res.render('interface-userFriendly.ejs', {requete : "vide"});
 });
 
 app.post('/userFriendly', function(req, res){
@@ -32,6 +32,7 @@ app.post('/userFriendly', function(req, res){
      * @TODO : Pas de champs vide envoyé
      * Ajouter la possibilité de supprimer une ligne vide
      */
+    var json = null;
     var requestType = req.body.KEYWORD;
     var nodeType = null;
     var nodeValue = null;
@@ -219,20 +220,6 @@ app.post('/standard', function(req, res) {
     // var message =req.body.ntm;
     // message =  '{"statement":"'+req.body.ntm+'", "resultDataContents":["graph"]} ';
     var json;
-    
-    /*
-     db.beginTransaction(
-     {statements:[{
-     statement:req.body.ntm,
-     resultDataContents:["graph"]}]},
-     function(err, result){
-     if(err){ throw err};
-     console.log(result);
-     json = result.data; // delivers an array of query results
-     console.log(json);
-     res.render('interface-standard.ejs', {requete: json});}
-     );
-     */
     var txUrl = "http://neo4j:naruto@localhost:7474/db/data/transaction/commit";
     r.post({
             uri: txUrl,
