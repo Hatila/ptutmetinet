@@ -28,10 +28,6 @@ app.get('/userFriendly', function(req, res) {
 });
 
 app.post('/userFriendly', function(req, res){
-    /**
-     * @TODO : Pas de champs vide envoyé
-     * Ajouter la possibilité de supprimer une ligne vide
-     */
     var json = null;
     var requestType = req.body.KEYWORD;
     var nodeType = null;
@@ -45,9 +41,41 @@ app.post('/userFriendly', function(req, res){
     if(typeof req.body.typeNode !== 'undefined'){
         nodeType = req.body.typeNode.split(' ').join('_');
         nodeValue = nodeType.toString().toLowerCase();
+    } else if(typeof req.body.typeNode0 !== 'undefined'){
+        nodeType = req.body.typeNode0.split(' ').join('_');
+        nodeValue = nodeType.toLowerCase();
     }
     
     switch(requestType){
+        //Search by node type
+        case 'SEARCH_BY_NODE_TYPE':
+            i = 1;
+            console.log(req.body);
+            cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+')'};
+            var nodeArray = [nodeValue];
+            while(boolean){
+                var otherNodeType = eval('req.body.typeNode'+i);
+                
+                if(typeof otherNodeType === 'undefined'){
+                    boolean = false;
+                    console.log('stop');
+                } else {
+                    otherNodeType = otherNodeType.split(' ').join('_');
+                    otherNodeValue = otherNodeType.toLowerCase();
+                    nodeArray.push(otherNodeValue);
+                    cypherRequest.query += ',('+otherNodeValue+':'+otherNodeType+')';
+                }
+                i++;
+            }
+            cypherRequest.query += ' RETURN ';
+            for(var j = 0; j < nodeArray.length;j++){
+                cypherRequest.query += nodeArray[j]+',';
+                if(j+1 === nodeArray.length){
+                    //Permet d'enlever la dernière virgule inutile
+                    cypherRequest.query = cypherRequest.query.substr(0, (cypherRequest.query.length-1));
+                }
+            }
+            break;
         //Create state
         case 'CREATE':
             cypherRequest = {query : requestType+" ("+nodeValue+":"+nodeType+" {"};

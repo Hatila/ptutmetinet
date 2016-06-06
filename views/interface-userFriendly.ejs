@@ -10,6 +10,16 @@
 <% include partials/menu.ejs %>
 
 <div class="container grpBtn">
+    <p class="separationText"> Recherche des noeuds </p>
+    <hr>
+    <div class="row">
+        <div class="col-lg-2">
+            <button class="btn btn-primary btnStandard" id="returnGraph">Retourne le graph</button>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary btnStandard" onclick="searchByNodeTypeDialog()">Recherche par type de noeud</button>
+        </div>
+    </div>
     <p class="separationText"> Traitement des noeuds </p>
     <hr>
     <div class="row">
@@ -48,6 +58,37 @@
     </div>
 </div>
 
+<div id="modalSearchByNodeType" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Recherche par type de noeud</h4>
+            </div>
+            <form id="formSearchByNodeType" name="searchByNodeType" action="/userFriendly" method="post">
+                <div class="modal-body">
+                    <div id="rowSearchByNodeType">
+                        <div id="rowSearchByNodeType0" class="row">
+                            <div class="col-md-6">
+                                <label for="nodeType">Type de noeud</label>
+                                <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></span>
+                                <input type="text" id="typeNode0" name="typeNode0" class="form-control" required/>
+                            </div>
+                            <input type="hidden" name="KEYWORD" value="SEARCH_BY_NODE_TYPE" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="addNodes('rowSearchByNodeType')">
+                        <span class="glyphicon glyphicon-plus"></span> Ajouter un noeud
+                    </button>
+                    <button type="submit" class="btn btn-success" >Valider</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div id="modalCreateNode" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -70,18 +111,20 @@
                         <input type="hidden" name="KEYWORD" value="CREATE" />
                     </div>
                     <h4>Attributs</h4>
-                    <div id="rowCreate" class="row">
-                        <div class="col-md-5">
-                            <label for="nameInput0">Nom</label>
-                            <input type="text" name="attributesName0" id="nameInput0" class="form-control" required/>
-                        </div>
-                        <div class="col-md-5">
-                            <label for="valueInput0">Valeur</label>
-                            <input type="text" name="attributesValue0" id="valueInput0" class="form-control" required/>
-                        </div>
-                        <div class="col-md-2">
-                            <label for="uniqueInput0">Attribut unique</label>
-                            <input type="checkbox" name="uniqueConstraint0" id="uniqueInput0" />
+                    <div id="rowCreate">
+                        <div id="rowCreate0" class="row">
+                            <div class="col-md-4">
+                                <label for="nameInput0">Nom</label>
+                                <input type="text" name="attributesName0" id="nameInput0" class="form-control" required/>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="valueInput0">Valeur</label>
+                                <input type="text" name="attributesValue0" id="valueInput0" class="form-control" required/>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="uniqueInput0">Attribut unique</label>
+                                <input type="checkbox" name="uniqueConstraint0" id="uniqueInput0" class="checkbox mt-10" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -89,7 +132,7 @@
                     <button type="button" class="btn btn-primary" onClick="addAttributes('rowCreate')">
                         <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
                     </button>
-                    <button type="button" class="btn btn-success" onClick="submit('formCreateNode')">Valider</button>
+                    <button type="submit" class="btn btn-success" >Valider</button>
                 </div>
             </form>
         </div>
@@ -126,22 +169,24 @@
                     </div>-->
                     <hr>
                     <h5>Attributs</h5>
-                    <div id="rowUpdate" class="row">
-                        <div class="col-md-5">
-                            <label for="attributesName0">Nom</label>
-                            <input type="text" name="attributesName0" id="nameInput0" class="form-control" required/>
-                        </div>
-                        <div class="col-md-5">
-                            <label for="attributesValue0">Valeur</label>
-                            <input type="text" name="attributesValue0" id="valueInput0" class="form-control" required/>
-                        </div>
-                        <div class="col-md-2">
-                            <label for="uniqueInput0">Attribut unique</label>
-                            <input type="checkbox" name="uniqueConstraint0" id="uniqueInput0" />
+                    <div id="rowUpdate">
+                        <div id="rowUpdate0" class="row">
+                            <div class="col-md-4">
+                                <label for="attributesName0">Nom</label>
+                                <input type="text" name="attributesName0" id="nameInput0" class="form-control" required/>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="attributesValue0">Valeur</label>
+                                <input type="text" name="attributesValue0" id="valueInput0" class="form-control" required/>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="uniqueInput0">Attribut unique</label>
+                                <input type="checkbox" name="uniqueConstraint0" id="uniqueInput0" class="checkbox mt-10" />
+                            </div>
                         </div>
                         <div class="container help-block">
                             <p>Le premier attribut permet de trouver quel noeud vous souhaitez mettre à jour</p>
-                            <p>Il ne servira en aucun cas à modifier un attribut existant</p>
+                            <p>Il ne servira en aucun cas à ajouter ou modifier un attribut</p>
                         </div>
                     </div>
                 </div>
@@ -167,8 +212,8 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
-                                <label for="nodeType">Type de noeud</label>
-                                <input type="text" id="typeNode0" name="typeNode" class="form-control" />                            
+                            <label for="nodeType">Type de noeud</label>
+                            <input type="text" id="typeNode0" name="typeNode" class="form-control" required/>                            
                         </div>
 <!--                        <div class="col-md-6">
                             <label for="nodeType">Nom du noeud</label>
@@ -181,11 +226,11 @@
                     <div id="rowDelete" class="row">
                         <div class="col-md-6">
                             <label for="attributesName0">Nom</label>
-                            <input type="text" name="attributesName0" id="nameInput0" class="form-control" />
+                            <input type="text" name="attributesName0" id="nameInput0" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="attributesValue0">Valeur</label>
-                            <input type="text" name="attributesValue0" id="valueInput0" class="form-control" />
+                            <input type="text" name="attributesValue0" id="valueInput0" class="form-control" required/>
                         </div>
                     </div>
                 </div>
@@ -209,7 +254,7 @@
                     <div class="row">
                         <div class="col-md-6">
                                 <label for="nodeType">Type de noeud</label>
-                                <input type="text" id="typeNode0" name="typeNode" class="form-control" />                            
+                                <input type="text" id="typeNode0" name="typeNode" class="form-control" required/>                            
                         </div>
 <!--                        <div class="col-md-6">
                             <label for="nodeType">Nom du noeud</label>
@@ -222,18 +267,18 @@
                     <div id="rowDeleteProperty" class="row">
                         <div class="col-md-6">
                             <label for="attributeAim">Nom</label>
-                            <input type="text" name="attributeAim" class="form-control" />
+                            <input type="text" name="attributeAim" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="attributeAimValue">Valeur</label>
-                            <input type="text" name="attributeAimValue" class="form-control" />
+                            <input type="text" name="attributeAimValue" class="form-control" required/>
                         </div>
                     </div>
                     <hr>
                     <h4>Attributs à supprimer</h4>
                     <div id="rowPropertiesToDelete" class="row">
                         <div class="col-md-6">
-                            <input type="text" name="attributesName0" id="nameInput0" class="form-control" />
+                            <input type="text" name="attributesName0" id="nameInput0" class="form-control" required/>
                         </div>
                     </div>
                 </div>
@@ -259,8 +304,8 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
-                                <label for="nodeType">Type de noeud</label>
-                                <input type="text" id="typeNode0" name="typeNode" class="form-control" />                            
+                            <label for="nodeType">Type de noeud</label>
+                            <input type="text" id="typeNode0" name="typeNode" class="form-control" required/>                            
                         </div>
 <!--                        <div class="col-md-6">
                             <label for="nodeType">Nom du noeud</label>
@@ -273,29 +318,29 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="attributeAim">Nom</label>
-                            <input type="text" name="attributeAim" class="form-control" />
+                            <input type="text" name="attributeAim" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="attributeAimValue">Valeur</label>
-                            <input type="text" name="attributeAimValue" class="form-control" />
+                            <input type="text" name="attributeAimValue" class="form-control" required/>
                         </div>
                     </div>
                     <hr>
                     <h4>Nom de la relation</h4>
                     <div id="rowRelationship" class="row">
                         <div class="col-md-6">
-                            <input type="text" name="relationshipName" class="form-control" />
+                            <input type="text" name="relationshipName" class="form-control" required/>
                         </div>
-                        <div class="col-md-2">
-                            <input type="checkbox" name="uniqueConstraint0" id="uniqueInput0" />
-                        </div>
+<!--                        <div class="col-md-2">
+                            <input type="checkbox" name="uniqueConstraint0" id="uniqueInput0" class="checkbox" />
+                        </div>-->
                     </div>
                     <hr>
                     <h4>Relation avec un autre noeud</h4>                    
                     <div class="row">
                         <div class="col-md-6">
                             <label for="otherNodeType">Type de noeud</label>
-                            <input type="text" name="otherNodeType" id="otherNodeType" class="form-control" />
+                            <input type="text" name="otherNodeType" id="otherNodeType" class="form-control" required/>
                         </div>
                     </div>
                     <hr>
@@ -303,11 +348,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="otherNodeAttributeAim">Type de noeud</label>
-                            <input type="text" name="otherNodeAttributeAim" class="form-control" />
+                            <input type="text" name="otherNodeAttributeAim" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="otherNodeAttributeAimValue">Type de noeud</label>
-                            <input type="text" name="otherNodeAttributeAimValue" class="form-control" />
+                            <input type="text" name="otherNodeAttributeAimValue" class="form-control" required/>
                         </div>
                     </div>
                 </div>
@@ -334,7 +379,7 @@
                     <div class="row">
                         <div class="col-md-6">
                                 <label for="nodeType">Type de noeud</label>
-                                <input type="text" id="typeNode0" name="typeNode" class="form-control" />                            
+                                <input type="text" id="typeNode0" name="typeNode" class="form-control" required/>                            
                         </div>
 <!--                        <div class="col-md-6">
                             <label for="nodeType">Nom du noeud</label>
@@ -347,11 +392,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="attributeAim">La relation actuelle</label>
-                            <input type="text" name="attributeAim" class="form-control" />
+                            <input type="text" name="attributeAim" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="attributeAimValue">La relation actuelle</label>
-                            <input type="text" name="attributeAimValue" class="form-control" />
+                            <input type="text" name="attributeAimValue" class="form-control" required/>
                         </div>
                     </div>
                     <hr>
@@ -359,11 +404,11 @@
                     <div id="rowRelationship" class="row">
                         <div class="col-md-6">
                             <label for="origialRelationship">La relation actuelle</label>
-                            <input id="originalRelationship" type="text" name="relationshipName" class="form-control" />
+                            <input id="originalRelationship" type="text" name="relationshipName" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="newRelationship">La nouvelle relation</label>
-                            <input id="newRelationship" type="text" name="newRelationshipName" class="form-control" />
+                            <input id="newRelationship" type="text" name="newRelationshipName" class="form-control" required/>
                         </div>
                     </div>
                     <hr>
@@ -371,7 +416,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="otherNodeType">Type de noeud</label>
-                            <input type="text" name="otherNodeType" id="otherNodeType" class="form-control" />
+                            <input type="text" name="otherNodeType" id="otherNodeType" class="form-control" required/>
                         </div>
                     </div>
                     <hr>
@@ -379,11 +424,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="otherNodeAttributeAim">Nom</label>
-                            <input type="text" name="otherNodeAttributeAim" class="form-control" />
+                            <input type="text" name="otherNodeAttributeAim" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="otherNodeAttributeAimValue">Valeur</label>
-                            <input type="text" name="otherNodeAttributeAimValue" class="form-control" />
+                            <input type="text" name="otherNodeAttributeAimValue" class="form-control" required/>
                         </div>
                     </div>
                 </div>
@@ -419,14 +464,14 @@
                             <div id="rowRelationship" class="row">
                                 <div class="col-md-6">
                                     <label for="relationshipName">Nom de la relation</label>
-                                    <input type="text" name="relationshipName" class="form-control" />
+                                    <input type="text" name="relationshipName" class="form-control" required/>
                                 </div>
                             </div>
                             <h4>Noeud</h4>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="nodeType">Type de noeud</label>
-                                    <input type="text" id="typeNode0" name="typeNode" class="form-control" />
+                                    <input type="text" id="typeNode0" name="typeNode" class="form-control" required/>
                                 </div>
         <!--                    <div class="col-md-6">
                                     <label for="nodeType">Nom du noeud</label>
@@ -439,11 +484,11 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="attributeAim">Nom</label>
-                                    <input type="text" name="attributeAim" class="form-control" />
+                                    <input type="text" name="attributeAim" class="form-control" required/>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="attributeAimValue">Valeur</label>
-                                    <input type="text" name="attributeAimValue" class="form-control" />
+                                    <input type="text" name="attributeAimValue" class="form-control" required/>
                                 </div>
                             </div>
 
@@ -455,7 +500,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="otherNodeType">Type de noeud</label>
-                                    <input type="text" name="otherNodeType" id="otherNodeType" class="form-control" />
+                                    <input type="text" name="otherNodeType" id="otherNodeType" class="form-control" required/>
                                 </div>
                             </div>
                             <hr>
@@ -463,11 +508,11 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="otherNodeAttributeAim">Nom</label>
-                                    <input type="text" name="otherNodeAttributeAim" class="form-control" />
+                                    <input type="text" name="otherNodeAttributeAim" class="form-control" required/>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="otherNodeAttributeAim">Valeur</label>
-                                    <input type="text" name="otherNodeAttributeAimValue" class="form-control" />
+                                    <input type="text" name="otherNodeAttributeAimValue" class="form-control" required/>
                                 </div>
                             </div>
                         </div>
