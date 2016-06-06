@@ -43,7 +43,7 @@ app.post('/userFriendly', function(req, res){
     var jsonData = [];
     
     if(typeof req.body.typeNode !== 'undefined'){
-        nodeType = req.body.typeNode.replace(' ','_');
+        nodeType = req.body.typeNode.split(' ').join('_');
         nodeValue = nodeType.toString().toLowerCase();
     }
     
@@ -63,7 +63,7 @@ app.post('/userFriendly', function(req, res){
                     cypherRequest.query = cypherRequest.query.substr(0, (cypherRequest.query.length-1));
                     console.log("stop");
                 } else {
-                    attributeName = attributeName.replace(' ','_');
+                    attributeName = attributeName.split(' ').join('_');
                     cypherRequest.query += attributeName+' : "'+attributeValue+'",';
                 }
                 if(typeof uniqueConstraint !== 'undefined'){
@@ -76,7 +76,7 @@ app.post('/userFriendly', function(req, res){
         //Update state
         case 'SET':
             i=1;
-            var attributesName0 = req.body.attributesName0.replace(' ','_');
+            var attributesName0 = req.body.attributesName0.split(' ').join('_');
             cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+' {'+attributesName0+':"'+req.body.attributesValue0+'"}) SET '};
             while(boolean){
                 var attributeName = eval('req.body.attributesName'+i);
@@ -89,7 +89,7 @@ app.post('/userFriendly', function(req, res){
                     console.log("stop");
                 } else {
                     console.log(attributeName);
-                    attributeName = attributeName.replace(' ','_');
+                    attributeName = attributeName.split(' ').join('_');
                     cypherRequest.query += nodeValue+"."+attributeName+' = "'+attributeValue+'",';
                 }
                 i++;
@@ -100,7 +100,7 @@ app.post('/userFriendly', function(req, res){
             cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+' {'+req.body.attributesName0+':"'+req.body.attributesValue0+'"}) DETACH DELETE '+nodeValue};
             break;
         case 'DELETE_PROPERTY':
-            var attributeAim = req.body.attributeAim.replace(' ','_');
+            var attributeAim = req.body.attributeAim.split(' ').join('_');
             cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+' {'+attributeAim+':"'+req.body.attributeAimValue+'"}) REMOVE '};
             while(boolean){
                 var attributeName = eval('req.body.attributesName'+i);
@@ -110,7 +110,7 @@ app.post('/userFriendly', function(req, res){
                     //Permet d'enlever la dernière virgule inutile
                     cypherRequest.query = cypherRequest.query.substr(0, (cypherRequest.query.length-1));
                 } else {
-                    attributeName = attributeName.replace(' ','_');
+                    attributeName = attributeName.split(' ').join('_');
                     cypherRequest.query += nodeValue+"."+attributeName+',';
                 }
                 i++;
@@ -118,27 +118,27 @@ app.post('/userFriendly', function(req, res){
             cypherRequest.query += ' RETURN '+nodeValue+';';
             break;
         case 'RELATIONSHIP':
-            var attributeAim = req.body.attributeAim.replace(' ','_');
-            var relationshipName = req.body.relationshipName.replace(' ','_');
+            var attributeAim = req.body.attributeAim.split(' ').join('_');
+            var relationshipName = req.body.relationshipName.split(' ').join('_');
             var uniqueConstraint = eval('req.body.uniqueConstraint'+i);
             
             cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+')'};
             if(req.body.otherNodeType !== '' && otherNodeAttributeAim !== '' && req.body.otherNodeAttributeAimValue !== ''){
-                var otherNodeType = req.body.otherNodeType.replace(' ','_');
-                var otherNodeAttributeAim = req.body.otherNodeAttributeAim.replace(' ','_');
+                var otherNodeType = req.body.otherNodeType.split(' ').join('_');
+                var otherNodeAttributeAim = req.body.otherNodeAttributeAim.split(' ').join('_');
                 
                 cypherRequest.query += ', (r:'+req.body.otherNodeType+')';
                 cypherRequest.query += ' WHERE '+nodeValue+'.'+attributeAim+'="'+req.body.attributeAimValue+'"';
                 cypherRequest.query += ' AND r.'+otherNodeAttributeAim+'="'+req.body.otherNodeAttributeAimValue+'"';
                 if(typeof uniqueConstraint !== 'undefined'){
-                    cypherRequest.query += 'CREATE UNIQUE ('+nodeValue+')-[:'+relationshipName+']->(r)';
+                    cypherRequest.query += ' CREATE UNIQUE ('+nodeValue+')-[:'+relationshipName+']->(r)';
                 } else {
                     cypherRequest.query += ' CREATE ('+nodeValue+')-[:'+relationshipName+']->(r)';
                 }
             } else {
                 cypherRequest.query += ' WHERE '+nodeValue+'.'+attributeAim+'="'+req.body.attributeAimValue+'"';
                 if(typeof uniqueConstraint !== 'undefined'){
-                    cypherRequest.query += 'CREATE UNIQUE ('+nodeValue+')-[:'+relationshipName+']->('+nodeValue+')';
+                    cypherRequest.query += ' CREATE UNIQUE ('+nodeValue+')-[:'+relationshipName+']->('+nodeValue+')';
                 } else {
                     cypherRequest.query += ' CREATE ('+nodeValue+')-[:'+relationshipName+']->('+nodeValue+')';
                 }
@@ -153,10 +153,10 @@ app.post('/userFriendly', function(req, res){
             if(req.body.otherNodeType !== '' && req.body.otherNodeAttributeAim !== '' && req.body.otherNodeAttributeAimValue !== ''){
                 var random = randomize();
                 
-                var otherNodeAttributeAim = req.body.otherNodeAttributeAim.replace(' ','_');
-                var attributeAim = req.body.attributeAim.replace(' ','_');
-                var relationshipName = req.body.relationshipName.replace(' ','_');
-                otherNodeType = req.body.otherNodeType.replace(' ','_');
+                var otherNodeAttributeAim = req.body.otherNodeAttributeAim.split(' ').join('_');
+                var attributeAim = req.body.attributeAim.split(' ').join('_');
+                var relationshipName = req.body.relationshipName.split(' ').join('_');
+                otherNodeType = req.body.otherNodeType.split(' ').join('_');
                 otherNodeValue = otherNodeType.toString().toLowerCase();
                 otherNodeValue += random;
                 
@@ -175,10 +175,10 @@ app.post('/userFriendly', function(req, res){
             cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+' {'+req.body.attributeAim+':"'+req.body.attributeAimValue+'"})-'};
             if(req.body.otherNodeType !== '' && req.body.otherNodeAttributeAim !== '' && req.body.otherNodeAttributeAimValue !== ''){
                 var random = randomize();
-                var otherNodeAttributeAim = req.body.otherNodeAttributeAim.replace(' ','_');
-                var attributeAim = req.body.attributeAim.replace(' ','_');
-                var relationshipName = req.body.relationshipName.replace(' ','_');
-                var newRelationshipName = req.body.newRelationshipName.replace(' ','_');
+                var otherNodeAttributeAim = req.body.otherNodeAttributeAim.split(' ').join('_');
+                var attributeAim = req.body.attributeAim.split(' ').join('_');
+                var relationshipName = req.body.relationshipName.split(' ').join('_');
+                var newRelationshipName = req.body.newRelationshipName.split(' ').join('_');
                 otherNodeType = req.body.otherNodeType;
                 otherNodeValue = otherNodeType.toString().toLowerCase()+random;
                 
