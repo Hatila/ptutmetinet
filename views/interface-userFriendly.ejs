@@ -13,8 +13,11 @@
     <p class="separationText"> Recherche des noeuds </p>
     <hr>
     <div class="row">
-        <div class="col-lg-2">
-            <button class="btn btn-primary btnStandard" id="returnGraph">Retourne le graph</button>
+        <div class="col-lg-2"> 
+            <form id="formGetGraph" name="getGraph" action="/userFriendly" method="post">
+                <input type="hidden" value="GET_GRAPH" name="KEYWORD"/>
+                <button class="btn btn-primary btnStandard" id="returnGraph" type="submit">Retourne le graph</button>
+            </form>
         </div>
         <div class="col-md-3">
             <button class="btn btn-primary btnStandard" onclick="searchByNodeTypeDialog()">Recherche par type de noeud</button>

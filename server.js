@@ -47,6 +47,10 @@ app.post('/userFriendly', function(req, res){
     }
     
     switch(requestType){
+        //Get all graph content
+        case 'GET_GRAPH':
+            cypherRequest = {query : 'MATCH (n) OPTIONAL MATCH (n)-[r]-() return n, r;'};
+            break;
         //Search by node type
         case 'SEARCH_BY_NODE_TYPE':
             i = 1;
@@ -148,6 +152,7 @@ app.post('/userFriendly', function(req, res){
         case 'RELATIONSHIP':
             var attributeAim = req.body.attributeAim.split(' ').join('_');
             var relationshipName = req.body.relationshipName.split(' ').join('_');
+            relationshipName = relationshipName.toUpperCase();
             var uniqueConstraint = eval('req.body.uniqueConstraint'+i);
             
             cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+')'};
@@ -226,7 +231,7 @@ app.post('/userFriendly', function(req, res){
             //@TODO
     }
     
-    
+    console.log(cypherRequest.query);
 //    var jsonData = {query : "CREATE (n:Person { name : 'name' }) RETURN n"};
 //    var jsonData = { query: 'CREATE (n:NewType {name:"World"}) RETURN "hello", n.name' }
 //    var txUrl = "http://neo4j:naruto@localhost:7474/db/data/cypher";
