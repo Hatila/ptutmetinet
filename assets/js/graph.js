@@ -25,7 +25,7 @@ function genererGraph(requete) {
     var width = 600;
     var height = 400;
     // force layout setup
-    var force = d3.layout.force().charge(-400).linkDistance(90).size([width, height]);
+    var force = d3.layout.force().charge(-400).linkDistance(150).size([width, height]);
 
     // setup svg div
     var svg = d3.select("#graph").append("svg")
@@ -35,17 +35,6 @@ function genererGraph(requete) {
 
     force.nodes(nodes).links(links).start();
 
-    // force feed algo ticks for coordinate computation
-    force.on("tick", function () {
-        link.attr("d", function (d) {
-                return "M "+ d.source.x + " " + d.source.y +" L "+d.target.x + " " + d.target.y;
-            });
-
-        node.attr("transform", function(d) {
-            return "translate(" + d.x + "," + d.y + ")";
-        })
-    });
-
     // render relationships as lines
     var link = svg.selectAll(".link")
         .data(links).enter()
@@ -53,8 +42,8 @@ function genererGraph(requete) {
         .attr("id", function (d){ return "link"+d.id; })
         .attr("fill", "none")
         .attr("stroke", "black")
-        .attr("data-content", function (d) { console.log(d);
-            return d.source.id + " " + d.type + " " + d.target.id;
+        .attr("data-content", function (d) {
+            return d.source.id + " " + d.target.id;
         });
 
     var linkText = svg.selectAll(".linkText")
@@ -115,7 +104,34 @@ function genererGraph(requete) {
         .attr("font-size", "7px")
         .attr("fill", "white");
 
-       var graphPanZoom = svgPanZoom("#graph svg", {
+    // force feed algo ticks for coordinate computation
+    force.on("tick", function () {
+        link.attr("d", function (d) {
+            var result = "M "+ d.source.x + " " + d.source.y +" L "+d.target.x + " " + d.target.y
+            var existsNode = $("[data-content='" + $(this).attr("data-content") + "']");
+            //Si on a plusieurs liens sur les mêmes noeuds
+            if(existsNode.length > 1){
+                    var i = existsNode.index(this)+1;
+                    var dx = d.target.x - d.source.x;
+                    var dy = d.target.y - d.source.y;
+                if(!i%2){
+                    var dr = Math.sqrt(dx * dx + dy * dy)*i*2;
+                    result =  "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+                }else{
+                    var dr = Math.sqrt(dx * dx + dy * dy)*(i-1);
+                    result = "M" + d.source.x + "," + d.source.y + "A" + -1*dr + "," + -1*dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+                }
+            }
+            return result;
+        })
+
+        node.attr("transform", function(d) {
+            return "translate(" + d.x + "," + d.y + ")";
+        })
+    });
+
+
+    var graphPanZoom = svgPanZoom("#graph svg", {
         panEnabled: true
         , controlIconsEnabled: false
         , zoomEnabled: true
