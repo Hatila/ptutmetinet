@@ -7,6 +7,10 @@ function searchByNodeTypeDialog(){
     $("#modalSearchByNodeType").modal();
 }
 
+function searchByNodeAndAttributes(){
+    $("#modalSearchByNodeWithAttributes").modal();
+}
+
 function createNodeDialog(){
     $("#modalCreateNode").modal();        
 }
@@ -46,6 +50,10 @@ function deleteDatabase(){
     $("#modalDeleteDatabase").modal();
 }
 
+function importDatabase(){
+    $('#modalImportDatabase').modal();
+}
+
 /**
  * Supprime la dernière ligne pour les attributs
  * @param {HTMLElement} domElement
@@ -57,7 +65,6 @@ function trashLastRow(domElement){
     var id = subId.replace(indexAttributes,'');
     indexAttributes--;
     domElement.remove();
-    console.log(subId);
     //S'il y a plus d'une ligne ET s'il ne s'agit pas de la ligne rowUpdate2 qui est un cas particulier (2 lignes minimum pour cette action)
     if(indexAttributes > 0 && subId !== 'rowUpdate2'){
         $('#'+id+' #'+id+''+indexAttributes).append('<div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div>');
@@ -69,7 +76,6 @@ function trashLastRow(domElement){
  * @param {HTMLElement} domElement
  */
 function trashLastRowNode(domElement){
-    console.log(domElement);
     //get div row id to delete
     var subId = domElement.id;
     //get main id
@@ -78,13 +84,11 @@ function trashLastRowNode(domElement){
     domElement.remove();
     //S'il y a plus d'une ligne
     if(indexNodes > 0){
-        console.log('here');
-        console.log(id);
-        console.log(indexNodes);
         $('#'+id+' #'+id+''+indexNodes).append('<div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRowNode('+id+indexNodes+')"></span></div>');
     }
 }
 
+//Variable permettant de rendre unique chaque input pour les attributs
 var indexAttributes = 0;
 /**
  * Fonction permettant d'ajouter des input aux modal
@@ -107,11 +111,16 @@ function addAttributes(id){
                 $('#'+id+' #'+id+''+(indexAttributes-1)+' #trashButton').remove();
             }
             if(id === 'rowSearchByNodeValueInput'){
-                //Ajoute les inputs, le checkbox pour attribut unique et le bouton de suppression de ligne
-            $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div><div class="col-md-3"><div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div></div>');
+                //Ajoute les inputs et le bouton de suppression de ligne
+                $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div><div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div></div>');
             } else {
-                //Ajoute les inputs, le checkbox pour attribut unique et le bouton de suppression de ligne
-                $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div><div class="col-md-3"><input type="checkbox" name="uniqueConstraint'+indexAttributes+'" id="uniqueInput'+indexAttributes+'" class="checkbox mt-10" /></div><div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div></div>');
+                //Ajoute les inputs, la selectbox et le bouton de suppression de ligne
+                if(id === 'rowSearchWithAttributes'){
+                    $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-3 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div><div class="col-md-4 champClone"><select name="operator'+indexAttributes+'" id="selectOperator'+indexAttributes+'" class="form-control"><option value="<">Inférieur à</option><option value="<=">Inférieur ou égale à</option><option value=">">Supérieur à</option><option value=">=">Supérieur ou égale à</option><option value="=">Égale à</option><option value="<>">Différent de</option></select></div><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div><div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div></div>');
+                } else {
+                    //Ajoute les inputs, le checkbox pour attribut unique et le bouton de suppression de ligne
+                    $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div><div class="col-md-3"><input type="checkbox" name="uniqueConstraint'+indexAttributes+'" id="uniqueInput'+indexAttributes+'" class="checkbox mt-10" /></div><div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div></div>');
+                }
             }
         }
     } else {
@@ -127,6 +136,7 @@ function addAttributes(id){
     }
 }
 
+//Variable permettant de rendre unique chaque input pour les noeuds
 var indexNodes = 0;
 /**
  * Fonction permetttant d'ajouter des noeuds à une modal
@@ -162,13 +172,6 @@ function addNodes(id){
 
 function cancel(id){
     $('#'+id).modal('hide');
-}
-
-function deleteRowAttributes(){
-    console.log('indexNodes');
-    console.log(indexNodes);
-    console.log('indexAttributes');
-    console.log(indexAttributes);
 }
  
  /*
@@ -241,3 +244,14 @@ $('#modalSearchByNodeTypeAndNodeValue').on("hidden.bs.modal", function(){
     $("#modalSearchByNodeTypeAndNodeValue #nameInput0").val('');
     $("#modalSearchByNodeTypeAndNodeValue #valueInput0").val('');
 })
+
+$('#modalImportDatabase').on("hidden.bs.modal", function(){
+    $('#modalImportDatabase #textareaDataContent').val('');
+})
+
+//Fournis un exemple d'improt de base de données
+function importExample(){
+    $('#modalImportDatabase #textareaDataContent').val('LOAD CSV WITH HEADERS FROM "https://dl.dropboxusercontent.com/u/14493611/movies_setup.csv" AS row MERGE (m:Movie {title:row.title}) ON CREATE SET m.released = toInt(row.released), m.tagline = row.tagline MERGE (p:Person  {name:row.name}) ON CREATE SET p.born = toInt(row.born) WITH m,p,row WHERE row.type = "ACTED_IN" MERGE (p)-[r:ACTED_IN]->(m) ON CREATE SET r.roles = split(row.roles,";")[0..-1] RETURN p,m,r;');
+}
+
+

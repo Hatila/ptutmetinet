@@ -87,6 +87,26 @@ app.post('/userFriendly', function(req, res){
                 }
             }
             break;
+        case 'SEARCH_BY_NODE_TYPE_WITH_ATTRIBUTES':
+            cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+') WHERE '};
+            while(boolean){
+                var attributesName = eval('req.body.attributesName'+i);
+                var operator = eval('req.body.operator'+i);
+                var attributesValue = eval('req.body.attributesValue'+i);
+                
+                if(typeof attributesName === 'undefined'){
+                    boolean = false;
+                    //Permet d'enlever le dernier ' AND ' inutile
+                    cypherRequest.query = cypherRequest.query.substr(0, (cypherRequest.query.length-5));
+                    console.log('stop');
+                } else {
+                    cypherRequest.query += nodeValue+'.'+attributesName+''+operator+''+attributesValue+' AND ';
+                }
+                i++;
+            }
+            cypherRequest.query += ' RETURN '+nodeValue;
+            console.log(cypherRequest.query);
+            break;
         case 'SEARCH_BY_NODE_TYPE_AND_NODE_VALUE':
             var mainNode = eval('req.body.mainTypeNode');
             mainNode = mainNode.toLowerCase();
@@ -271,6 +291,10 @@ app.post('/userFriendly', function(req, res){
             }
             
             cypherRequest.query += ' SET rel2 = rel WITH rel DELETE rel'
+            break;
+        case 'IMPORT_DATABASE':
+            var dataContent = req.body.dataContent;
+            cypherRequest = {query : dataContent};
             break;
         case 'DELETE_DATABASE':
             cypherRequest = {query : 'MATCH (n) DETACH DELETE n;'};

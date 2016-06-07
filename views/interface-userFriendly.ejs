@@ -13,17 +13,20 @@
     <p class="separationText"> Recherche des noeuds </p>
     <hr>
     <div class="row">
-        <div class="col-lg-2"> 
+        <div class="col-lg-3"> 
             <form id="formGetGraph" name="getGraph" action="/userFriendly" method="post">
                 <input type="hidden" value="GET_GRAPH" name="KEYWORD"/>
-                <button class="btn btn-primary btnStandard" id="returnGraph" type="submit">Retourne le graph</button>
+                <button class="btn btn-primary btnStandard" id="returnGraph" type="submit">Retourner tout le graph</button>
             </form>
         </div>
         <div class="col-md-3">
-            <button class="btn btn-primary btnStandard" onclick="searchByNodeTypeDialog()">Recherche par type de noeud</button>
+            <button class="btn btn-primary btnStandard" onclick="searchByNodeTypeDialog()">Rechercher par type de noeud</button>
         </div>
-        <div class="col-md-4">
-            <button class="btn btn-primary btnStandard" onclick="searchByNodeTypeAndValueDialog()">Recherche par type de noeud et par attribut</button>
+        <div class="col-md-3">
+            <button class="btn btn-primary btnStandard" onclick="searchByNodeAndAttributes()">Rechercher de noeud avec restrictions</button>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary btnStandard" onclick="searchByNodeTypeAndValueDialog()">Rechercher des relations</button>
         </div>
     </div>
     <p class="separationText"> Traitement des noeuds </p>
@@ -60,6 +63,9 @@
     <div class="row" style="margin-top:10px;">
         <div class="col-md-3">
             <button class="btn btn-primary btnStandard" onClick="deleteDatabase()">Vider la base de données</button>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary btnStandard" onClick="importDatabase()">Importer une base de données</button>
         </div>
     </div>
 </div>
@@ -100,7 +106,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Recherche par type de noeud et par attribut</h4>
+                <h4 class="modal-title">Recherche des relations</h4>
             </div>
             <form id="formSearchByNodeTypeAndNodeValue" name="searchByNodeTypeAndNoveValue" action="/userFriendly" method="post">
                 <div class="modal-body">
@@ -140,6 +146,61 @@
                         <span class="glyphicon glyphicon-plus"></span> Ajouter un noeud
                     </button>
                     <button type="button" class="btn btn-primary" onClick="addAttributes('rowSearchByNodeValueInput')">
+                        <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
+                    </button>
+                    <button type="submit" class="btn btn-success" >Valider</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalSearchByNodeWithAttributes" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Rechercher des noeuds avec des restrictions</h4>
+            </div>
+            <form id="formSearchByNodeWithAttributes" name="searchByNodeWithAttributes" action="/userFriendly" method="post">
+                <div class="modal-body">
+                    <div id="rowSearchByNodeWithAttributes">
+                        <div id="SearchByNodeWithAttributes0" class="row">
+                            <div class="col-md-6">
+                                <label for="nodeType">Type de noeud</label>
+                                <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Noeud recherché"></span>
+                                <input type="text" id="typeNode0" name="typeNode0" class="form-control" required/>
+                            </div>
+                            <input type="hidden" name="KEYWORD" value="SEARCH_BY_NODE_TYPE_WITH_ATTRIBUTES" />
+                        </div>
+                    </div>
+                    <h4>Attributs</h4>
+                    <div id="rowSearchWithAttributes">
+                        <div id="rowSearchWithAttributes0" class="row">
+                            <div class="col-md-3">
+                                <label for="nameInput0">Nom de l'attribut</label>
+                                <input type="text" name="attributesName0" id="nameInput0" class="form-control" required/>
+                            </div>
+                            <div class='col-md-4'>
+                                <label for="selectOperator0">Opérateur</label>
+                                <select name="operator0" id="selectOperator0" class="form-control">
+                                    <option value="<">Inférieur à</option>
+                                    <option value="<=">Inférieur ou égale à</option>
+                                    <option value=">">Supérieur à</option>
+                                    <option value=">=">Supérieur ou égale à</option>
+                                    <option value="=">Égale à</option>
+                                    <option value="<>">Différent de</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="valueInput0">Valeur de l'attribut</label>
+                                <input type="text" name="attributesValue0" id="valueInput0" class="form-control" required/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="addAttributes('rowSearchWithAttributes')">
                         <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
                     </button>
                     <button type="submit" class="btn btn-success" >Valider</button>
@@ -602,21 +663,41 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Supprimer toute la base de données</h4>
             </div>
-            <div class="modal-body">
-                <p class="alert alert-danger">
-                    Attention ! Vous êtes sur le point de supprimer l'intégralité de votre base de données. Êtes-vous sûr que vous souhaitez faire ça ?
-                </p>
-                <form id="formDeleteDatabase" name="deleteDatabse" action="/userFriendly" method="post">
-                    <input type='hidden' name="KEYWORD"  value="DELETE_DATABASE" />
-                </form>
+            <form id="formDeleteDatabase" name="deleteDatabse" action="/userFriendly" method="post">
+                <div class="modal-body">
+                    <p class="alert alert-danger">
+                        Attention ! Vous êtes sur le point de supprimer l'intégralité de votre base de données. Êtes-vous sûr que vous souhaitez faire ça ?
+                    </p>
+                        <input type='hidden' name="KEYWORD"  value="DELETE_DATABASE" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Oui</button>
+                    <button type="button" class="btn btn-danger" onClick="cancel('modalDeleteDatabase')">Non</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalImportDatabase" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Importer une base de données</h4>
             </div>
-            <div class="modal-footer">
-<!--                <button type="button" class="btn btn-primary" onClick="addAttributes('rowRelationship')">
-                    <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
-                </button>-->
-                <button type="button" class="btn btn-success" onClick="submit('formDeleteDatabase')">Oui</button>
-                <button type="button" class="btn btn-danger" onClick="cancel('modalDeleteDatabase')">Non</button>
-            </div>
+            <form id="formImportDatabase" name="importDatabse" action="/userFriendly" method="post">
+                <div class="modal-body">
+                    <label for="textareaDataContent"></label>
+                    <textarea id="textareaDataContent" name="dataContent" style="margin: 0px;width: 566px;height: 250px;"></textarea>
+                    <input type='hidden' name="KEYWORD"  value="IMPORT_DATABASE" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info pull-left" onclick='importExample()'>Exemple d'import</button>
+                    <button type="submit" class="btn btn-success" >Valider</button>
+                    <button type="button" class="btn btn-danger" onClick="cancel('modalImportDatabase')">Annuler</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
