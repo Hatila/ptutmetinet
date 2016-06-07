@@ -1,4 +1,8 @@
 //Ouverture d'une modal
+function searchByNodeTypeAndValueDialog(){
+    $('#modalSearchByNodeTypeAndNodeValue').modal();
+}
+
 function searchByNodeTypeDialog(){
     $("#modalSearchByNodeType").modal();
 }
@@ -102,8 +106,13 @@ function addAttributes(id){
             if($('#'+id+' #'+id+''+(indexAttributes-1)+' #trashButton').length !== 0){
                 $('#'+id+' #'+id+''+(indexAttributes-1)+' #trashButton').remove();
             }
-            //Ajoute les inputs, le checkbox pour attribut unique et le bouton de suppression de ligne
-            $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div><div class="col-md-3"><input type="checkbox" name="uniqueConstraint'+indexAttributes+'" id="uniqueInput'+indexAttributes+'" class="checkbox mt-10" /></div><div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div></div>');
+            if(id === 'rowSearchByNodeValueInput'){
+                //Ajoute les inputs, le checkbox pour attribut unique et le bouton de suppression de ligne
+            $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div><div class="col-md-3"><div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div></div>');
+            } else {
+                //Ajoute les inputs, le checkbox pour attribut unique et le bouton de suppression de ligne
+                $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div><div class="col-md-3"><input type="checkbox" name="uniqueConstraint'+indexAttributes+'" id="uniqueInput'+indexAttributes+'" class="checkbox mt-10" /></div><div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div></div>');
+            }
         }
     } else {
         //Vérifie s'il existe déjà un id "warningInfo" dans la modal visé
@@ -128,6 +137,7 @@ function addNodes(id){
      * Récupère la valeur des derniers inputs (peut être les 1er si aucun n'a été ajouté)
      */
     var inputNameField = $('#'+id+' [name=typeNode'+indexNodes+']');
+    console.log(inputNameField);
     //Si au moins un input de la ligne en cours est vide, on ajoute pas de nouvelles lignes
     if(inputNameField.val() !== ''){
         indexNodes++;
@@ -207,3 +217,27 @@ $("#modalCreateNode").on("hidden.bs.modal", function () {
     }
     indexNodes = 0;
 });
+
+$('#modalSearchByNodeTypeAndNodeValue').on("hidden.bs.modal", function(){
+    if(indexNodes > 0){
+        for(var i = 1; i <= indexNodes; i++){
+            $("#rowSearchByNodeTypeInput"+i).remove();
+        }
+        indexNodes = 0;
+    }
+    indexNodes = 0;
+    
+    
+    if(indexAttributes > 0){
+        for(var i = 1; i <= indexAttributes; i++){
+            $("#rowSearchByNodeValueInput"+i).remove();
+        }
+        indexAttributes = 0;
+    }
+    indexAttributes = 0;
+    
+    
+    $("#modalSearchByNodeTypeAndNodeValue #typeNode0").val('');
+    $("#modalSearchByNodeTypeAndNodeValue #nameInput0").val('');
+    $("#modalSearchByNodeTypeAndNodeValue #valueInput0").val('');
+})

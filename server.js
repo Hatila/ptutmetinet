@@ -65,12 +65,60 @@ app.post('/userFriendly', function(req, res){
                     console.log('stop');
                 } else {
                     otherNodeType = otherNodeType.split(' ').join('_');
+                    //Si le type de noeud est le même, on ajoute une valeur numérique afin de le rendre différent
+                    if(otherNodeType === nodeType){
+                        otherNodeType += i.toString();
+                    }
                     otherNodeValue = otherNodeType.toLowerCase();
                     nodeArray.push(otherNodeValue);
-                    cypherRequest.query += ',('+otherNodeValue+':'+otherNodeType+')';
+                    nodeArray.push('r'+i);
+                    //@TODO : Test if more than 3 nodeType
+                    cypherRequest.query += '-[r'+i+']->('+otherNodeValue+')';
+//                    cypherRequest.query += ',('+otherNodeValue+':'+otherNodeType+')';
                 }
                 i++;
             }
+            cypherRequest.query += ' RETURN ';
+            for(var j = 0; j < nodeArray.length;j++){
+                cypherRequest.query += nodeArray[j]+',';
+                if(j+1 === nodeArray.length){
+                    //Permet d'enlever la dernière virgule inutile
+                    cypherRequest.query = cypherRequest.query.substr(0, (cypherRequest.query.length-1));
+                }
+            }
+            break;
+        case 'SEARCH_BY_NODE_TYPE_AND_NODE_VALUE':
+            var mainNode = eval('req.body.mainTypeNode');
+            mainNode = mainNode.toLowerCase();
+            var attributeName = eval('req.body.attributesName'+i);
+            var attributeValue = eval('req.body.attributesValue'+i);
+            attributeName = attributeName.split(' ').join('_');
+            cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+' {'+attributeName+':"'+attributeValue+'"})-[r'+i+']->('+mainNode+')'};
+            var nodeArray = [nodeValue,'r'+i];
+            
+            var otherNodeType = null;
+            i=1;
+            while(boolean){
+                otherNodeType = eval('req.body.typeNode'+i);
+                attributeName = eval('req.body.attributesName'+i);
+                attributeValue = eval('req.body.attributesValue'+i);
+                if(typeof otherNodeType === 'undefined'){
+                    boolean = false;
+                    console.log('stop');
+                }
+                else {
+                    console.log('here');
+                    otherNodeType = otherNodeType.split(' ').join('_');
+                    var otherNodeValue = otherNodeType.toLowerCase();
+                    otherNodeValue += i.toString();
+                    attributeName = attributeName.split(' ').join('_');
+                    nodeArray.push(otherNodeValue);
+                    nodeArray.push('r'+i);
+                    cypherRequest.query += ',('+otherNodeValue+':'+otherNodeType+' {'+attributeName+':"'+attributeValue+'"})-[r'+i+']->('+mainNode+')';
+                }
+                i++;
+            }
+            nodeArray.push(mainNode);
             cypherRequest.query += ' RETURN ';
             for(var j = 0; j < nodeArray.length;j++){
                 cypherRequest.query += nodeArray[j]+',';
@@ -230,7 +278,6 @@ app.post('/userFriendly', function(req, res){
         default:
             //@TODO
     }
-    
     console.log(cypherRequest.query);
 //    var jsonData = {query : "CREATE (n:Person { name : 'name' }) RETURN n"};
 //    var jsonData = { query: 'CREATE (n:NewType {name:"World"}) RETURN "hello", n.name' }

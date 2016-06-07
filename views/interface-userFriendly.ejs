@@ -22,6 +22,9 @@
         <div class="col-md-3">
             <button class="btn btn-primary btnStandard" onclick="searchByNodeTypeDialog()">Recherche par type de noeud</button>
         </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary btnStandard" onclick="searchByNodeTypeAndValueDialog()">Recherche par type de noeud et par attribut</button>
+        </div>
     </div>
     <p class="separationText"> Traitement des noeuds </p>
     <hr>
@@ -84,6 +87,60 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onClick="addNodes('rowSearchByNodeType')">
                         <span class="glyphicon glyphicon-plus"></span> Ajouter un noeud
+                    </button>
+                    <button type="submit" class="btn btn-success" >Valider</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalSearchByNodeTypeAndNodeValue" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Recherche par type de noeud et par attribut</h4>
+            </div>
+            <form id="formSearchByNodeTypeAndNodeValue" name="searchByNodeTypeAndNoveValue" action="/userFriendly" method="post">
+                <div class="modal-body">
+                    <div id="rowSearchByNodeTypeInput">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="mainNode">Noeud principal</label>
+                                <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Noeud utilisé pour les relations"></span>
+                                <input type="text" id="mainNode" name="mainTypeNode" class="form-control" required />
+                            </div>
+                        </div>
+                        <div id="rowSearchByNodeTypeInput0" class="row">
+                            <div class="col-md-6">
+                                <label for="nodeType">Type de noeud</label>
+                                <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Noeud(s) en relation avec le noeud principal"></span>
+                                <input type="text" id="typeNode0" name="typeNode0" class="form-control" required/>
+                            </div>
+                            <input type="hidden" name="KEYWORD" value="SEARCH_BY_NODE_TYPE_AND_NODE_VALUE" />
+                        </div>
+                    </div>
+                    <h4>Attributs</h4>
+                    <div id="rowSearchByNodeValueInput">
+                        <div id="rowSearchByNodeValueInput0" class="row">
+                            <div class="col-md-4">
+                                <label for="nameInput0">Nom</label>
+                                <input type="text" name="attributesName0" id="nameInput0" class="form-control" required/>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="valueInput0">Valeur</label>
+                                <input type="text" name="attributesValue0" id="valueInput0" class="form-control" required/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="addNodes('rowSearchByNodeTypeInput')">
+                        <span class="glyphicon glyphicon-plus"></span> Ajouter un noeud
+                    </button>
+                    <button type="button" class="btn btn-primary" onClick="addAttributes('rowSearchByNodeValueInput')">
+                        <span class="glyphicon glyphicon-plus"></span> Ajouter un attribut
                     </button>
                     <button type="submit" class="btn btn-success" >Valider</button>
                 </div>
