@@ -100,12 +100,16 @@ app.post('/userFriendly', function(req, res){
                     cypherRequest.query = cypherRequest.query.substr(0, (cypherRequest.query.length-5));
                     console.log('stop');
                 } else {
-                    cypherRequest.query += nodeValue+'.'+attributesName+''+operator+''+attributesValue+' AND ';
+                    cypherRequest.query += nodeValue+'.'+attributesName+''+operator;
+                    if(isNaN(attributesValue)){
+                        cypherRequest.query += '"'+attributesValue+'" AND ';
+                    } else {
+                        cypherRequest.query += attributesValue+' AND ';
+                    }
                 }
                 i++;
             }
             cypherRequest.query += ' RETURN '+nodeValue;
-            console.log(cypherRequest.query);
             break;
         case 'SEARCH_BY_NODE_TYPE_AND_NODE_VALUE':
             var mainNode = eval('req.body.mainTypeNode');
