@@ -725,28 +725,6 @@
 <script src="./js/graph.js"></script>
 <script src="./js/svg-pan-zoom.min.js"></script>
 <script>
-
-    function auto_grow(element) {
-        element.style.height = "5px";
-        element.style.height = (element.scrollHeight)+"px";
-    }
-
-    $("#addNode").on("click", function(){
-        $("#areaRequete").html('CREATE (n {name:"World"}) RETURN "hello", n.name')
-    })
-
-    $("#returnNode").on("click", function(){
-        $("#areaRequete").html('MATCH (n) RETURN n LIMIT 100')
-    })
-
-    $("#returnGraph").on("click", function(){
-        $("#areaRequete").html('MATCH path = (n)-[r]->(m) RETURN path')
-    })
-
-    $("#findNode").on("click", function(){
-        $("#areaRequete").html('START n=node:nodes(field = "label") RETURN n')
-    })
-
     var vide = "";
 </script>
 
