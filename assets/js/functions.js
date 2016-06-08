@@ -156,7 +156,7 @@ function addNodes(id){
             $('#'+id+' #'+id+''+(indexNodes-1)+' #trashButton').remove();
         }
         //Ajoute les inputs, le checkbox pour attribut unique et le bouton de suppression de ligne
-        $('#'+id).append('<div id="'+id+''+indexNodes+'" class="row"><div class="col-md-5 champClone"><input class="form-control" type="text" id="nodeType'+indexNodes+'" name="typeNode'+indexNodes+'" required /></div><div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRowNode('+id+indexNodes+')"></span></div></div>');
+        $('#'+id).append('<div id="'+id+''+indexNodes+'" class="row"><div class="col-md-6 champClone"><input class="form-control" type="text" id="nodeType'+indexNodes+'" name="typeNode'+indexNodes+'" required /></div><div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRowNode('+id+indexNodes+')"></span></div></div>');
     } else {
         //Vérifie s'il existe déjà un id "warningInfo" dans la modal visé
         if($('#'+id).parent().siblings('div.modal-footer').find('#warningInfo').length === 0){
