@@ -15,8 +15,8 @@ app.get('/', function(req, res) {
     res.render('index.ejs');
 });
 
-app.get('/test', function(req, res) {
-   res.render('test.ejs');
+app.get('/userManual', function(req, res) {
+   res.render('/assets/pdf/test.ejs');
 });
 
 app.get('/presentation', function(req, res) {
@@ -53,7 +53,7 @@ app.post('/userFriendly', function(req, res){
     switch(requestType){
         //Get all graph content
         case 'GET_GRAPH':
-            cypherRequest = {query : 'MATCH (n) OPTIONAL MATCH (n)-[r]-() return n, r;'};
+            cypherRequest = {query : 'MATCH (n) OPTIONAL MATCH (n)-[r]->() return n, r;'};
             break;
         //Search by node type
         case 'SEARCH_BY_NODE_TYPE':
@@ -104,20 +104,28 @@ app.post('/userFriendly', function(req, res){
                     cypherRequest.query = cypherRequest.query.substr(0, (cypherRequest.query.length-5));
                     console.log('stop');
                 } else {
-                    cypherRequest.query += nodeValue+'.'+attributesName+''+operator+''+attributesValue+' AND ';
+                    cypherRequest.query += nodeValue+'.'+attributesName+''+operator;
+                    if(isNaN(attributesValue)){
+                        cypherRequest.query += '"'+attributesValue+'" AND ';
+                    } else {
+                        cypherRequest.query += attributesValue+' AND ';
+                    }
                 }
                 i++;
             }
             cypherRequest.query += ' RETURN '+nodeValue;
-            console.log(cypherRequest.query);
             break;
         case 'SEARCH_BY_NODE_TYPE_AND_NODE_VALUE':
             var mainNode = eval('req.body.mainTypeNode');
             mainNode = mainNode.toLowerCase();
             var attributeName = eval('req.body.attributesName'+i);
             var attributeValue = eval('req.body.attributesValue'+i);
-            attributeName = attributeName.split(' ').join('_');
-            cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+' {'+attributeName+':"'+attributeValue+'"})-[r'+i+']->('+mainNode+')'};
+            if(attributeName === ''){
+                cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+')-[r'+i+']->('+mainNode+')'};
+            } else {
+                attributeName = attributeName.split(' ').join('_');
+                cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+' {'+attributeName+':"'+attributeValue+'"})-[r'+i+']->('+mainNode+')'};
+            }
             var nodeArray = [nodeValue,'r'+i];
             
             var otherNodeType = null;
@@ -135,10 +143,14 @@ app.post('/userFriendly', function(req, res){
                     otherNodeType = otherNodeType.split(' ').join('_');
                     var otherNodeValue = otherNodeType.toLowerCase();
                     otherNodeValue += i.toString();
-                    attributeName = attributeName.split(' ').join('_');
                     nodeArray.push(otherNodeValue);
                     nodeArray.push('r'+i);
-                    cypherRequest.query += ',('+otherNodeValue+':'+otherNodeType+' {'+attributeName+':"'+attributeValue+'"})-[r'+i+']->('+mainNode+')';
+                    if(typeof attributeName === 'undefined'){
+                        cypherRequest.query += ',('+otherNodeValue+':'+otherNodeType+')-[r'+i+']->('+mainNode+')';
+                    } else {
+                        attributeName = attributeName.split(' ').join('_');
+                        cypherRequest.query += ',('+otherNodeValue+':'+otherNodeType+' {'+attributeName+':"'+attributeValue+'"})-[r'+i+']->('+mainNode+')';
+                    }
                 }
                 i++;
             }
@@ -303,10 +315,11 @@ app.post('/userFriendly', function(req, res){
         case 'DELETE_DATABASE':
             cypherRequest = {query : 'MATCH (n) DETACH DELETE n;'};
             break;
+        //Default case will return all graph like GET_GRAPH case
         default:
-            //@TODO
+            cypherRequest = {query : 'MATCH (n) OPTIONAL MATCH (n)-[r]->() return n, r;'};
     }
-    console.log(cypherRequest.query);
+    
 //    var jsonData = {query : "CREATE (n:Person { name : 'name' }) RETURN n"};
 //    var jsonData = { query: 'CREATE (n:NewType {name:"World"}) RETURN "hello", n.name' }
 //    var txUrl = "http://neo4j:naruto@localhost:7474/db/data/cypher";

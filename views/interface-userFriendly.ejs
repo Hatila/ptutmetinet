@@ -127,16 +127,16 @@
                             <input type="hidden" name="KEYWORD" value="SEARCH_BY_NODE_TYPE_AND_NODE_VALUE" />
                         </div>
                     </div>
-                    <h4>Attributs</h4>
+                    <h4>Attributs (optionnel)</h4>
                     <div id="rowSearchByNodeValueInput">
                         <div id="rowSearchByNodeValueInput0" class="row">
                             <div class="col-md-4">
                                 <label for="nameInput0">Nom</label>
-                                <input type="text" name="attributesName0" id="nameInput0" class="form-control" required/>
+                                <input type="text" name="attributesName0" id="nameInput0" class="form-control" />
                             </div>
                             <div class="col-md-4">
                                 <label for="valueInput0">Valeur</label>
-                                <input type="text" name="attributesValue0" id="valueInput0" class="form-control" required/>
+                                <input type="text" name="attributesValue0" id="valueInput0" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -725,63 +725,8 @@
 <script src="./js/graph.js"></script>
 <script src="./js/svg-pan-zoom.min.js"></script>
 <script>
-
-    function auto_grow(element) {
-        element.style.height = "5px";
-        element.style.height = (element.scrollHeight)+"px";
-    }
-
-    $("#addNode").on("click", function(){
-        $("#areaRequete").html('CREATE (n {name:"World"}) RETURN "hello", n.name')
-    })
-
-    $("#returnNode").on("click", function(){
-        $("#areaRequete").html('MATCH (n) RETURN n LIMIT 100')
-    })
-
-    $("#returnGraph").on("click", function(){
-        $("#areaRequete").html('MATCH path = (n)-[r]->(m) RETURN path')
-    })
-
-    $("#findNode").on("click", function(){
-        $("#areaRequete").html('START n=node:nodes(field = "label") RETURN n')
-    })
-
     var vide = "";
-    var jsonResponse = <%- requete %>;
-
-    if(jsonResponse) {
-
-        if (jsonResponse['errors'].length > 0) {
-            swal("Erreur", "Code : " + jsonResponse.errors[0].code + "\n \n Message : " + jsonResponse.errors[0].message, "error");
-        }
-        if (jsonResponse['results'].length > 0) {
-            genererGraph(jsonResponse);
-        }
-    }
-    
-    $(document).ready(function () {
-        //can also be wrapped with:
-        //1. $(function () {...});
-        //2. $(window).load(function () {...});
-        //3. Or your own custom named function block.
-        //It's better to wrap it.
-        //Tooltip, activated by hover event
-        $("body").tooltip({
-                    selector: "[data-toggle='tooltip']",
-                    container: "body"
-                })
-                //Popover, activated by clicking
-                .popover({
-                    selector: "[data-toggle='popover']",
-                    container: "body",
-                    html: true
-                });
-        //They can be chained like the example above (when using the same selector).
-        $(".node").mouseover(function(){
-            var pouet = $(this).attr("data-content");
-            $("#detailedInfos").html(pouet);
-        });
-    });
 </script>
+
+<% include partials/graph %>
 </html>

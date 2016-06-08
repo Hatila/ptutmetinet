@@ -77,38 +77,7 @@
     $("#findNode").on("click", function(){
         $("#areaRequete").html('START n=node:nodes(field = "label") RETURN n')
     })
-
-    var jsonResponse = <%- requete %>;
-
-    if(jsonResponse) {
-
-        if (jsonResponse['errors'].length > 0) {
-            swal("Erreur", "Code : " + jsonResponse.errors[0].code + "\n \n Message : " + jsonResponse.errors[0].message, "error");
-        }
-        if (jsonResponse['results'].length > 0) {
-            genererGraph(jsonResponse);
-        }
-    }
-
-    $(document).ready(function () {
-        $("body").tooltip({
-                    selector: "[data-toggle='tooltip']",
-                    container: "body"
-                })
-                //Popover, activated by clicking
-                .popover({
-                    selector: "[data-toggle='popover']",
-                    container: "body",
-                    html: true
-                });
-        //They can be chained like the example above (when using the same selector).
-        $(".node").mouseover(function(){
-            var pouet = $(this).attr("data-content");
-            $("#detailedInfos").html(pouet);
-        });
-    });
 </script>
+
+<% include partials/graph %>
 </html>
-
-
-<!-- Source vidéo :D  https://www.youtube.com/watch?v=4haBbPEClP4 -->

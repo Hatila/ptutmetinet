@@ -1,0 +1,12 @@
+Manuel d’installation
+    Prérequis : 
+- Avoir node.js, NPM (Node Packet Manager), PM2, NGinx, Git et Neo4j  installés sur le serveur.
+- Configurer NGinx.
+- Ouvrir le port 8080 pour l’application et le port 7474 pour Neo4j. 
+
+  Installation : 
+- Cloner le repository Git sur le serveur (utiliser la commande : ‘git clone https://github.com/Hatila/ptutmetinet.git’).
+- Dans un terminal, tapez la commande : ‘npm install’ pour installer les paquets et les dépendances.
+- Pour Lancer le serveur, tapez la commande : ‘pm2 start server.js’
+
+
