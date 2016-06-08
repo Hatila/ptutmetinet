@@ -112,12 +112,17 @@ app.post('/userFriendly', function(req, res){
             cypherRequest.query += ' RETURN '+nodeValue;
             break;
         case 'SEARCH_BY_NODE_TYPE_AND_NODE_VALUE':
+            console.log(req.body);
             var mainNode = eval('req.body.mainTypeNode');
             mainNode = mainNode.toLowerCase();
             var attributeName = eval('req.body.attributesName'+i);
             var attributeValue = eval('req.body.attributesValue'+i);
-            attributeName = attributeName.split(' ').join('_');
-            cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+' {'+attributeName+':"'+attributeValue+'"})-[r'+i+']->('+mainNode+')'};
+            if(attributeName === ''){
+                cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+')-[r'+i+']->('+mainNode+')'};
+            } else {
+                attributeName = attributeName.split(' ').join('_');
+                cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+' {'+attributeName+':"'+attributeValue+'"})-[r'+i+']->('+mainNode+')'};
+            }
             var nodeArray = [nodeValue,'r'+i];
             
             var otherNodeType = null;
@@ -135,10 +140,14 @@ app.post('/userFriendly', function(req, res){
                     otherNodeType = otherNodeType.split(' ').join('_');
                     var otherNodeValue = otherNodeType.toLowerCase();
                     otherNodeValue += i.toString();
-                    attributeName = attributeName.split(' ').join('_');
                     nodeArray.push(otherNodeValue);
                     nodeArray.push('r'+i);
-                    cypherRequest.query += ',('+otherNodeValue+':'+otherNodeType+' {'+attributeName+':"'+attributeValue+'"})-[r'+i+']->('+mainNode+')';
+                    if(typeof attributeName === 'undefined'){
+                        cypherRequest.query += ',('+otherNodeValue+':'+otherNodeType+')-[r'+i+']->('+mainNode+')';
+                    } else {
+                        attributeName = attributeName.split(' ').join('_');
+                        cypherRequest.query += ',('+otherNodeValue+':'+otherNodeType+' {'+attributeName+':"'+attributeValue+'"})-[r'+i+']->('+mainNode+')';
+                    }
                 }
                 i++;
             }
