@@ -19,6 +19,10 @@ app.get('/test', function(req, res) {
    res.render('test.ejs');
 });
 
+app.get('/presentation', function(req, res) {
+    res.render('presentation.ejs');
+});
+
 app.get('/graph', function(req, res) {
    res.render('graph.ejs');
 });
