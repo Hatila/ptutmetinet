@@ -35,6 +35,20 @@ function genererGraph(requete) {
 
     force.nodes(nodes).links(links).start();
 
+    var defs = svg.append('svg:defs');
+
+    var marker = defs.append("marker")
+        .attr("id", "arrow")
+        .attr("viewBox","0 0 10 10")
+        .attr("refX","10.5")
+        .attr("refY","2")
+        .attr("markerUnits","strokeWidth")
+        .attr("markerWidth","30")
+        .attr("markerHeight","30")
+        .attr("orient","auto").append("svg:path")
+        .attr("d", "M 0 0 L 4 2 L 0 4 z")
+        .attr("fill", "#000");;
+
     // render relationships as lines
     var link = svg.selectAll(".link")
         .data(links).enter()
@@ -44,7 +58,8 @@ function genererGraph(requete) {
         .attr("stroke", "black")
         .attr("data-content", function (d) {
             return d.source.id + " " + d.target.id;
-        });
+        })
+        .attr("marker-end", "url(#arrow)");
 
     var linkText = svg.selectAll(".linkText")
         .data(links).enter()
@@ -107,7 +122,7 @@ function genererGraph(requete) {
     // force feed algo ticks for coordinate computation
     force.on("tick", function () {
         link.attr("d", function (d) {
-            var result = "M "+ d.source.x + " " + d.source.y +" L "+d.target.x + " " + d.target.y
+            var result = "M "+ d.source.x + " " + d.source.y +" L "+d.target.x + " " + d.target.y;
             var existsNode = $("[data-content='" + $(this).attr("data-content") + "']");
             //Si on a plusieurs liens sur les mêmes noeuds
             if(existsNode.length > 1){
