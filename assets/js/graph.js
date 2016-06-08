@@ -14,6 +14,7 @@ function initializeData(graph){
             }
         });
         links = links.concat(row.graph.relationships.map(function (r) {
+
             return {id: r.id, source: idIndex(nodes, r.startNode), target: idIndex(nodes, r.endNode), type: r.type};
         }));
     });
@@ -30,6 +31,7 @@ function initializeSVG(){
         .attr("width", "100%").attr("height",  "100%")
         .attr("pointer-events", "all");
 }
+
 //Fonction permettant de créer et d'afficher les différents éléments (liens, noeuds) de la base sur le graph
 function drawSVG(){
     //Création d'un svg:marker servant de flèche en bout de lien entre 2 noeuds
