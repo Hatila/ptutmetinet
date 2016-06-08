@@ -240,6 +240,7 @@ $('#modalSearchByNodeTypeAndNodeValue').on("hidden.bs.modal", function(){
     indexAttributes = 0;
     
     
+    $("#modalSearchByNodeTypeAndNodeValue #mainNode").val('');
     $("#modalSearchByNodeTypeAndNodeValue #typeNode0").val('');
     $("#modalSearchByNodeTypeAndNodeValue #nameInput0").val('');
     $("#modalSearchByNodeTypeAndNodeValue #valueInput0").val('');

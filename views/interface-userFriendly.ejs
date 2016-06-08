@@ -726,6 +726,7 @@
 <script src="./js/svg-pan-zoom.min.js"></script>
 <script>
 
+    
     function auto_grow(element) {
         element.style.height = "5px";
         element.style.height = (element.scrollHeight)+"px";
@@ -751,7 +752,15 @@
     var jsonResponse = <%- requete %>;
 
     if(jsonResponse) {
-
+        console.log(jsonResponse.results[0]['data']);
+        //Affiche un message d'erreur si aucune données n'est renvoyé
+        if(jsonResponse.results[0]['data'].length === 0){
+            var sentence = '';
+            jsonResponse.results[0]['columns'].forEach(function(column){
+                sentence += column + ', ';
+            });
+            swal("Erreur","Pas de résultat correspondant au(x) noeud(s) "+sentence);
+        }
         if (jsonResponse['errors'].length > 0) {
             swal("Erreur", "Code : " + jsonResponse.errors[0].code + "\n \n Message : " + jsonResponse.errors[0].message, "error");
         }
