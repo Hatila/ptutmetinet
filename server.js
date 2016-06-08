@@ -49,7 +49,7 @@ app.post('/userFriendly', function(req, res){
     switch(requestType){
         //Get all graph content
         case 'GET_GRAPH':
-            cypherRequest = {query : 'MATCH (n) OPTIONAL MATCH (n)-[r]-() return n, r;'};
+            cypherRequest = {query : 'MATCH (n) OPTIONAL MATCH (n)-[r]->() return n, r;'};
             break;
         //Search by node type
         case 'SEARCH_BY_NODE_TYPE':
@@ -112,7 +112,6 @@ app.post('/userFriendly', function(req, res){
             cypherRequest.query += ' RETURN '+nodeValue;
             break;
         case 'SEARCH_BY_NODE_TYPE_AND_NODE_VALUE':
-            console.log(req.body);
             var mainNode = eval('req.body.mainTypeNode');
             mainNode = mainNode.toLowerCase();
             var attributeName = eval('req.body.attributesName'+i);
@@ -312,10 +311,11 @@ app.post('/userFriendly', function(req, res){
         case 'DELETE_DATABASE':
             cypherRequest = {query : 'MATCH (n) DETACH DELETE n;'};
             break;
+        //Default case will return all graph like GET_GRAPH case
         default:
-            //@TODO
+            cypherRequest = {query : 'MATCH (n) OPTIONAL MATCH (n)-[r]->() return n, r;'};
     }
-    console.log(cypherRequest.query);
+    
 //    var jsonData = {query : "CREATE (n:Person { name : 'name' }) RETURN n"};
 //    var jsonData = { query: 'CREATE (n:NewType {name:"World"}) RETURN "hello", n.name' }
 //    var txUrl = "http://neo4j:naruto@localhost:7474/db/data/cypher";
