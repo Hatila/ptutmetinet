@@ -15,8 +15,12 @@ app.get('/', function(req, res) {
     res.render('index.ejs');
 });
 
-app.get('/test', function(req, res) {
-   res.render('test.ejs');
+app.get('/userManual', function(req, res) {
+   res.render('/assets/pdf/test.ejs');
+});
+
+app.get('/presentation', function(req, res) {
+    res.render('presentation.ejs');
 });
 
 app.get('/graph', function(req, res) {
