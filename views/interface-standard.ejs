@@ -94,21 +94,13 @@
         $("body").tooltip({
                     selector: "[data-toggle='tooltip']",
                     container: "body"
-                })
-                //Popover, activated by clicking
-                .popover({
-                    selector: "[data-toggle='popover']",
-                    container: "body",
-                    html: true
                 });
-        //They can be chained like the example above (when using the same selector).
+        
+        //Affichage des infos d'un noeud dans la zone en bas du graph au survol du noeud
         $(".node").mouseover(function(){
-            var pouet = $(this).attr("data-content");
-            $("#detailedInfos").html(pouet);
+            var data = $(this).attr("data-content");
+            $("#detailedInfos").html(data);
         });
     });
 </script>
 </html>
-
-
-<!-- Source vidéo :D  https://www.youtube.com/watch?v=4haBbPEClP4 -->
