@@ -1,0 +1,25 @@
+<script>
+    var jsonResponse = <%- requete %>;
+
+    if(jsonResponse) {
+            if (jsonResponse['errors'].length > 0) {
+                swal("Erreur", "Code : " + jsonResponse.errors[0].code + "\n \n Message : " + jsonResponse.errors[0].message, "error");
+            }
+            if (jsonResponse['results'].length > 0) {
+                genererGraph(jsonResponse);
+            }
+        }
+
+        $(document).ready(function () {
+            $("body").tooltip({
+            selector: "[data-toggle='tooltip']",
+            container: "body"
+            });
+
+            //Affichage des infos d'un noeud dans la zone en bas du graph au survol du noeud
+            $(".node").mouseover(function(){
+                var data = $(this).attr("data-content");
+                $("#detailedInfos").html(data);
+            });
+        });
+</script>
