@@ -32,20 +32,6 @@
   caption: '{Prénom}';
 }
 
-.node.Test {
-  fill: #FF756E;
-  border-color: #E06760;
-  text-color-internal: #FFFFFF;
-  caption: '{test}';
-}
-
-.node.aze {
-  fill: #DE9BF9;
-  border-color: #BF85D6;
-  text-color-internal: #FFFFFF;
-  caption: '{aze}';
-}
-
 .node.Movie {
   fill: #FB95AF;
   border-color: #E0849B;

@@ -22,7 +22,18 @@ function updateNodeDialog(){
      */ 
     setTimeout(function(){
         indexAttributes++;
-        $('#rowUpdate').append('<div id="rowUpdate'+indexAttributes+'" class="row"><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div><div class="col-md-2"><input id="uniqueInput'+indexAttributes+'" name="uniqueConstraint'+indexAttributes+'" type="checkbox" /><label for="uniqueInput'+indexAttributes+'"><span></span><ins><i>Unique</i></ins></label></div></div>');
+        $('#rowUpdate').append('<div id="rowUpdate'+indexAttributes+'" class="row">\n\
+            <div class="col-md-4 champClone"><label for="attributesName'+indexAttributes+'">Nom</label>\n\
+                <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Nom de l\'attribut à modifier ou à ajouter s\'il n\'existe pas."></span>\n\
+                <input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div>\n\
+            <div class="col-md-4 champClone"><label for="attributesValue'+indexAttributes+'">Valeur</label>\n\
+                <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Valeur de l\'attribut à modifier ou à ajouter s\'il n\'existe pas."></span>\n\
+                <input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div>\n\
+            <div class="col-md-4 champClone"><label for="uniqueInput'+indexAttributes+'">Attribut unique</label>\n\
+                <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Permet de rendre unique la propriété existante ou ajouté."></span>\n\
+                <input id="uniqueInput'+indexAttributes+'" name="uniqueConstraint'+indexAttributes+'" type="checkbox" /><label for="uniqueInput'+indexAttributes+'">\n\
+                <span></span><ins><i>Unique</i></ins></label></div>\n\
+            </div>');
     },0);
 }
 
@@ -67,7 +78,9 @@ function trashLastRow(domElement){
     domElement.remove();
     //S'il y a plus d'une ligne ET s'il ne s'agit pas de la ligne rowUpdate2 qui est un cas particulier (2 lignes minimum pour cette action)
     if(indexAttributes > 0 && subId !== 'rowUpdate2'){
-        $('#'+id+' #'+id+''+indexAttributes).append('<div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div>');
+        $('#'+id+' #'+id+''+indexAttributes).append('<div class="col-md-1" id="trashButton">\n\
+            <span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span>\n\
+        </div>');
     }
 }
 
@@ -84,7 +97,9 @@ function trashLastRowNode(domElement){
     domElement.remove();
     //S'il y a plus d'une ligne
     if(indexNodes > 0){
-        $('#'+id+' #'+id+''+indexNodes).append('<div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRowNode('+id+indexNodes+')"></span></div>');
+        $('#'+id+' #'+id+''+indexNodes).append('<div class="col-md-1" id="trashButton">\n\
+            <span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRowNode('+id+indexNodes+')"></span>\n\
+        </div>');
     }
 }
 
@@ -104,7 +119,9 @@ function addAttributes(id){
     if(inputNameField.val() !== '' && inputValueField.val() !== ''){
         indexAttributes++;
         if(id === 'rowPropertiesToDelete'){
-            $('#'+id).append('<div id="'+id+''+indexAttributes+'"><div class="col-md-6 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div></div>');
+            $('#'+id).append('<div id="'+id+''+indexAttributes+'"><div class="col-md-6 champClone">\n\
+                <input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div>\n\
+            </div>');
         } else {
             //Si le button de suppression existe, on supprime celui de la ligne précédente afin de mettre le boutton sur la ligne suivante
             if($('#'+id+' #'+id+''+(indexAttributes-1)+' #trashButton').length !== 0){
@@ -112,20 +129,42 @@ function addAttributes(id){
             }
             if(id === 'rowSearchByNodeValueInput'){
                 //Ajoute les inputs et le bouton de suppression de ligne
-                $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" /></div><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" /></div><div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div></div>');
+                $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-4 champClone">\n\
+                    <input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" /></div>\n\
+                    <div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" /></div>\n\
+                    <div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div>\n\
+                </div>');
             } else {
                 //Ajoute les inputs, la selectbox et le bouton de suppression de ligne
                 if(id === 'rowSearchWithAttributes'){
-                    $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-3 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div><div class="col-md-4 champClone"><select name="operator'+indexAttributes+'" id="selectOperator'+indexAttributes+'" class="form-control"><option value="<">Inférieur à</option><option value="<=">Inférieur ou égale à</option><option value=">">Supérieur à</option><option value=">=">Supérieur ou égale à</option><option value="=">Égale à</option><option value="<>">Différent de</option></select></div><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div><div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div></div>');
+                    $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-3 champClone">\n\
+                        <input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div>\n\
+                        <div class="col-md-4 champClone"><select name="operator'+indexAttributes+'" id="selectOperator'+indexAttributes+'" class="form-control">\n\
+                        <option value="<">Inférieur à</option><option value="<=">Inférieur ou égale à</option><option value=">">Supérieur à</option>\n\
+                        <option value=">=">Supérieur ou égale à</option><option value="=">Égale à</option><option value="<>">Différent de</option></select></div>\n\
+                        <div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div>\n\
+                        <div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div>\n\
+                    </div>');
                 } else{
                     if(id === 'rowCreate'){
                         //Ajoute les inputs, le checkbox pour attribut unique et le bouton de suppression de ligne
-                        $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div><div class="col-md-3"><input id="uniqueInput'+indexAttributes+'" name="uniqueConstraint'+indexAttributes+'" type="checkbox" /><label for="uniqueInput'+indexAttributes+'"><span></span><ins><i>Unique</i></ins></label></div><div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div></div>');
-//                        $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div><div class="col-md-3"><input type="checkbox" name="uniqueConstraint'+indexAttributes+'" id="uniqueInput'+indexAttributes+'" class="checkbox mt-10" /></div><div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div></div>');
+                        $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-4 champClone">\n\
+                            <input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div>\n\
+                            <div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div>\n\
+                            <div class="col-md-3"><input id="uniqueInput'+indexAttributes+'" name="uniqueConstraint'+indexAttributes+'" type="checkbox" />\n\
+                            <label for="uniqueInput'+indexAttributes+'"><span></span><ins><i>Unique</i></ins></label></div><div class="col-md-1" id="trashButton">\n\
+                            <span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div>\n\
+                        </div>');
                     }
                     else {
                         //Ajoute les inputs, le checkbox pour attribut unique et le bouton de suppression de ligne
-                        $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div><div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div><div class="col-md-3"><input id="uniqueInput'+indexAttributes+'" name="uniqueConstraint'+indexAttributes+'" type="checkbox" /><label for="uniqueInput'+indexAttributes+'"><span></span><ins><i>Unique</i></ins></label></div><div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div></div>');
+                        $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-4 champClone">\n\
+                            <input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div>\n\
+                            <div class="col-md-4 champClone"><input class="form-control" type="text" name="attributesValue'+indexAttributes+'" id="valueInput'+indexAttributes+'" required/></div>\n\
+                            <div class="col-md-3"><input id="uniqueInput'+indexAttributes+'" name="uniqueConstraint'+indexAttributes+'" type="checkbox" /><label for="uniqueInput'+indexAttributes+'">\n\
+                            <span></span><ins><i>Unique</i></ins></label></div><div class="col-md-1" id="trashButton">\n\
+                            <span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div>\n\
+                        </div>');
                     }
                 }
             }
@@ -163,7 +202,10 @@ function addNodes(id){
             $('#'+id+' #'+id+''+(indexNodes-1)+' #trashButton').remove();
         }
         //Ajoute les inputs, le checkbox pour attribut unique et le bouton de suppression de ligne
-        $('#'+id).append('<div id="'+id+''+indexNodes+'" class="row"><div class="col-md-6 champClone"><input class="form-control" type="text" id="nodeType'+indexNodes+'" name="typeNode'+indexNodes+'" required /></div><div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRowNode('+id+indexNodes+')"></span></div></div>');
+        $('#'+id).append('<div id="'+id+''+indexNodes+'" class="row"><div class="col-md-6 champClone">\n\
+            <input class="form-control" type="text" id="nodeType'+indexNodes+'" name="typeNode'+indexNodes+'" required /></div>\n\
+            <div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRowNode('+id+indexNodes+')"></span></div>\n\
+        </div>');
     } else {
         //Vérifie s'il existe déjà un id "warningInfo" dans la modal visé
         if($('#'+id).parent().siblings('div.modal-footer').find('#warningInfo').length === 0){

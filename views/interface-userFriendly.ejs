@@ -187,6 +187,7 @@
                             </div>
                             <div class='col-md-4'>
                                 <label for="selectOperator0">Opérateur</label>
+                                <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Opérateur mathématique permettant d'appliquer une restriction sur le noeud recherché."></span>
                                 <select name="operator0" id="selectOperator0" class="form-control">
                                     <option value="<">Inférieur à</option>
                                     <option value="<=">Inférieur ou égale à</option>
@@ -198,6 +199,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="valueInput0">Valeur de l'attribut</label>
+                                <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Valeur de l'attribut sur lequel s'effectue la restriction"></span>
                                 <input type="text" name="attributesValue0" id="valueInput0" class="form-control" required/>
                             </div>
                         </div>
@@ -282,6 +284,7 @@
                         <div id="rowNode">
                             <div class="col-md-6">
                                 <label for="nodeType">Type de noeud</label>
+                                <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Type du noeud recherché."></span>
                                 <input type="text" id="typeNode0" name="typeNode" class="form-control" required/>                            
                             </div>
 <!--                            <div class="col-md-6">
@@ -297,29 +300,24 @@
                         </button>
                     </div>-->
                     <hr>
-                    <h5>Attributs</h5>
+                    <h4>Attributs</h4>
                     <div id="rowUpdate">
+                        <div class="row">
+                            <span class="glyphicon glyphicon-warning-sign col-md-2 fs-1_5" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="
+                                  Le premier attribut permet de trouver quel noeud vous souhaitez mettre à jour. Il ne servira en aucun cas à ajouter ou modifier un attribut.">
+                            </span>
+                        </div>
                         <div id="rowUpdate0" class="row">
                             <div class="col-md-4">
                                 <label for="attributesName0">Nom</label>
+                                <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Nom de l'attribut du noeud recherché"></span>
                                 <input type="text" name="attributesName0" id="nameInput0" class="form-control" required/>
                             </div>
                             <div class="col-md-4">
                                 <label for="attributesValue0">Valeur</label>
+                                <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Valeur de l'attribut du noeud recherché"></span>
                                 <input type="text" name="attributesValue0" id="valueInput0" class="form-control" required/>
                             </div>
-                            <div class="col-md-3">
-                                <label for="uniqueInput0">Attribut unique</label>
-                                <input type="checkbox" name="uniqueConstraint0" id="uniqueInput0" type='checkbox' />
-                                <label for='uniqueInput0'>
-                                  <span></span>
-                                  <ins><i>Unique</i></ins>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="container help-block">
-                            <p>Le premier attribut permet de trouver quel noeud vous souhaitez mettre à jour</p>
-                            <p>Il ne servira en aucun cas à ajouter ou modifier un attribut</p>
                         </div>
                     </div>
                 </div>
@@ -346,6 +344,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="nodeType">Type de noeud</label>
+                            <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Type du noeud à supprimer."></span>
                             <input type="text" id="typeNode0" name="typeNode" class="form-control" required/>                            
                         </div>
 <!--                        <div class="col-md-6">
@@ -359,10 +358,12 @@
                     <div id="rowDelete" class="row">
                         <div class="col-md-6">
                             <label for="attributesName0">Nom</label>
+                            <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Nom de l'attribut du noeud à supprimer."></span>
                             <input type="text" name="attributesName0" id="nameInput0" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="attributesValue0">Valeur</label>
+                            <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Valeur de l'attribut du noeud à supprimer."></span>
                             <input type="text" name="attributesValue0" id="valueInput0" class="form-control" required/>
                         </div>
                     </div>
@@ -380,13 +381,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Suppresion d'une propriété d'un noeud</h4>
+                <h4 class="modal-title">Suppression d'une propriété d'un noeud</h4>
             </div>
             <form id="formDeleteNodeProperty" name="deleteNodeProperty" action="/userFriendly" method="post">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
                                 <label for="nodeType">Type de noeud</label>
+                                    <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Type du noeud à modifier."></span>
                                 <input type="text" id="typeNode0" name="typeNode" class="form-control" required/>                            
                         </div>
 <!--                        <div class="col-md-6">
@@ -400,15 +402,19 @@
                     <div id="rowDeleteProperty" class="row">
                         <div class="col-md-6">
                             <label for="attributeAim">Nom</label>
+                            <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Nom de l'attribut du noeud à modifier."></span>
                             <input type="text" name="attributeAim" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="attributeAimValue">Valeur</label>
+                            <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Valeur de l'attribut du noeud à modifier."></span>
                             <input type="text" name="attributeAimValue" class="form-control" required/>
                         </div>
                     </div>
                     <hr>
-                    <h4>Attributs à supprimer</h4>
+                    <h4>Attributs à supprimer
+                        <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Nom de l'attribut à supprimer."></span>
+                    </h4>
                     <div id="rowPropertiesToDelete" class="row">
                         <div class="col-md-6">
                             <input type="text" name="attributesName0" id="nameInput0" class="form-control" required/>
@@ -438,12 +444,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="nodeType">Type de noeud</label>
+                            <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Type du 1er noeud sur lequel la relation sera crée."></span>
                             <input type="text" id="typeNode0" name="typeNode" class="form-control" required/>                            
                         </div>
-<!--                        <div class="col-md-6">
-                            <label for="nodeType">Nom du noeud</label>
-                            <input type="text" id="valueNode0" name="valueNode" class="form-control" />
-                        </div>-->
                         <input type="hidden" name="KEYWORD" value="RELATIONSHIP" />
                     </div>
                     <hr>
@@ -451,15 +454,19 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="attributeAim">Nom</label>
+                            <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Nom de l'attribut du 1er noeud sur lequel sera crée la relation."></span>
                             <input type="text" name="attributeAim" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="attributeAimValue">Valeur</label>
+                            <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Valeur de l'attribut du 1er noeud sur lequel sera crée la relation."></span>
                             <input type="text" name="attributeAimValue" class="form-control" required/>
                         </div>
                     </div>
                     <hr>
-                    <h4>Nom de la relation</h4>
+                    <h4>Nom de la relation
+                        <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Nom de la relatiuon à créer."></span>
+                    </h4>
                     <div id="rowRelationship" class="row">
                         <div class="col-md-6">
                             <input type="text" name="relationshipName" class="form-control" required/>
@@ -512,6 +519,7 @@
                     <div class="row">
                         <div class="col-md-6">
                                 <label for="nodeType">Type de noeud</label>
+                                <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Type de noeud sur lequel existe une relation"></span>
                                 <input type="text" id="typeNode0" name="typeNode" class="form-control" required/>                            
                         </div>
 <!--                        <div class="col-md-6">
@@ -524,11 +532,13 @@
                     <h4>Attribut nécessaire à la recherche du noeud</h4>
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="attributeAim">La relation actuelle</label>
+                            <label for="attributeAim">Nom de l'attribut</label>
+                            <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Nom de l'attribut du noeud sur lequel existe une relation"></span>
                             <input type="text" name="attributeAim" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
-                            <label for="attributeAimValue">La relation actuelle</label>
+                            <label for="attributeAimValue">Valeur de l'attribut</label>
+                            <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Valeur de l'attribut du noeud sur lequel existe une relation"></span>
                             <input type="text" name="attributeAimValue" class="form-control" required/>
                         </div>
                     </div>
@@ -537,10 +547,12 @@
                     <div id="rowRelationship" class="row">
                         <div class="col-md-6">
                             <label for="origialRelationship">La relation actuelle</label>
+                            <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Nom de l'actuelle relation entre les deux noeuds."></span>
                             <input id="originalRelationship" type="text" name="relationshipName" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="newRelationship">La nouvelle relation</label>
+                            <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Nom de la nouvelle relation entre les deux noeuds."></span>
                             <input id="newRelationship" type="text" name="newRelationshipName" class="form-control" required/>
                         </div>
                     </div>
@@ -589,6 +601,7 @@
                     <div id="rowRelationship" class="row">
                         <div class="col-md-6">
                             <label for="relationshipName">Nom de la relation</label>
+                            <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Nom de la relation à supprimer"></span>
                             <input type="text" name="relationshipName" class="form-control" required/>
                         </div>
                     </div>
@@ -596,6 +609,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="nodeType">Type de noeud</label>
+                            <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Type du noeud qui possède la relation susnommée."></span>
                             <input type="text" id="typeNode0" name="typeNode" class="form-control" required/>
                         </div>
 <!--                    <div class="col-md-6">
@@ -608,10 +622,12 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="attributeAim">Nom</label>
+                            <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Nom de l'attribut du noeud susnommé."></span>
                             <input type="text" name="attributeAim" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="attributeAimValue">Valeur</label>
+                            <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Valeur de l'attribut du noeud susnommé."></span>
                             <input type="text" name="attributeAimValue" class="form-control" required/>
                         </div>
                     </div>
