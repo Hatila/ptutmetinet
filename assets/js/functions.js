@@ -119,7 +119,7 @@ function addAttributes(id){
     if(inputNameField.val() !== '' && inputValueField.val() !== ''){
         indexAttributes++;
         if(id === 'rowPropertiesToDelete'){
-            $('#'+id).append('<div id="'+id+''+indexAttributes+'"><div class="col-md-6 champClone">\n\
+            $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-6 champClone">\n\
                 <input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div>\n\
             </div>');
         } else {
@@ -234,6 +234,8 @@ $("#modalCreateNode").on("hidden.bs.modal", function () {
         }
         indexAttributes = 0;
     }
+    
+    $("#modalCreateNode #uniqueInput0").attr('checked',false);
     $("#modalCreateNode #nameInput0").val('');
     $("#modalCreateNode #valueInput0").val('');
 });
@@ -250,9 +252,9 @@ $("#modalCreateNode").on("hidden.bs.modal", function () {
 });
 
 $('#modalDeleteNode').on("hidden.bs.modal", function(){
-    $("#modalDeleteNode #typeNode0");
-    $("#modalDeleteNode #nameInput0");
-    $("#modalDeleteNode #valueInput0");
+    $("#modalDeleteNode #typeNode0").val('');
+    $("#modalDeleteNode #nameInput0").val('');
+    $("#modalDeleteNode #valueInput0").val('');
 })
 
  $("#modalDeleteNodeProperty").on("hidden.bs.modal", function () {
@@ -264,6 +266,11 @@ $('#modalDeleteNode').on("hidden.bs.modal", function(){
     }
     indexNodes = 0;
     indexAttributes = 0;
+    
+    $('#modalDeleteNodeProperty #typeNode0').val('');
+    $('#modalDeleteNodeProperty #attributeAim0').val('');
+    $('#modalDeleteNodeProperty #attributeAimValue0').val('');
+    $('#modalDeleteNodeProperty #nameInput0').val('');
 });
 
  $("#modalSearchByNodeType").on("hidden.bs.modal", function () {
@@ -274,6 +281,8 @@ $('#modalDeleteNode').on("hidden.bs.modal", function(){
         indexNodes = 0;
     }
     indexNodes = 0;
+    
+    $('#modalSearchByNodeType #typeNode0').val('');
 });
 
 $('#modalSearchByNodeTypeAndNodeValue').on("hidden.bs.modal", function(){
@@ -306,8 +315,17 @@ $('#modalImportDatabase').on("hidden.bs.modal", function(){
 })
 
 $('#modalSearchByNodeWithAttributes').on("hidden.bs.modal", function(){
+    if(indexAttributes > 0){
+        for(var i = 1; i <= indexAttributes; i++){
+            $("#rowSearchWithAttributes"+i).remove();
+        }
+        indexAttributes = 0;
+    }
+    indexAttributes = 0;
+    
+    $('#modalSearchByNodeWithAttributes #typeNode0').val('');
     $('#modalSearchByNodeWithAttributes #nameInput0').val('');
-    $('#modalSearchByNodeWithAttributes #selectOperator0').val('');
+    $('#modalSearchByNodeWithAttributes #selectOperator0 option[value="<"]').attr('selected','selected');
     $('#modalSearchByNodeWithAttributes #valueInput0').val('');
 })
 
@@ -319,6 +337,17 @@ $('#modalDeleteNodeRelationship').on("hidden.bs.modal", function(){
     $('#modalDeleteNodeRelationship #otherNodeType').val('');
     $('#modalDeleteNodeRelationship #otherNodeAttributeAim0').val('');
     $('#modalDeleteNodeRelationship #otherNodeAttributeAimValue0').val('');
+})
+
+$('#modalUpdateNodeRelationship').on("hidden.bs.modal", function(){
+    $('#modalUpdateNodeRelationship #typeNode0').val('');
+    $('#modalUpdateNodeRelationship #attributeAim0').val('');
+    $('#modalUpdateNodeRelationship #attributeAimValue0').val('');
+    $('#modalUpdateNodeRelationship #originalRelationship').val('');
+    $('#modalUpdateNodeRelationship #newRelationship').val('');
+    $('#modalUpdateNodeRelationship #otherNodeType').val('');
+    $('#modalUpdateNodeRelationship #otherNodeAttributeAim0').val('');
+    $('#modalUpdateNodeRelationship #otherNodeAttributeAimValue0').val('');
 })
 
 //Fournis un exemple d'improt de base de données

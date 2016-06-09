@@ -406,21 +406,23 @@
                         <div class="col-md-6">
                             <label for="attributeAim">Nom</label>
                             <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Nom de l'attribut du noeud à modifier."></span>
-                            <input type="text" name="attributeAim" class="form-control" required/>
+                            <input type="text" name="attributeAim" id="attributeAim0" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="attributeAimValue">Valeur</label>
                             <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Valeur de l'attribut du noeud à modifier."></span>
-                            <input type="text" name="attributeAimValue" class="form-control" required/>
+                            <input type="text" name="attributeAimValue" id="attributeAimValue0" class="form-control" required/>
                         </div>
                     </div>
                     <hr>
                     <h4>Attributs à supprimer
                         <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Nom de l'attribut à supprimer."></span>
                     </h4>
-                    <div id="rowPropertiesToDelete" class="row">
-                        <div class="col-md-6">
-                            <input type="text" name="attributesName0" id="nameInput0" class="form-control" required/>
+                    <div id="rowPropertiesToDelete">
+                        <div id="rowPropertiesToDelete0" class="row">
+                            <div class="col-md-6">
+                                <input type="text" name="attributesName0" id="nameInput0" class="form-control" required/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -537,12 +539,12 @@
                         <div class="col-md-6">
                             <label for="attributeAim">Nom de l'attribut</label>
                             <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Nom de l'attribut du noeud sur lequel existe une relation"></span>
-                            <input type="text" name="attributeAim" class="form-control" required/>
+                            <input type="text" name="attributeAim" id="attributeAim0" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="attributeAimValue">Valeur de l'attribut</label>
                             <span class="glyphicon glyphicon-info-sign info-bulle" data-toggle="tooltip" data-placement="top" title="Valeur de l'attribut du noeud sur lequel existe une relation"></span>
-                            <input type="text" name="attributeAimValue" class="form-control" required/>
+                            <input type="text" name="attributeAimValue" id="attributeAimValue0" class="form-control" required/>
                         </div>
                     </div>
                     <hr>
@@ -572,11 +574,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="otherNodeAttributeAim">Nom</label>
-                            <input type="text" name="otherNodeAttributeAim" class="form-control" required/>
+                            <input type="text" name="otherNodeAttributeAim" id="otherNodeAttributeAim0" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label for="otherNodeAttributeAimValue">Valeur</label>
-                            <input type="text" name="otherNodeAttributeAimValue" class="form-control" required/>
+                            <input type="text" name="otherNodeAttributeAimValue" id="otherNodeAttributeAimValue0" class="form-control" required/>
                         </div>
                     </div>
                 </div>
