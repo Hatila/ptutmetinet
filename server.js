@@ -338,7 +338,7 @@ app.post('/userFriendly', function(req, res){
             if (err) {
                 throw err
             };
-            if(requestType === 'DELETE_RELATIONSHIP' || requestType === 'DELETE_DATABASE'){
+            if(requestType === 'DELETE' || requestType === 'DELETE_PROPERTY' || requestType === 'DELETE_RELATIONSHIP' || requestType === 'DELETE_DATABASE'){
                 result.body.success = true;
             }
             json = JSON.stringify(result.body); // delivers an array of query results
@@ -389,7 +389,6 @@ app.post('/standard', function(req, res) {
                 throw err
             };
             json = JSON.stringify(result.body); // delivers an array of query results
-            console.log(json);
             res.render('interface-standard.ejs', {requete: json});
         });
 });
