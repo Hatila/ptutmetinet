@@ -10,9 +10,12 @@
 <% include partials/menu.ejs %>
 
 <div class="container grpBtn">
-    <p class="separationText"> Recherche des noeuds </p>
-    <hr>
-    <div class="row">
+    <div data-toggle="collapse" href="#div1" aria-expanded="false" aria-controls="div1">
+        <p class="separationText"> Recherche des noeuds </p>
+        <span class="glyphicon glyphicon-chevron-down" style="color:white;float:right"></span>
+        <hr>
+    </div>
+    <div class="row collapse" id="div1">
         <div class="col-lg-3"> 
             <form id="formGetGraph" name="getGraph" action="/userFriendly" method="post">
                 <input type="hidden" value="GET_GRAPH" name="KEYWORD"/>
@@ -29,9 +32,12 @@
             <button class="btn btn-primary btnStandard" onclick="searchByNodeTypeAndValueDialog()">Rechercher des relations</button>
         </div>
     </div>
-    <p class="separationText"> Traitement des noeuds </p>
-    <hr>
-    <div class="row">
+    <div data-toggle="collapse" href="#div2" aria-expanded="false" aria-controls="div2">
+        <p class="separationText"> Traitement des noeuds </p>
+        <span class="glyphicon glyphicon-chevron-down" style="color:white;float:right"></span>
+        <hr>
+    </div>
+    <div class="row collapse" id="div2">
         <div class="col-md-2">
             <button class="btn btn-primary btnStandard" onclick="createNodeDialog()">Créer un noeud</button>
         </div>
@@ -45,9 +51,12 @@
             <button class="btn btn-primary btnStandard" onClick="deleteAttributeDialog()">Supprimer un attribut</button>
         </div>
     </div>
-    <p class="separationText"> Traitement des relations </p>
-    <hr>
-    <div class="row" style="margin-top:10px;">
+    <div data-toggle="collapse" href="#div3" aria-expanded="false" aria-controls="div3">
+        <p class="separationText"> Traitement des relations </p>
+        <span class="glyphicon glyphicon-chevron-down" style="color:white;float:right"></span>
+        <hr>
+    </div>
+    <div class="row collapse" id="div3" style="margin-top:10px;">
         <div class="col-md-2">
             <button class="btn btn-primary btnStandard" onClick="createNodeRelationshipDialog()">Créer une relation</button>
         </div>
@@ -58,9 +67,12 @@
             <button class="btn btn-primary btnStandard" onClick="deleteRelationshipDialog()">Supprimer une relation</button>
         </div>
     </div>
-    <p class="separationText"> Traitement de la base </p>
-    <hr>
-    <div class="row" style="margin-top:10px;">
+    <div data-toggle="collapse" href="#div4" aria-expanded="false" aria-controls="div4">
+        <p class="separationText"> Traitement de la base </p>
+        <span class="glyphicon glyphicon-chevron-down" style="color:white;float:right"></span>
+        <hr>
+    </div>
+    <div class="row collapse" id="div4" style="margin-top:10px;">
         <div class="col-md-3">
             <button class="btn btn-primary btnStandard" onClick="deleteDatabase()">Vider la base de données</button>
         </div>
