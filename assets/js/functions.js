@@ -339,6 +339,16 @@ $('#modalDeleteNodeRelationship').on("hidden.bs.modal", function(){
     $('#modalDeleteNodeRelationship #otherNodeAttributeAimValue0').val('');
 })
 
+$('#modalCreateNodeRelationship').on("hidden.bs.modal", function(){
+    $('#modalCreateNodeRelationship #typeNode0').val('');
+    $('#modalCreateNodeRelationship #attributeAim0').val('');
+    $('#modalCreateNodeRelationship #attributeAimValue0').val('');
+    $('#modalCreateNodeRelationship #relationshipName').val('');
+    $('#modalCreateNodeRelationship #otherNodeType').val('');
+    $('#modalCreateNodeRelationship #otherNodeAttributeAim0').val('');
+    $('#modalCreateNodeRelationship #otherNodeAttributeAimValue0').val('');
+})
+
 $('#modalUpdateNodeRelationship').on("hidden.bs.modal", function(){
     $('#modalUpdateNodeRelationship #typeNode0').val('');
     $('#modalUpdateNodeRelationship #attributeAim0').val('');
