@@ -227,3 +227,7 @@ input[type='checkbox']:checked + label > span:before{
 #warningInfo{
     margin-top:10px;
 }
+
+.pointer_de{
+    cursor: pointer;
+}
