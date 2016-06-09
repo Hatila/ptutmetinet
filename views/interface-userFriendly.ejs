@@ -86,8 +86,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Recherche par type de noeud</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Recherche par type de noeud.</h4>
+                    <span class="glyphicon glyphicon-warning-sign fs-1_5" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="
+                          Si plusieurs noeuds sont précisés, seuls les noeuds ayant des relations entre eux seront retournés.">
+                    </span>
             </div>
             <form id="formSearchByNodeType" name="searchByNodeType" action="/userFriendly" method="post">
                 <div class="modal-body">

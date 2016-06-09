@@ -73,7 +73,7 @@ app.post('/userFriendly', function(req, res){
                     nodeArray.push(otherNodeValue);
                     nodeArray.push('r'+i);
                     //@TODO : Test if more than 3 nodeType
-                    cypherRequest.query += '-[r'+i+']->('+otherNodeValue+')';
+                    cypherRequest.query += '-[r'+i+']-('+otherNodeValue+')';
 //                    cypherRequest.query += ',('+otherNodeValue+':'+otherNodeType+')';
                 }
                 i++;
