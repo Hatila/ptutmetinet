@@ -96,6 +96,11 @@ function drawSVG(){
                 result += prop + " : " + d.properties[prop] + "\n";
             }
             return result;
+        })
+        .attr("fill", function(d){
+            var colors = ["#E89FFF","#5A9CE8","#70FF98","#E8DD47"];
+            var index = types.indexOf(d.type);
+            return colors[index%4];
         });
 
     //Ajout des noms/id associés au différents noeuds du graph
@@ -119,7 +124,8 @@ function drawSVG(){
         })
         .attr("font-family", "sans-serif")
         .attr("font-size", "7px")
-        .attr("fill", "white");
+        .attr("fill", "white")
+        .attr("class","nodeText");
 }
 
 //Fonction gérant les différents évènements de la zone de graph (scroll souris pour zoom, recalcul des coordonnées en cas de déplacement d'un noeud, etc.)
@@ -182,6 +188,14 @@ function genererGraph(requete) {
     var graph = requete;
 
     initializeData(graph, nodes, links);
+
+    types = [];
+
+    nodes.forEach(function(node){
+        if(!types.includes(node.type)){
+            types.push(node.type);
+        }
+    });
 
     initializeSVG();
 
