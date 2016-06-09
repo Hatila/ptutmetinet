@@ -15,10 +15,6 @@ app.get('/', function(req, res) {
     res.render('index.ejs');
 });
 
-app.get('/userManual', function(req, res) {
-   res.render('/assets/pdf/test.ejs');
-});
-
 app.get('/presentation', function(req, res) {
     res.render('presentation.ejs');
 });
