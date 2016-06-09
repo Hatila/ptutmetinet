@@ -34,8 +34,12 @@ app.get('/userFriendly', function(req, res) {
 app.post('/userFriendly', function(req, res){
     var json = null;
     var requestType = req.body.KEYWORD;
-    var nodeType = req.body.typeNode0.split(' ').join('_');
-    var nodeValue = nodeType.toLowerCase();
+    var nodeType = null;
+    var nodeValue = null;
+    if(typeof req.body.typeNode0 !== 'undefined'){
+        nodeType = req.body.typeNode0.split(' ').join('_');
+        nodeValue = nodeType.toLowerCase();
+    }
     var cypherRequest = null;
     var cypherRequestUnique = [];
     var boolean = true;
@@ -334,7 +338,7 @@ app.post('/userFriendly', function(req, res){
             if (err) {
                 throw err
             };
-            if(requestType === 'DELETE_RELATIONSHIP' || requestType === 'DELETE_DATABASE' || requestType === ''){
+            if(requestType === 'DELETE_RELATIONSHIP' || requestType === 'DELETE_DATABASE'){
                 result.body.success = true;
             }
             json = JSON.stringify(result.body); // delivers an array of query results
