@@ -249,6 +249,12 @@ $("#modalCreateNode").on("hidden.bs.modal", function () {
     $("#modalUpdateNode #valueInput0").val('');
 });
 
+$('#modalDeleteNode').on("hidden.bs.modal", function(){
+    $("#modalDeleteNode #typeNode0");
+    $("#modalDeleteNode #nameInput0");
+    $("#modalDeleteNode #valueInput0");
+})
+
  $("#modalDeleteNodeProperty").on("hidden.bs.modal", function () {
     if(indexAttributes > 0){
         for(var i = 1; i <= indexAttributes; i++){
@@ -297,6 +303,22 @@ $('#modalSearchByNodeTypeAndNodeValue').on("hidden.bs.modal", function(){
 
 $('#modalImportDatabase').on("hidden.bs.modal", function(){
     $('#modalImportDatabase #textareaDataContent').val('');
+})
+
+$('#modalSearchByNodeWithAttributes').on("hidden.bs.modal", function(){
+    $('#modalSearchByNodeWithAttributes #nameInput0').val('');
+    $('#modalSearchByNodeWithAttributes #selectOperator0').val('');
+    $('#modalSearchByNodeWithAttributes #valueInput0').val('');
+})
+
+$('#modalDeleteNodeRelationship').on("hidden.bs.modal", function(){
+    $('#modalDeleteNodeRelationship #relationshipName').val('');
+    $('#modalDeleteNodeRelationship #typeNode0').val('');
+    $('#modalDeleteNodeRelationship #attributeAim0').val('');
+    $('#modalDeleteNodeRelationship #attributeAimValue0').val('');
+    $('#modalDeleteNodeRelationship #otherNodeType').val('');
+    $('#modalDeleteNodeRelationship #otherNodeAttributeAim0').val('');
+    $('#modalDeleteNodeRelationship #otherNodeAttributeAimValue0').val('');
 })
 
 //Fournis un exemple d'improt de base de données
