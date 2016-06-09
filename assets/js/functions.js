@@ -118,15 +118,18 @@ function addAttributes(id){
     //Si au moins un input de la ligne en cours est vide, on ajoute pas de nouvelles lignes
     if(inputNameField.val() !== '' && inputValueField.val() !== ''){
         indexAttributes++;
+        
+        //Si le button de suppression existe, on supprime celui de la ligne précédente afin de mettre le boutton sur la ligne suivante
+        if($('#'+id+' #'+id+''+(indexAttributes-1)+' #trashButton').length !== 0){
+            $('#'+id+' #'+id+''+(indexAttributes-1)+' #trashButton').remove();
+        }
+        
         if(id === 'rowPropertiesToDelete'){
             $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-6 champClone">\n\
                 <input class="form-control" type="text" name="attributesName'+indexAttributes+'" id="nameInput'+indexAttributes+'" required /></div>\n\
+                <div class="col-md-1" id="trashButton"><span class="glyphicon glyphicon-trash mt-20" aria-hidden="true" onclick="trashLastRow('+id+indexAttributes+')"></span></div>\n\
             </div>');
         } else {
-            //Si le button de suppression existe, on supprime celui de la ligne précédente afin de mettre le boutton sur la ligne suivante
-            if($('#'+id+' #'+id+''+(indexAttributes-1)+' #trashButton').length !== 0){
-                $('#'+id+' #'+id+''+(indexAttributes-1)+' #trashButton').remove();
-            }
             if(id === 'rowSearchByNodeValueInput'){
                 //Ajoute les inputs et le bouton de suppression de ligne
                 $('#'+id).append('<div id="'+id+''+indexAttributes+'" class="row"><div class="col-md-4 champClone">\n\

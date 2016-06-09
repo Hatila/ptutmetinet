@@ -109,7 +109,7 @@ app.post('/userFriendly', function(req, res){
             break;
         case 'SEARCH_BY_NODE_TYPE_AND_NODE_VALUE':
             var mainNode = eval('req.body.mainTypeNode');
-            mainNode = mainNode.toLowerCase();
+            mainNode = mainNode.toLowerCase()+ randomize();
             var attributeName = eval('req.body.attributesName'+i);
             var attributeValue = eval('req.body.attributesValue'+i);
             if(attributeName === ''){
