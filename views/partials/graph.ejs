@@ -1,12 +1,15 @@
 <script>
     var jsonResponse = <%- requete %>;
-
+    console.log(jsonResponse);
     if(jsonResponse) {
             if (jsonResponse['errors'].length > 0) {
                 swal("Erreur", "Code : " + jsonResponse.errors[0].code + "\n \n Message : " + jsonResponse.errors[0].message, "error");
             }
             if (jsonResponse['results'].length > 0) {
                 genererGraph(jsonResponse);
+            }
+            if(typeof jsonResponse['success'] !== 'undefined' && jsonResponse['success'] === true){
+                swal("Succès","La requête s'est exécutée avec succès.");
             }
         }
 

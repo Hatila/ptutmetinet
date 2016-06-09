@@ -36,24 +36,20 @@ app.post('/userFriendly', function(req, res){
     var requestType = req.body.KEYWORD;
     var nodeType = null;
     var nodeValue = null;
+    if(typeof req.body.typeNode0 !== 'undefined'){
+        nodeType = req.body.typeNode0.split(' ').join('_');
+        nodeValue = nodeType.toLowerCase();
+    }
     var cypherRequest = null;
     var cypherRequestUnique = [];
     var boolean = true;
     var i = 0;
     var jsonData = [];
     
-    if(typeof req.body.typeNode !== 'undefined'){
-        nodeType = req.body.typeNode.split(' ').join('_');
-        nodeValue = nodeType.toString().toLowerCase();
-    } else if(typeof req.body.typeNode0 !== 'undefined'){
-        nodeType = req.body.typeNode0.split(' ').join('_');
-        nodeValue = nodeType.toLowerCase();
-    }
-    
     switch(requestType){
         //Get all graph content
         case 'GET_GRAPH':
-            cypherRequest = {query : 'MATCH (n) OPTIONAL MATCH (n)-[r]->() return n, r;'};
+            cypherRequest = {query : 'MATCH (n) OPTIONAL MATCH (n)-[r]->() RETURN n, r;'};
             break;
         //Search by node type
         case 'SEARCH_BY_NODE_TYPE':
@@ -234,6 +230,7 @@ app.post('/userFriendly', function(req, res){
             cypherRequest.query += ' RETURN '+nodeValue+';';
             break;
         case 'RELATIONSHIP':
+            console.log(req.body);
             var attributeAim = req.body.attributeAim.split(' ').join('_');
             var relationshipName = req.body.relationshipName.split(' ').join('_');
             relationshipName = relationshipName.toUpperCase();
@@ -248,18 +245,22 @@ app.post('/userFriendly', function(req, res){
                 cypherRequest.query += ' WHERE '+nodeValue+'.'+attributeAim+'="'+req.body.attributeAimValue+'"';
                 cypherRequest.query += ' AND r.'+otherNodeAttributeAim+'="'+req.body.otherNodeAttributeAimValue+'"';
                 if(typeof uniqueConstraint !== 'undefined'){
-                    cypherRequest.query += ' CREATE UNIQUE ('+nodeValue+')-[:'+relationshipName+']->(r)';
+                    cypherRequest.query += ' CREATE UNIQUE ('+nodeValue+')-[rel:'+relationshipName+']->(r)';
                 } else {
-                    cypherRequest.query += ' CREATE ('+nodeValue+')-[:'+relationshipName+']->(r)';
+                    cypherRequest.query += ' CREATE ('+nodeValue+')-[rel:'+relationshipName+']->(r)';
                 }
+                cypherRequest.query += ' RETURN '+nodeValue+',rel,r;';
             } else {
                 cypherRequest.query += ' WHERE '+nodeValue+'.'+attributeAim+'="'+req.body.attributeAimValue+'"';
                 if(typeof uniqueConstraint !== 'undefined'){
-                    cypherRequest.query += ' CREATE UNIQUE ('+nodeValue+')-[:'+relationshipName+']->('+nodeValue+')';
+                    cypherRequest.query += ' CREATE UNIQUE ('+nodeValue+')-[rel:'+relationshipName+']->('+nodeValue+')';
                 } else {
-                    cypherRequest.query += ' CREATE ('+nodeValue+')-[:'+relationshipName+']->('+nodeValue+')';
+                    cypherRequest.query += ' CREATE ('+nodeValue+')-[rel:'+relationshipName+']->('+nodeValue+')';
                 }
+                
+                cypherRequest.query += ' RETURN '+nodeValue+',rel;';
             }
+            
             //}) CREATE ('+nodeValue+')-[:'+req.body.relationshipName+']->('+nodeValue+')'};
             break;
         case 'DELETE_RELATIONSHIP':
@@ -290,23 +291,21 @@ app.post('/userFriendly', function(req, res){
             break;
         case 'UPDATE_RELATIONSHIP':
             cypherRequest = {query : 'MATCH ('+nodeValue+':'+nodeType+' {'+req.body.attributeAim+':"'+req.body.attributeAimValue+'"})-'};
-            if(req.body.otherNodeType !== '' && req.body.otherNodeAttributeAim !== '' && req.body.otherNodeAttributeAimValue !== ''){
-                var random = randomize();
-                var otherNodeAttributeAim = req.body.otherNodeAttributeAim.split(' ').join('_');
-                var attributeAim = req.body.attributeAim.split(' ').join('_');
-                var relationshipName = req.body.relationshipName.split(' ').join('_');
-                var newRelationshipName = req.body.newRelationshipName.split(' ').join('_');
-                otherNodeType = req.body.otherNodeType;
-                otherNodeValue = otherNodeType.toString().toLowerCase()+random;
-                
-                cypherRequest.query += '[rel:'+relationshipName+']->('+otherNodeValue+':'+otherNodeType+' {'+otherNodeAttributeAim+':"'+req.body.otherNodeAttributeAimValue+'"})';
-                cypherRequest.query += ' CREATE ('+nodeValue+')-[rel2:'+newRelationshipName+']->('+otherNodeValue+')';
-            } else {
-                cypherRequest.query += '[rel:'+relationshipName+']->('+nodeValue+':'+nodeType+' {'+attributeAim+':'+req.body.attributeAimValue+'})';
-                cypherRequest.query += ' CREATE ('+nodeValue+')-[rel2:'+newRelationshipName+']->('+nodeValue+')';
-            }
             
-            cypherRequest.query += ' SET rel2 = rel WITH rel DELETE rel'
+            var random = randomize();
+            var otherNodeAttributeAim = req.body.otherNodeAttributeAim.split(' ').join('_');
+            var attributeAim = req.body.attributeAim.split(' ').join('_');
+            var relationshipName = req.body.relationshipName.split(' ').join('_');
+            relationshipName = relationshipName.toUpperCase();
+            var newRelationshipName = req.body.newRelationshipName.split(' ').join('_');
+            newRelationshipName = newRelationshipName.toUpperCase();
+            otherNodeType = req.body.otherNodeType;
+            otherNodeValue = otherNodeType.toString().toLowerCase()+random;
+
+            cypherRequest.query += '[old:'+relationshipName+']->('+otherNodeValue+':'+otherNodeType+' {'+otherNodeAttributeAim+':"'+req.body.otherNodeAttributeAimValue+'"}) DELETE old';
+            cypherRequest.query += ' WITH '+nodeValue+','+otherNodeValue+' CREATE ('+nodeValue+')-[new:'+newRelationshipName+']->('+otherNodeValue+')';
+            cypherRequest.query += ' RETURN '+nodeValue+',new,'+otherNodeValue+';';
+            
             break;
         case 'IMPORT_DATABASE':
             var dataContent = req.body.dataContent;
@@ -324,6 +323,7 @@ app.post('/userFriendly', function(req, res){
 //    var jsonData = { query: 'CREATE (n:NewType {name:"World"}) RETURN "hello", n.name' }
 //    var txUrl = "http://neo4j:naruto@localhost:7474/db/data/cypher";
     var txUrl = "http://neo4j:naruto@localhost:7474/db/data/transaction/commit";
+    console.log(cypherRequest.query);
     
     r.post({
             uri: txUrl,
@@ -338,6 +338,9 @@ app.post('/userFriendly', function(req, res){
             if (err) {
                 throw err
             };
+            if(requestType === 'DELETE_RELATIONSHIP' || requestType === 'DELETE_DATABASE'){
+                result.body.success = true;
+            }
             json = JSON.stringify(result.body); // delivers an array of query results
             console.log(json);
             res.render('interface-userFriendly.ejs', {requete: json});
@@ -399,5 +402,5 @@ function randomize(){
         .toString(16)
         .substring(1);
     }
-    return s4() + s4() + s4() + s4();
+    return s4();
 }

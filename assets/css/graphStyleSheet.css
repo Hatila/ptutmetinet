@@ -1,62 +1,7 @@
-.node {
-  diameter: 50px;
-  color: #A5ABB6;
-  border-color: #9AA1AC;
-  border-width: 2px;
-  text-color-internal: #FFFFFF;
-  font-size: 10px;
-  fill: #000000;
+.nodeText{
+  text-shadow: #555555 1px 1px, #555555 -1px 1px, #555555 -1px -1px, #555555 1px -1px;
 }
 
-.relationship {
-  color: #A5ABB6;
-  shaft-width: 1px;
-  font-size: 8px;
-  padding: 3px;
-  text-color-external: #000000;
-  text-color-internal: #FFFFFF;
-  caption: '<type>';
+.node:hover {
+  stroke: #000;
 }
-
-.node.Actor {
-  fill: #68BDF6;
-  border-color: #5CA8DB;
-  text-color-internal: #FFFFFF;
-  caption: '{Prénom}';
-}
-
-.node.Director {
-  fill: #6DCE9E;
-  border-color: #60B58B;
-  text-color-internal: #FFFFFF;
-  caption: '{Prénom}';
-}
-
-.node.Test {
-  fill: #FF756E;
-  border-color: #E06760;
-  text-color-internal: #FFFFFF;
-  caption: '{test}';
-}
-
-.node.aze {
-  fill: #DE9BF9;
-  border-color: #BF85D6;
-  text-color-internal: #FFFFFF;
-  caption: '{aze}';
-}
-
-.node.Movie {
-  fill: #FB95AF;
-  border-color: #E0849B;
-  text-color-internal: #FFFFFF;
-  caption: '{title}';
-}
-
-.node.Person {
-  fill: #FFD86E;
-  border-color: #EDBA39;
-  text-color-internal: #604A0E;
-  caption: '{name}';
-}
-
