@@ -1,0 +1,4 @@
+Design à revoir (charte graphique)
+Ergonomie : Utiliser des select-box au lieu de simple champs de saisi ET donc utiliser des appels AJAX pour pré-remplir ses select-box
+Auto-complétion des select-box
+Détails des données à améliorer (cela se situe en dessous du rendu graphique) 
